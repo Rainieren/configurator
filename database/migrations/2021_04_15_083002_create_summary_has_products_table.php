@@ -15,7 +15,18 @@ class CreateSummaryHasProductsTable extends Migration
     {
         Schema::create('summary_has_products', function (Blueprint $table) {
             $table->id();
+            $table->integer('summary_id')->nullable()->unsigned();
+
+            $table->integer('product_id')->nullable()->unsigned();
+
             $table->timestamps();
+        });
+
+        Schema::table('summary_has_products', function($table) {
+            // TODO:: Set all foreign key constrains AFTER initial
+//            $table->foreign('summary_id')->references('id')->on('summaries');
+            $table->foreign('product_id')->references('id')->on('products');
+
         });
     }
 

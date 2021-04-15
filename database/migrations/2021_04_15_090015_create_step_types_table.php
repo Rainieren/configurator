@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSummariesTable extends Migration
+class CreateStepTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSummariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('summaries', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
+        Schema::create('step_types', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateSummariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('summaries');
+        Schema::dropIfExists('step_types');
     }
 }

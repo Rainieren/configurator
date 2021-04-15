@@ -14,7 +14,12 @@ class CreateManufacturersTable extends Migration
     public function up()
     {
         Schema::create('manufacturers', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id')->unsigned();
+            $table->text('name');
+            $table->text('address');
+            $table->text('zip_code');
+            $table->text('city');
+            $table->integer('country_id')->nullable()->unsigned();
             $table->timestamps();
         });
     }

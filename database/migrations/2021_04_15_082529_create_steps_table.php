@@ -14,7 +14,9 @@ class CreateStepsTable extends Migration
     public function up()
     {
         Schema::create('steps', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id')->unsigned();
+            $table->string('name');
+            $table->integer('step_type_id')->nullable()->unsigned();
             $table->timestamps();
         });
     }
