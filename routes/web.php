@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $products = \App\Models\Product::all();
+    $manufacturers = \App\Models\Manufacturer::all();
+    return view('home', compact('products', 'manufacturers'));
 });

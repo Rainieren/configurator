@@ -18,7 +18,7 @@ class ManufacturerSeeder extends Seeder
     {
         $faker = Factory::create();
         // Make 100 new Products
-        foreach(range(1, 100) as $index) {
+        foreach(range(1, 50) as $index) {
 
 
             DB::table('manufacturers')->insert([
