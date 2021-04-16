@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CountrySeeder::class,
             ManufacturerSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            InputTypeSeeder::class
         ]);
     }
 }
