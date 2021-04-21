@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="loading-screen absolute w-screen h-screen flex justify-center items-center bg-white z-10 flex-col overflow-hidden hidden">
+    <div class="loading-screen absolute w-screen h-screen flex justify-center items-center bg-white z-20 flex-col overflow-hidden hidden">
 
         <svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -55,7 +55,7 @@
                 </section>
             </div>
         </div>
-        <div class="preview bg-gray-100 xl:w-4/12 w-full border-l border-gray-300 h-screen fixed top-0 right-0 shadow-lg">
+        <div class="preview bg-gray-100 xl:w-4/12 w-full border-l border-gray-300 h-screen fixed top-0 right-0 shadow-md">
             <div class="h-4/5">
                 <div class="border-b border-gray-300 h-1/4 flex justify-center items-center">
                     Product preview

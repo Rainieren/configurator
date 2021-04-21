@@ -18,3 +18,7 @@ Route::get('/', function () {
     $manufacturers = \App\Models\Manufacturer::all();
     return view('home', compact('products', 'manufacturers'));
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
