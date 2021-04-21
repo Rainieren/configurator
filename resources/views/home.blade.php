@@ -32,12 +32,16 @@
                 <div class="w-1/3">
                     <p class="text-2xl font-bold my-5">Products: </p>
                     @foreach($products as $product)
-                        <p><span class="text-blue-600 font-bold">Product name:</span> <?= $product->name ?></p>
+                        <p><span class="text-blue-600 font-bold">Product name:</span> <?= $product->name ?> ID: <?= $product->id ?></p>
                         <p class="ml-5"><span class="text-green-600 font-bold">Manufacturer:</span> <?= $product->manufacturer['name'] ?></p>
                         <p class="ml-5 text-yellow-600 font-bold">Sub products:</p>
                         @foreach($product->products as $subProduct)
-                            <p class="ml-10"><span class="text-purple-600 font-bold">Product name: </span><?= $subProduct['name'] ?></p>
+                            <p class="ml-10"><span class="text-purple-600 font-bold">Product name: </span><?= $subProduct['name'] ?> ID: <?= $subProduct['id'] ?></p>
                             <p class="ml-16"><span class="text-pink-600 font-bold">Manufacturer name:</span> <?= $subProduct->manufacturer['name'] ?></p>
+                            @foreach($subProduct->products as $subSubProduct)
+                                <p class="ml-24"><span class="text-red-600 font-bold">Product name: </span><?= $subSubProduct['name'] ?> ID: <?= $subSubProduct['id'] ?></p>
+                                <p class="ml-28"><span class="text-yellow-300 font-bold">Manufacturer name:</span> <?= $subSubProduct->manufacturer['name'] ?></p>
+                            @endforeach
                         @endforeach
                     @endforeach
                 </div>

@@ -42,7 +42,7 @@ class Product extends Model
      */
     public function products()
     {
-        return $this->hasMany(Product::class, 'sub_product_id');
+        return $this->belongsToMany(Product::class, 'product_product', 'product_id', 'sub_product_id');
     }
 
     /**
