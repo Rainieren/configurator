@@ -10,7 +10,7 @@
 </head>
     <body class="antialiased animate__animated animate__fadeIn animate__slow bg-gray-50">
         <div class="w-80 bg-gray-100 h-screen p-3 border-r border-gray-300 fixed">
-            <div class="h-14 bg-gray-300 w-full rounded flex items-center justify-center mb-5 shadow-sm">
+            <div class="h-14 bg-gray-300 w-full rounded flex items-center justify-center mb-3 shadow-sm">
                 Logo
             </div>
             <a href="#" class="block hover:bg-gray-300 rounded-md hover:text-indigo-500 hover:no-underline transition">
