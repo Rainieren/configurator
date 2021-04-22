@@ -21,4 +21,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::prefix('dashboard')->group(function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
+});

@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-    <body class="antialiased animate__animated animate__fadeIn animate__slow bg-gray-50">
+    <body class="antialiased bg-gray-50">
         <div class="w-80 bg-gray-100 h-screen p-3 border-r border-gray-300 fixed">
             <div class="h-14 bg-gray-300 w-full rounded flex items-center justify-center mb-3 shadow-sm">
                 Logo
@@ -38,7 +38,7 @@
 
             <ul class="space-y-2">
                 <li>
-                    <a href="" class="px-3 py-2 rounded transition flex items-center hover:no-underline {{ Route::currentRouteNamed('home') ? 'bg-gray-200 text-indigo-600 hover:text-indigo-800' : '' }}">
+                    <a href="{{ route('home') }}" class="px-3 py-2 rounded transition flex items-center hover:no-underline {{ Route::currentRouteNamed('home') ? 'bg-gray-200 text-indigo-600 hover:text-indigo-800' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="hover:bg-gray-200 px-3 py-2 rounded transition flex items-center hover:text-indigo-600 hover:no-underline">
+                    <a href="{{ route('products') }}" class="hover:bg-gray-200 px-3 py-2 rounded transition flex items-center hover:text-indigo-600 hover:no-underline">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                         </svg>
