@@ -1,17 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="loading-screen absolute w-screen h-screen flex justify-center items-center bg-white z-20 flex-col overflow-hidden hidden">
+    @auth
+        <div class="flex fixed px-20 py-3 bg-indigo-500 absolute w-100 top-0 right-0 z-20 text-white shadow animate__animated animate__bounceInDown ">
+            <p>I can see you're already logged in</p>
+            <a href="/dashboard" class="underline hover:text-gray-50 ml-2">Go to dashboard</a>
+        </div>
+    @endauth
 
-        <svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-
-        <p class="my-5">Even geduld aub...</p>
-    </div>
     <div class="flex flex-col xl:flex-row ">
-
         <div class="configurator bg-white xl:w-8/12 w-full min-h-screen p-20 space-y-15">
             <h1 class="text-5xl font-serif mb-20">Product configureren</h1>
             <div class="flex">
@@ -46,16 +43,8 @@
                     @endforeach
                 </div>
             </div>
-
-                    </div>
-                </section>
-                <section class="finished space-y-5">
-                    <button class="bg-purple-500 p-5 rounded-lg w-full hover:shadow-lg text-white transition">Ik ben klaar</button>
-                    <button class="bg-purple-500 opacity-80 pointer-events-none p-5 rounded-lg w-full hover:shadow-lg text-white transition">Ik ben klaar disabled</button>
-                </section>
-            </div>
         </div>
-        <div class="preview bg-gray-100 xl:w-4/12 w-full border-l border-gray-300 h-screen fixed top-0 right-0 shadow-md">
+        <div class="preview bg-gray-100 xl:w-4/12 w-full border-l border-gray-300 h-screen fixed top-0 right-0 shadow-md z-10">
             <div class="h-4/5">
                 <div class="border-b border-gray-300 h-1/4 flex justify-center items-center">
                     Product preview
