@@ -60,8 +60,6 @@ class ProductSeeder extends Seeder
 
                 'manufacturer_id' => $faker->numberBetween($min = 0, $max = 50),
 
-                'step_id' => null,
-
                 'created_at' => Carbon::now(),
 
                 'updated_at' => Carbon::now(),

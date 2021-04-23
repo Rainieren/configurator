@@ -36,12 +36,9 @@ class CreateProductsTable extends Migration
             $table->dateTime('new_from')->nullable();
             $table->dateTime('new_to')->nullable();
             $table->string('sku');
-
-            $table->integer('sub_product_id')->unsigned()->nullable();
-
-            $table->integer('manufacturer_id')->unsigned()->nullable();
-
             $table->integer('step_id')->unsigned()->nullable();
+            $table->integer('sub_product_id')->unsigned()->nullable();
+            $table->integer('manufacturer_id')->unsigned()->nullable();
 
             $table->timestamps();
         });

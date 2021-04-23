@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Step;
 use Illuminate\Http\Request;
 
 class StepController extends Controller
@@ -80,5 +81,11 @@ class StepController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // Vue methods
+
+    public function getAllSteps() {
+        return response()->json(Step::all());
     }
 }

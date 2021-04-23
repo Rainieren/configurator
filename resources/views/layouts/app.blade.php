@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
     <body class="antialiased">
-
-        @yield('content')
+        <div id="app">
+            @yield('content')
+        </div>
     </body>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </html>

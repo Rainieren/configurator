@@ -87,4 +87,11 @@ class ProductController extends Controller
     {
         //
     }
+
+
+    // Vue methods
+
+    public function getAllProducts() {
+        return response()->json(Product::with('steps')->get());
+    }
 }
