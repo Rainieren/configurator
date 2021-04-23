@@ -46,7 +46,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('products') }}" class="hover:bg-gray-200 px-3 py-2 rounded transition flex items-center hover:text-indigo-600 hover:no-underline">
+                    <a href="{{ route('configurator') }}" class="hover:bg-gray-200 px-3 py-2 rounded transition flex items-center hover:text-indigo-600 hover:no-underline {{ Route::currentRouteNamed('configurator') ? 'bg-gray-200 text-indigo-600 hover:text-indigo-800' : '' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        Configurator
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('products') }} " class="hover:bg-gray-200 px-3 py-2 rounded transition flex items-center hover:text-indigo-600 hover:no-underline">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                         </svg>

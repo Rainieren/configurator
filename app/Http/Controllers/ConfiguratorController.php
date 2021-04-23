@@ -13,7 +13,7 @@ class ConfiguratorController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.configurator');
     }
 
     /**

@@ -24,4 +24,9 @@ Auth::routes();
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
+    Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('product');
+});
+
+Route::prefix('configurator')->group(function () {
+    Route::get('/', [App\Http\Controllers\ConfiguratorController::class, 'index'])->name('configurator');
 });
