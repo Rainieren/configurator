@@ -25,6 +25,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
     Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('product');
+    Route::get('/flash', [App\Http\Controllers\ProductController::class, 'create'])->name('flash');
 });
 
 Route::prefix('configurator')->group(function () {

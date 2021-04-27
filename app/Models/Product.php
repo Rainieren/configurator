@@ -38,11 +38,10 @@ class Product extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_product', 'product_id', 'sub_product_id');
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -65,9 +64,6 @@ class Product extends Model
     {
         return $this->belongsTo(Step::class);
     }
-
-
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

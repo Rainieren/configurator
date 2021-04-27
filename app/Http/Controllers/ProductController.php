@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return redirect('/')->with('flash', 'Uw bericht is geplaatst!');
     }
 
     /**
@@ -91,7 +91,7 @@ class ProductController extends Controller
 
     // Vue methods
 
-    public function getAllProducts() {
-        return response()->json(Product::with('steps')->get());
+    public function getConfigurableProducts() {
+        return response()->json(Product::where('step_id', null)->with('steps.options')->get());
     }
 }

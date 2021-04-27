@@ -20,11 +20,6 @@ class CreateConfiguratorsTable extends Migration
             $table->integer('language_id')->nullable()->unsigned();
             $table->timestamps();
         });
-
-        Schema::table('configurators', function($table) {
-            $table->foreign('language_id')->references('id')->on('countries');
-
-        });
     }
 
     /**

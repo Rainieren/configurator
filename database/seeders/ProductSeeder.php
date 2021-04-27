@@ -54,9 +54,9 @@ class ProductSeeder extends Seeder
 
                 'new_to' => null,
 
-                'sku' => $faker->randomNumber($nbDigits = NULL, $strict = false),
+                'user_id' => 1,
 
-                'sub_product_id' => null,
+                'sku' => $faker->randomNumber($nbDigits = NULL, $strict = false),
 
                 'manufacturer_id' => $faker->numberBetween($min = 0, $max = 50),
 

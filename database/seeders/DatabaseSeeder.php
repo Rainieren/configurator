@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             ManufacturerSeeder::class,
             ProductSeeder::class,
-            InputTypeSeeder::class
+            InputTypeSeeder::class,
+            UserTableSeeder::class
         ]);
     }
 }

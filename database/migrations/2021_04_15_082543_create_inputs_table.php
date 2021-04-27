@@ -16,7 +16,6 @@ class CreateInputsTable extends Migration
         Schema::create('inputs', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id')->unsigned()->nullable();
-
             $table->string('name');
             $table->string('value');
             $table->string('placeholder')->nullable();

@@ -29,6 +29,7 @@
     "dependencies": {
         "@tailwindcss/forms": "^0.3.2",
         "@tailwindcss/typography": "^0.4.0",
-        "animate.css": "^4.1.1"
+        "animate.css": "^4.1.1",
+        "vue-session": "^1.0.0"
     }
 }

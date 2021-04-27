@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Step;
 use Illuminate\Http\Request;
 
@@ -85,7 +86,9 @@ class StepController extends Controller
 
     // Vue methods
 
-    public function getAllSteps() {
-        return response()->json(Step::all());
+    public function getRelatedStepsAndProducts($id) {
+        return response()->json(Step::whereHas('options', function ($q) use ($id) {
+            $q->where('product_id', $id);
+        })->get());
     }
 }
