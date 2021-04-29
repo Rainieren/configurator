@@ -60,6 +60,9 @@ class Product extends Model
         return $this->belongsToMany(Step::class, 'product_step', 'product_id', 'step_id');
     }
 
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+//     */
     public function step()
     {
         return $this->belongsTo(Step::class);

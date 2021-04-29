@@ -107,10 +107,7 @@
             </ul>
         </div>
         <div class="ml-80" id="dashboard">
-
             @yield('content')
-
-
         </div>
     </body>
 </html>

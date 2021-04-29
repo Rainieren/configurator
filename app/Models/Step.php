@@ -15,4 +15,12 @@ class Step extends Model
     public function options() {
         return $this->hasMany(Product::class);
     }
+
+
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+//     */
+//    public function option() {
+//        return $this->belongsTo(Product::class);
+//    }
 }

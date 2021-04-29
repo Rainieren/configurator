@@ -20,8 +20,7 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// import Configurator from './components/ConfiguratorComponent.vue';
-// import Flash from './components/FlashComponent.vue';
+import Flash from './components/FlashComponent.vue';
 
 Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
 Vue.component('flash', require('./components/FlashComponent.vue').default);
