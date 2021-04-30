@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/get/configurable_products', [App\Http\Controllers\ProductController::class, 'getConfigurableProducts'])->name('getProducts');
-Route::get('/get/getRelatedSteps/{id}', [App\Http\Controllers\StepController::class, 'getRelatedStepsAndProducts'])->name('getSteps');
+Route::get('/get/getRelatedSteps/{id}', [App\Http\Controllers\ProductController::class, 'getAllRelatedSteps'])->name('getSteps');

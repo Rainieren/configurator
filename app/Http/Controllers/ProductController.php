@@ -10,13 +10,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
         $products = Product::all();
 
-        return view('dashboard.products', compact('products'));
+        return view('dashboard.products.products', compact('products'));
     }
 
     /**
@@ -26,7 +26,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return redirect('/')->with('flash', 'Uw bericht is geplaatst!');
+        return view('dashboard.products.create');
+//        return redirect('/')->with('flash', 'Uw bericht is geplaatst!');
     }
 
     /**
@@ -37,20 +38,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
         $product = Product::find($id);
 
-        return view('dashboard.product', compact('product'));
+        return view('dashboard.products.index', compact('product'));
 
     }
 
@@ -92,6 +93,11 @@ class ProductController extends Controller
     // Vue methods
 
     public function getConfigurableProducts() {
-        return response()->json(Product::where('step_id', null)->with('steps.options')->get());
+        return response()->json(Product::where('step_id', null)->get());
+    }
+
+
+    public function getAllRelatedSteps($id) {
+        return response()->json(Product::where('id', $id)->with('steps.options')->get());
     }
 }
