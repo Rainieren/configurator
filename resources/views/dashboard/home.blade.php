@@ -4,14 +4,14 @@
     <div class="border-b px-5 py-3 bg-white">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-xl">Dashboard</p>
+                <p class="text-xl font-medium">Dashboard</p>
             </div>
         </div>
     </div>
     <div class="p-5">
         <p class="text-xl">Overview</p>
         <div class="grid grid-cols-3 gap-5 my-4">
-            <div class="bg-white shadow-sm rounded">
+            <div class="bg-white shadow-sm rounded-md border border-gray-100">
                 <div class="p-3">
                     <div class="grid grid-cols-4 gap-4">
                         <div class="col-span-1 flex flex-column items-center justify-center">
@@ -29,7 +29,7 @@
                     <a href="" class="font-bold text-indigo-500">Show all</a>
                 </div>
             </div>
-            <div class="bg-white shadow-sm rounded">
+            <div class="bg-white shadow-sm rounded-md border border-gray-100">
                 <div class="p-3 h-100 flex flex-column justify-center">
                     <div class="grid grid-cols-4 gap-4">
                         <div class="col-span-1 flex flex-column items-center justify-center">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white shadow-sm rounded">
+            <div class="bg-white shadow-sm rounded-md border border-gray-100">
                 <div class="p-3 h-100 flex flex-column justify-center">
                     <div class="grid grid-cols-4 gap-4">
                         <div class="col-span-1 flex flex-column items-center justify-center">
@@ -66,8 +66,8 @@
                 <div class="flex flex-col my-4">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
-                            <div class="shadow-sm overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
+                            <div class="shadow-sm overflow-hidden border-b border-gray-200 rounded-md">
+                                <table class="min-w-full divide-y rounded-md divide-gray-200 border border-gray-100">
                                     <thead class="bg-white">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -118,8 +118,8 @@
                 <div class="flex flex-col my-4">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
-                            <div class="shadow-sm overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
+                            <div class="shadow-sm overflow-hidden border-b border-gray-200 rounded-md">
+                                <table class="min-w-full divide-y divide-gray-200 rounded-md border border-gray-100">
                                     <thead class="bg-white">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

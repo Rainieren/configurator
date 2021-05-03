@@ -4,13 +4,13 @@
     <div class="border-b px-5 py-3 bg-white">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-xl">Configurator</p>
+                <p class="text-xl font-medium">Configurator</p>
             </div>
         </div>
     </div>
     <div class="p-5">
         <p class="text-xl">Add products you'd like to configure</p>
-        <div class="grid grid-cols-4 gap-5 my-5">
+        <div class="grid gap-5 my-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
             <div class="border-white bg-white shadow-sm min-h-56 w-100 rounded-md transition">
                 <div class="px-5 py-3 border-b border-gray-200">
                     <div class="flex">

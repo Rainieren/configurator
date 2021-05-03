@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -34,11 +36,41 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        dd($request);
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price ? str_replace(",", "", $request->price) : null,
+            'percentage_increase' => $request->percentage,
+            'stock' => $request->stock,
+            'status' => 1,
+            'visibility' => 1,
+            'description' => $request->description,
+
+            'thumbnail' => $request->file('thumbnail'),
+            'visualisation' => $request->file('visualisation'),
+
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'length' => $request->length,
+            'url_key' => strtolower(str_replace(' ', '_', $request->name)),
+
+            'new_from' => $request->newFrom,
+            'new_to' => $request->newTo,
+
+            'sku' => $request->sku,
+            'step_id' => $request->step,
+            'manufacturer_id' => $request->manufacturer,
+
+            'user_id' => auth()->user()->id,
+
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        return redirect('/dashboard/product/' . $product->id)->with('flash', 'Successful aangemaakt!');
     }
 
     /**

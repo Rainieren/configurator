@@ -20,10 +20,23 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+import VueMask from 'v-mask'
+import Vuelidate from 'vuelidate';
+
+Vue.use(VueMask);
+Vue.use(Vuelidate)
+
 import Flash from './components/FlashComponent.vue';
+import Configurator from "./pages/Configurator.vue";
+import CreateProductForm from "./components/products/createProductForm.vue";
 
 Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
 Vue.component('flash', require('./components/FlashComponent.vue').default);
+Vue.component('product-create-form', require('./components/products/createProductForm.vue').default);
+Vue.component('product-preview', require('./components/products/productPreview').default)
+Vue.component('card-preview', require('./components/products/cardPreview').default)
+Vue.component('radio-preview', require('./components/products/radioPreview.vue').default)
+
 
 // Pages
 Vue.component('configurator-view', require('./pages/Configurator.vue').default);
@@ -35,5 +48,16 @@ Vue.component('configurator-view', require('./pages/Configurator.vue').default);
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    components: {
+        Configurator
+    }
+});
+
+const dashboard = new Vue({
+    el: '#dashboard',
+    components: {
+        Flash,
+        CreateProductForm
+    }
 });

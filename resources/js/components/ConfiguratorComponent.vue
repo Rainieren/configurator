@@ -1,6 +1,6 @@
 <template>
-    <div class="">
-        <div class="flex m-5 w-75 gap-10">
+    <div class="container-fluid">
+        <div class="flex m-5 w-75">
             <div class="w-1/2 space-y-10">
                 <div class="grid grid-cols-3 gap-6">
                     <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">

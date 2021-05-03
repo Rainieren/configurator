@@ -91,4 +91,11 @@ class StepController extends Controller
             $q->where('product_id', $id);
         })->get());
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSteps() {
+        return response()->json(Step::all());
+    }
 }

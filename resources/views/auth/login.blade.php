@@ -13,7 +13,7 @@
                         @csrf
                         <div class="space-y-6">
                             <div class="w-1/2">
-                                <label for="first_name" class="block text-xs my-2 font-medium text-gray-700 uppercase tracking-wide">{{ __('First name') }}</label>
+                                <label for="email" class="block text-xs my-2 font-medium text-gray-700 uppercase tracking-wide">{{ __('Email address') }}</label>
                                 <input id="email" type="email" class="@error('email') is-invalid @enderror px-3 py-2 border border-gray-300 w-full rounded" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
