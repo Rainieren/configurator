@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('products') }}" class="hover:bg-gray-200 px-3 py-2 rounded transition flex font-medium items-center hover:text-indigo-600 hover:no-underline">
+                    <a href="{{ route('products') }}" class="hover:bg-gray-200 px-3 py-2 rounded transition flex font-medium items-center hover:text-indigo-600 hover:no-underline {{ Route::currentRouteNamed('products') ? 'bg-gray-200 text-indigo-600 hover:text-indigo-800' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                         </svg>
@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="hover:bg-gray-200 px-3 py-2 rounded transition flex font-medium items-center hover:text-indigo-600 hover:no-underline">
+                    <a href="{{ route('steps') }}" class="hover:bg-gray-200 px-3 py-2 rounded transition flex font-medium items-center hover:text-indigo-600 hover:no-underline {{ Route::currentRouteNamed('steps') ? 'bg-gray-200 text-indigo-600 hover:text-indigo-800' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>

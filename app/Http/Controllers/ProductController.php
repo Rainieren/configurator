@@ -55,6 +55,7 @@ class ProductController extends Controller
             'weight' => $request->weight,
             'height' => $request->height,
             'length' => $request->length,
+            'width' => $request->width,
             'url_key' => strtolower(str_replace(' ', '_', $request->name)),
 
             'new_from' => $request->newFrom,
@@ -131,5 +132,9 @@ class ProductController extends Controller
 
     public function getAllRelatedSteps($id) {
         return response()->json(Product::where('id', $id)->with('steps.options')->get());
+    }
+
+    public function getInteractionTypeProducts($interaction_type) {
+        return response()->json("hjoi");
     }
 }

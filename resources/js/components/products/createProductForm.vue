@@ -85,7 +85,7 @@
                             <p class="text-gray-500">How much do you have in stock?</p>
                         </div>
                         <div class="w-8/12">
-                            <input v-model="fields.stock" v-model.trim="$v.stock.$model" type="number" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
+                            <input v-model="fields.stock" v-model.trim="$v.stock.$model" :maxlength="10" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
                             <p class="error text-red-500" v-if="submitted && !$v.stock.required">Voorraad is verplicht!</p>
                         </div>
                     </div>
@@ -162,15 +162,19 @@
                         <div class="w-8/12">
                             <div class="mb-3">
                                 <label for="weight" class="font-medium text-gray-700">Weight</label>
-                                <input v-model="fields.weight" type="text" name="weight" id="weight" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                <input v-model="fields.weight" type="text" name="weight" :maxlength="10" v-on:keypress="isLetter($event)" id="weight" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
                             </div>
                             <div class="mb-3">
                                 <label for="height" class="font-medium text-gray-700">Height</label>
-                                <input v-model="fields.height" type="text" name="height" id="height" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                <input v-model="fields.height" type="text" name="height" :maxlength="10" v-on:keypress="isLetter($event)" id="height" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
                             </div>
                             <div class="mb-3">
                                 <label for="length" class="font-medium text-gray-700">Length</label>
-                                <input v-model="fields.length" type="text" name="length" id="length" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                <input v-model="fields.length" type="text" name="length" :maxlength="10" v-on:keypress="isLetter($event)" id="length" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="width" class="font-medium text-gray-700">Width</label>
+                                <input v-model="fields.width" type="text" name="width" :maxlength="10" v-on:keypress="isLetter($event)" id="width" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
                             </div>
                         </div>
                     </div>
@@ -181,7 +185,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="flex">
-                                <input v-model="fields.newFrom" type="date" name="new_from" id="new_from" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                <input v-model="fields.newFrom" type="date" name="new_from" id="new_from" v-on:change="alert('test')" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
                                 <div class="mx-3 flex items-center justify-center">
                                     <p class="text-gray-900 font-medium">To</p>
                                 </div>
@@ -334,6 +338,7 @@
                     weight: null,
                     length: null,
                     height: null,
+                    width: null,
                     newFrom: null,
                     newTo: null,
                     manufacturer: '',
@@ -356,6 +361,9 @@
         mounted: function() {
             this.getManufacturers();
             this.getSteps();
+        },
+        computed: {
+
         },
         methods: {
             isConfigurableProductFunc() {
@@ -406,7 +414,16 @@
                 } else {
                     document.getElementById("productCreateForm").submit();
                 }
-            }
+            },
+            isLetter: function(event) {
+                event = (event) ? event : window.event;
+                var charCode = (event.which) ? event.which : event.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                    event.preventDefault();;
+                } else {
+                    return true;
+                }
+            },
         },
         validations: {
             name: {

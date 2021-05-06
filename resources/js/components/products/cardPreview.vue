@@ -19,6 +19,7 @@
             <p class="text-gray-500 text-sm" v-if="data.weight">Weight: {{ data.weight }}</p>
             <p class="text-gray-500 text-sm" v-if="data.height">Height: {{ data.height }}</p>
             <p class="text-gray-500 text-sm" v-if="data.length">Length: {{ data.length }}</p>
+            <p class="text-gray-500 text-sm" v-if="data.width">Width: {{ data.width }}</p>
         </div>
         <span class="bg-indigo-500 text-white rounded-full px-3 py-1 shadow-lg absolute font-medium" v-if="data.newFrom" style="top: -20px; right: -20px">New!</span>
     </button>

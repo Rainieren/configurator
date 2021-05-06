@@ -39,6 +39,12 @@
                                     Price
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Last updated
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Created at
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Action
                                 </th>
                             </tr>
@@ -60,13 +66,19 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             @if($product->status == 1)
-                                                aan
+                                                <div class="bg-green-200 text-green-800 text-sm rounded-full font-medium text-center w-auto">Active</div>
                                             @else
-                                                uit
+                                                <div class="bg-red-200 text-red-800 text-sm rounded-full font-medium text-center">Inactive</div>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            {{ $product->price }}
+                                            € {{ $product->price }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            {{ $product->updated_at->diffForHumans() }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            {{ $product->created_at->diffForHumans() }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             <div class="flex space-x-4">

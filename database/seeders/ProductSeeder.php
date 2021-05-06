@@ -48,6 +48,8 @@ class ProductSeeder extends Seeder
 
                 'length' => $faker->numberBetween($min = 0, $max = 100),
 
+                'width' => $faker->numberBetween($min = 0, $max = 100),
+
                 'url_key' => preg_replace('/\s+/', '_', strtolower($product_name)),
 
                 'new_from' => null,

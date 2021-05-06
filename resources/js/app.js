@@ -9,6 +9,10 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 
+// import createApp from "vue";
+// import Vue from "vue";
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20,22 +24,30 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-import VueMask from 'v-mask'
+import VueMask from 'v-mask';
 import Vuelidate from 'vuelidate';
-
-Vue.use(VueMask);
-Vue.use(Vuelidate)
-
 import Flash from './components/FlashComponent.vue';
+import Modal from './components/steps/modalComponent.vue';
 import Configurator from "./pages/Configurator.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
+import CreateStepForm from "./components/steps/createStepForm.vue";
+
+Vue.use(VueMask);
+Vue.use(Vuelidate);
+
 
 Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
 Vue.component('flash', require('./components/FlashComponent.vue').default);
+// Vue.component('modal', require('./components/modalComponent.vue').default);
+
+// Product
 Vue.component('product-create-form', require('./components/products/createProductForm.vue').default);
 Vue.component('product-preview', require('./components/products/productPreview').default)
 Vue.component('card-preview', require('./components/products/cardPreview').default)
 Vue.component('radio-preview', require('./components/products/radioPreview.vue').default)
+
+// Steps
+Vue.component('step-create-form', require('./components/steps/createStepForm.vue').default);
 
 
 // Pages
@@ -58,6 +70,8 @@ const dashboard = new Vue({
     el: '#dashboard',
     components: {
         Flash,
-        CreateProductForm
+        Modal,
+        CreateProductForm,
+        CreateStepForm
     }
 });

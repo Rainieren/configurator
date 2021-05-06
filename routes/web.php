@@ -31,8 +31,6 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('createProduct');
         Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('storeProduct');
         Route::get('/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('showProduct');
-
-
         Route::patch('/{id}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('editProduct');
         Route::delete('/{id}/delete', [App\Http\Controllers\ProductController::class, 'destroy'])->name('deleteProduct');
     });
@@ -48,8 +46,8 @@ Route::prefix('dashboard')->group(function () {
 
     // All routes related to steps
     Route::prefix('step')->group(function () {
-        Route::get('/{id}', [App\Http\Controllers\StepController::class, 'show'])->name('step');
         Route::get('/create', [App\Http\Controllers\StepController::class, 'create'])->name('createStep');
+        Route::get('/{id}', [App\Http\Controllers\StepController::class, 'show'])->name('step');
         Route::post('/store', [App\Http\Controllers\StepController::class, 'store'])->name('storeStep');
         Route::patch('/{id}/edit', [App\Http\Controllers\StepController::class, 'edit'])->name('editStep');
         Route::delete('/{id}/delete', [App\Http\Controllers\StepController::class, 'destroy'])->name('deleteStep');

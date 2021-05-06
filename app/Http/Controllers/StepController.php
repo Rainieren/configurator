@@ -15,17 +15,20 @@ class StepController extends Controller
      */
     public function index()
     {
-        //
+
+        $steps = Step::all();
+
+        return view('dashboard.steps.steps', compact('steps'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('dashboard.steps.create');
     }
 
     /**

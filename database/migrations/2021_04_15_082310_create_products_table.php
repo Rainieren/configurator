@@ -32,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->integer('weight')->nullable();
             $table->integer('height')->nullable();
             $table->integer('length')->nullable();
+            $table->integer('width')->nullable();
             $table->string('url_key')->unique();
             $table->dateTime('new_from')->nullable();
             $table->dateTime('new_to')->nullable();
