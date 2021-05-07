@@ -31,6 +31,7 @@ import Modal from './components/steps/modalComponent.vue';
 import Configurator from "./pages/Configurator.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
+import Statistics from "./components/dashboard/statisticsComponent.vue";
 
 Vue.use(VueMask);
 Vue.use(Vuelidate);
@@ -38,6 +39,7 @@ Vue.use(Vuelidate);
 
 Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
 Vue.component('flash', require('./components/FlashComponent.vue').default);
+Vue.component('statistics', require('./components/dashboard/statisticsComponent.vue').default);
 // Vue.component('modal', require('./components/modalComponent.vue').default);
 
 // Product
@@ -72,6 +74,7 @@ const dashboard = new Vue({
         Flash,
         Modal,
         CreateProductForm,
-        CreateStepForm
+        CreateStepForm,
+        Statistics
     }
 });

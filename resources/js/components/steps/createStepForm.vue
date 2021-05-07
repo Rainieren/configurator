@@ -19,7 +19,7 @@
                         </div>
                         <div class="w-8/12">
                             <select v-model="fields.interactionType" type="text" name="input_field_type" id="input_field_type" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
-                                <option v-for="type in stepTypes" :value="type.id">{{ type.name }}</option>
+                                <option v-for="type in interactionTypes" :value="type.id">{{ type.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -29,10 +29,28 @@
                             <p class="text-gray-800 font-medium text-lg">Add a product</p>
                             <p class="text-gray-500">Which products would you like to add to this step? </p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-8/12 space-y-5">
+                            <div class="grid grid-cols-10 gap-5 space-x-5 shadow-sm p-3" v-for="product in selectedProducts">
+                                <div class="di">
+                                    <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
+                                </div>
+                                <div class="col-span-8 flex items-center">
+                                    <p class="font-medium">{{ product.name }}</p>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="flex space-x-4">
+                                        <a href="#" @click="removeProductFromList(product)" class="">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="">
                                 <a href="#" @click="openModal">
-                                    <div class="border-2 border-dashed border-gray-400 hover:border-indigo-500 hover:text-indigo-500 h-32 w-100  flex-column rounded-md flex justify-center items-center transition">
+                                    <div class="border-2 border-dashed border-gray-400 hover:border-blue-500 hover:text-blue-500 h-32 w-100 flex-column rounded-md flex justify-center items-center transition">
                                         <p>Add a product</p>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -43,8 +61,8 @@
                         </div>
                     </div>
                     <div class="flex float-right my-5 space-x-5">
-                        <a href="" class="bg-gray-300 rounded p-2 text-centet text-black hover:text-indigo-500 hover:no-underline transition">Cancel</a>
-                        <button type="submit" class="bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-700 transition">Create step</button>
+                        <a href="" class="bg-gray-300 rounded p-2 text-center text-black hover:text-blue-500 hover:no-underline transition">Cancel</a>
+                        <button type="submit" class="bg-blue-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-blue-700 transition">Create step</button>
                     </div>
                 </form>
             </div>
@@ -62,15 +80,12 @@
                 fields: {
                     interactionType: 1,
                 },
-                selectedProducts: {
-                    'id': '1',
-                    'name': "hoi"
-                },
-                stepTypes: {},
+                selectedProducts: [],
+                interactionTypes: {},
             };
         },
         mounted: function() {
-            this.getStepTypes();
+            this.getInteractionTypes();
         },
         components: {
             Modal
@@ -79,13 +94,18 @@
             openModal() {
                 this.$refs.modal.showModal = true;
             },
-            getStepTypes() {
-                axios.get('/api/get/step_types')
+            getInteractionTypes() {
+                axios.get('/api/get/interaction_types')
                     .then(response => {
-                        this.stepTypes = response.data
+                        this.interactionTypes = response.data
                     }).catch(err => {
                         console.log(err)
                 });
+            },
+            removeProductFromList: function(product) {
+                if(this.selectedProducts.includes(product)) {
+                    this.selectedProducts.splice(product, 1)
+                }
             }
         },
     }

@@ -3,7 +3,7 @@
         <div class="flex m-5 w-75">
             <div class="w-1/2 space-y-10">
                 <div class="grid grid-cols-3 gap-6">
-                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
+                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm min-h-32 hover:shadow-xl hover:border-blue-500 transition rounded-lg border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-blue-500': activeProduct === product }">
                         <div class="p-3 border-b border-gray-300">
                             <div class="flex">
                                 <div class="w-2/3 text-left">
@@ -28,7 +28,7 @@
                     <div v-for="step in product.steps" class="">
                         <p class="text-black text-2xl mb-3 font-bold font-serif mb-4">{{ step.name }}</p>
                         <div class="grid grid-cols-3 gap-6">
-                            <button v-on:click="addToChosenOptions(step.name, option)" class="bg-white border-2 rounded transition border-gray-200" v-for="option in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].option === option)}">
+                            <button v-on:click="addToChosenOptions(step.name, option)" class="bg-white border-2 rounded transition border-gray-200" v-for="option in step.options" v-bind:key="option.id" :class="{'border-blue-500': chosenOptions.some(chosenOption => chosenOption[0].option === option)}">
                                 <div class="p-3 border-b border-gray-300">
                                     <div class="flex">
                                         <div class="w-2/3 text-left">

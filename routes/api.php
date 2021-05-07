@@ -23,6 +23,6 @@ Route::get('/get/products/interaction_type/{interaction_type}', [App\Http\Contro
 
 Route::get('/get/getRelatedSteps/{id}', [App\Http\Controllers\ProductController::class, 'getAllRelatedSteps'])->name('getRelatedSteps');
 Route::get('/get/steps', [App\Http\Controllers\StepController::class, 'getSteps'])->name('getSteps');
-Route::get('/get/step_types', [App\Http\Controllers\StepTypeController::class, 'getStepTypes'])->name('getStepTypes');
+Route::get('/get/interaction_types', [App\Http\Controllers\interactionTypeController::class, 'getInteractionTypes'])->name('getInteractionTypes');
 Route::get('/get/manufacturers', [App\Http\Controllers\ManufacturerController::class, 'getAllManufacturers'])->name('getManufacturers');
 

@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(20);
 
         return view('dashboard.products.products', compact('products'));
     }
@@ -48,25 +48,22 @@ class ProductController extends Controller
             'status' => 1,
             'visibility' => 1,
             'description' => $request->description,
-
             'thumbnail' => $request->file('thumbnail'),
             'visualisation' => $request->file('visualisation'),
-
             'weight' => $request->weight,
             'height' => $request->height,
             'length' => $request->length,
             'width' => $request->width,
             'url_key' => strtolower(str_replace(' ', '_', $request->name)),
-
             'new_from' => $request->newFrom,
             'new_to' => $request->newTo,
-
             'sku' => $request->sku,
             'step_id' => $request->step,
-            'manufacturer_id' => $request->manufacturer,
+
+            'interaction_type' => $request->interaction_type,
 
             'user_id' => auth()->user()->id,
-
+            'manufacturer_id' => $request->manufacturer,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -135,6 +132,6 @@ class ProductController extends Controller
     }
 
     public function getInteractionTypeProducts($interaction_type) {
-        return response()->json("hjoi");
+        return response()->json(Product::where('interaction_type', $interaction_type)->with('interactionType')->get());
     }
 }

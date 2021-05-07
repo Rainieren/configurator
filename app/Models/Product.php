@@ -32,6 +32,8 @@ class Product extends Model
         'sku',
         'created_at',
         'updated_at',
+        'user_id',
+        'interaction_type',
         'sub_product_id',
         'manufacturer_id',
         'step_id'
@@ -82,6 +84,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function interactionType() {
+        return $this->belongsTo(interactionType::class);
     }
 
 }

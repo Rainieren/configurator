@@ -15,6 +15,7 @@ class CreateInteractionTypesTable extends Migration
     {
         Schema::create('interaction_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

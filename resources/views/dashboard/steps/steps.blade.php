@@ -1,18 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="border-b px-5 py-3 bg-white">
+    <div class="px-20 pt-10 pb-10">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-xl">Steps</p>
+                <p class="text-2xl font-bold">Steps</p>
             </div>
             <div class="w-1/2 text-right">
-                <a href="{{ route('createStep') }}" class="bg-indigo-600 py-2 px-4 text-white shadow-sm rounded">Nieuw step</a>
+                <a href="{{ route('createStep') }}" type="button" class="w-full inline-flex justify-center rounded-md border border-blue-300 shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Nieuwe step
+                </a>
             </div>
         </div>
     </div>
-    <div class="p-5">
-        <p class="text-xl">All steps</p>
+    <div class="px-20">
         <div class="flex flex-col my-4">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">

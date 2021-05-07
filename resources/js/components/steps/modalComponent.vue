@@ -43,7 +43,7 @@
                             </div>
 
                             <div class="mt-2" v-if="!loading">
-                                <div class="flex flex-col my-4">
+                                <div class="flex flex-col my-4 h-75 overflow-y-scroll">
                                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                         <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
                                             <div class="shadow-sm overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -64,16 +64,15 @@
                                                             </th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="bg-white divide-y divide-gray-200" v-for="product in products">
+                                                    <tbody class="bg-white divide-y divide-gray-200" v-for="(product, index) in products" v-bind:index="index">
                                                         <tr>
                                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                                <input type="checkbox">
+                                                                <input type="checkbox" :id="product.id" :key="product.id" @change="addToArray(product, index)" :value="product.id">
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 {{ product.name }}
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
-
                                                                 {{ product.price }}
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -95,10 +94,10 @@
                         <p class="font-medium" v-if="selectedProducts.length">Producten geselecteerd: {{ selectedProducts.length }}</p>
                     </div>
                     <div class="w-1/2 text-right flex flex-row-reverse">
-                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-indigo-300 shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        <button @click="showModal = false" type="button" class="w-full inline-flex justify-center rounded-md border border-blue-300 shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                             Toevoegen
                         </button>
-                        <button @click="showModal = false" type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        <button @click="emptyArrayAndCloseModal()" type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                             Cancel
                         </button>
                     </div>
@@ -111,16 +110,20 @@
 
 <script>
 export default {
+    props: ['interactionType', 'selectedProducts'],
     data () {
         return {
             showModal: false,
             loading: true,
-            products: {}
+            products: {},
         };
+    },
+    mounted: function() {
+        this.getProductsWithInteractionType();
     },
     methods: {
         getProductsWithInteractionType: function() {
-            axios.get('/get/products/interaction_type/' + interactionType)
+            axios.get('/api/get/products/interaction_type/1')
                 .then(response => {
                     this.products = response.data
                     this.loading = false
@@ -128,8 +131,18 @@ export default {
                 console.log(err)
             });
         },
-    },
-    props: ['interactionType', 'selectedProducts']
-
+        addToArray: function(product, index) {
+            console.log(product.name)
+            if(this.selectedProducts.includes(product)) {
+                console.log("Verwijder uit array")
+                this.selectedProducts.splice(product, 1)
+            } else {
+                this.selectedProducts.push(product);
+            }
+        },
+        emptyArrayAndCloseModal: function() {
+            this.showModal = false;
+        }
+    }
 }
 </script>

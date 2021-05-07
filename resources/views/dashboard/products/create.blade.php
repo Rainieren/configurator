@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="border-b px-5 py-3 bg-white">
+    <div class="px-20 pt-10 pb-10">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-xl">Create a new product</p>
+                <p class="text-2xl font-bold">Create a new product</p>
             </div>
         </div>
     </div>

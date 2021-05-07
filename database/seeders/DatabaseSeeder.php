@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             InputTypeSeeder::class,
             UserTableSeeder::class,
-            StepTypeSeeder::class,
+            InteractionTypeSeeder::class
         ]);
     }
 }

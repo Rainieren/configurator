@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\interactionType;
 use Illuminate\Http\Request;
-use App\Models\Step_type;
 
-class StepTypeController extends Controller
+class interactionTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -83,7 +83,7 @@ class StepTypeController extends Controller
         //
     }
 
-    public function getStepTypes() {
-        return response()->json(Step_type::all());
+    public function getInteractionTypes() {
+        return response()->json(interactionType::all());
     }
 }

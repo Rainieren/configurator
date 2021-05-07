@@ -16,6 +16,13 @@ class Step extends Model
         return $this->hasMany(Product::class);
     }
 
+    /**
+     * @return mixed
+     */
+    public function interactionType() {
+        return $this->belongsTo(interactionType::class);
+    }
+
 
 //    /**
 //     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

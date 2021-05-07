@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5">
+    <div class="px-20">
         <div class="flex space-x-10">
             <div class="w-6/12">
                 <form action="/dashboard/product/store" method="POST" class="w-full my-2" id="productCreateForm">
@@ -229,7 +229,7 @@
                                     <div class="space-y-4">
 
                                         <div class="flex items-center">
-                                            <input v-model="fields.interactionType" @click="fields.interactionInputType = ''" id="configuration_card" name="configuration_type" value="card" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                            <input v-model="fields.interactionType" @click="fields.interactionInputType = ''" id="configuration_card" name="interaction_type" value="1" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                             <div class="flex flex-column">
                                                 <label for="push_everything" class="block text-sm font-medium text-gray-700 mb-0">
                                                     Card
@@ -241,7 +241,7 @@
 
                                         </div>
                                         <div class="flex items-center">
-                                            <input v-model="fields.interactionType" id="configuration_input" name="configuration_type" value="input" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                            <input v-model="fields.interactionType" id="configuration_input" name="interaction_type" value="2" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                             <div class="flex flex-column">
                                                 <label for="configuration_input" class="mb-0 block text-sm font-medium text-gray-700">
                                                     Input field
@@ -260,7 +260,7 @@
                                         </div>
 
                                         <div class="flex items-center">
-                                            <input v-model="fields.interactionType"  @click="fields.interactionInputType = ''" id="configuration_input" name="configuration_type" value="radio" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                            <input v-model="fields.interactionType"  @click="fields.interactionInputType = ''" id="configuration_input" name="interaction_type" value="3" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                             <div class="flex flex-column">
                                                 <label for="configuration_input" class="mb-0 block text-sm font-medium text-gray-700">
                                                     Radio button
