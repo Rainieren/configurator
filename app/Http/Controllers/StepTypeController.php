@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Step_type;
 
 class StepTypeController extends Controller
 {
@@ -80,5 +81,9 @@ class StepTypeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getStepTypes() {
+        return response()->json(Step_type::all());
     }
 }

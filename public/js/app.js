@@ -2709,20 +2709,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       fields: {
-        interactionType: null
+        interactionType: 1
       },
       selectedProducts: {
         'id': '1',
         'name': "hoi"
-      }
+      },
+      stepTypes: {}
     };
+  },
+  mounted: function mounted() {
+    this.getStepTypes();
   },
   components: {
     Modal: _modalComponent__WEBPACK_IMPORTED_MODULE_0__.default
@@ -2730,6 +2732,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     openModal: function openModal() {
       this.$refs.modal.showModal = true;
+    },
+    getStepTypes: function getStepTypes() {
+      var _this = this;
+
+      axios.get('/api/get/step_types').then(function (response) {
+        _this.stepTypes = response.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -42182,19 +42193,12 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _c("option", { attrs: { value: "card" } }, [
-                        _vm._v("Cards")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "radio" } }, [
-                        _vm._v("Radio buttons")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "input" } }, [
-                        _vm._v("Inputs")
+                    _vm._l(_vm.stepTypes, function(type) {
+                      return _c("option", { domProps: { value: type.id } }, [
+                        _vm._v(_vm._s(type.name))
                       ])
-                    ]
+                    }),
+                    0
                   )
                 ])
               ]),

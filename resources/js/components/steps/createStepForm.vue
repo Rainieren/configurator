@@ -19,9 +19,7 @@
                         </div>
                         <div class="w-8/12">
                             <select v-model="fields.interactionType" type="text" name="input_field_type" id="input_field_type" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
-                                <option value="card">Cards</option>
-                                <option value="radio">Radio buttons</option>
-                                <option value="input">Inputs</option>
+                                <option v-for="type in stepTypes" :value="type.id">{{ type.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -62,13 +60,17 @@
         data () {
             return {
                 fields: {
-                    interactionType: null,
+                    interactionType: 1,
                 },
                 selectedProducts: {
                     'id': '1',
                     'name': "hoi"
-                }
+                },
+                stepTypes: {},
             };
+        },
+        mounted: function() {
+            this.getStepTypes();
         },
         components: {
             Modal
@@ -76,6 +78,14 @@
         methods: {
             openModal() {
                 this.$refs.modal.showModal = true;
+            },
+            getStepTypes() {
+                axios.get('/api/get/step_types')
+                    .then(response => {
+                        this.stepTypes = response.data
+                    }).catch(err => {
+                        console.log(err)
+                });
             }
         },
     }

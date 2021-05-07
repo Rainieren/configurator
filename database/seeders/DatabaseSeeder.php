@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ManufacturerSeeder::class,
             ProductSeeder::class,
             InputTypeSeeder::class,
-            UserTableSeeder::class
+            UserTableSeeder::class,
+            StepTypeSeeder::class,
         ]);
     }
 }
