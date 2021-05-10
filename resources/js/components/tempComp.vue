@@ -38,46 +38,7 @@
 
             <a href="/dashboard/flash">Klik hier</a>
 
-            <!--                <div class="preview bg-gray-100 xl:w-4/12 w-full border-l border-gray-300 h-screen fixed top-0 right-0 shadow-md z-10">-->
-            <!--                    <div class="h-4/5">-->
-            <!--                        <div class="border-b border-gray-300 h-1/4 flex justify-center items-center">-->
-            <!--                            Product preview-->
-            <!--                        </div>-->
-            <!--                        <div class="p-16">-->
-            <!--                            <div class="border-b border-gray-300 py-6 flex">-->
-            <!--                                <div class="w-1/2">-->
-            <!--                                    <p class="text-gray-500">Subtotaal</p>-->
-            <!--                                </div>-->
-            <!--                                <div class="w-1/2 text-right">-->
-            <!--                                    <p class="text-gray-500">€ 500.00</p>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                            <div class="border-b border-gray-300 py-6 flex">-->
-            <!--                                <div class="w-1/2">-->
-            <!--                                    <p class="text-gray-500">Verzending</p>-->
-            <!--                                </div>-->
-            <!--                                <div class="w-1/2 text-right">-->
-            <!--                                    <p class="text-gray-500">GRATIS</p>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                            <div class="py-6 flex">-->
-            <!--                                <div class="w-1/2">-->
-            <!--                                    <p class="text-black text-2xl font-serif">Totaal</p>-->
-            <!--                                </div>-->
-            <!--                                <div class="w-1/2 text-right">-->
-            <!--                                    <p class="text-black text-2xl font-serif">€ 500.00</p>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                    <div class="border-t border-gray-300 p-16 space-y-2 h-1/5 ">-->
-            <!--                        <p class="font-bold">Need help?</p>-->
-            <!--                        <p class="text-gray-500"> We zijn er altijd</p>-->
 
-            <!--                        STEP TYPE: cards, tabs, list,-->
-            <!--                        Product: is optioneel. Als optioneel, optie need dankje-->
-            <!--                    </div>-->
-            <!--                </div>-->
         </div>
     </div>
 </template>

@@ -41,8 +41,10 @@
                                 </svg>
                                 <p class="font-medium my-3">Producten ophalen</p>
                             </div>
-
-                            <div class="mt-2" v-if="!loading">
+                            <div v-if="!products.length">
+                                <p class="my-2">Sorry, Er zijn momenteel geen producten met de gekozen interactie type beschikbaar om toe te voegen. Maak nieuwe producten aan of pas bestaande producten aan.</p>
+                            </div>
+                            <div class="mt-2" v-if="!loading && products.length">
                                 <div class="flex flex-col my-4 h-75 overflow-y-scroll">
                                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                         <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
@@ -73,7 +75,7 @@
                                                                 {{ product.name }}
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                                {{ product.price }}
+                                                                {{ product.price | currency('€ ') }}
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 Card
@@ -94,7 +96,7 @@
                         <p class="font-medium" v-if="selectedProducts.length">Producten geselecteerd: {{ selectedProducts.length }}</p>
                     </div>
                     <div class="w-1/2 text-right flex flex-row-reverse">
-                        <button @click="showModal = false" type="button" class="w-full inline-flex justify-center rounded-md border border-blue-300 shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        <button v-if="products.length" @click="showModal = false" type="button" class="w-full inline-flex justify-center rounded-md border border-blue-300 shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                             Toevoegen
                         </button>
                         <button @click="emptyArrayAndCloseModal()" type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -110,31 +112,17 @@
 
 <script>
 export default {
-    props: ['interactionType', 'selectedProducts'],
+    props: ['interactionType', 'selectedProducts', 'products'],
     data () {
         return {
             showModal: false,
-            loading: true,
-            products: {},
+            // loading: true,
         };
     },
-    mounted: function() {
-        this.getProductsWithInteractionType();
-    },
     methods: {
-        getProductsWithInteractionType: function() {
-            axios.get('/api/get/products/interaction_type/1')
-                .then(response => {
-                    this.products = response.data
-                    this.loading = false
-                }).catch(err => {
-                console.log(err)
-            });
-        },
         addToArray: function(product, index) {
             console.log(product.name)
             if(this.selectedProducts.includes(product)) {
-                console.log("Verwijder uit array")
                 this.selectedProducts.splice(product, 1)
             } else {
                 this.selectedProducts.push(product);

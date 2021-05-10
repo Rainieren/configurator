@@ -25,6 +25,9 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 import VueMask from 'v-mask';
+import Vue2Filters from 'vue2-filters'
+
+
 import Vuelidate from 'vuelidate';
 import Flash from './components/FlashComponent.vue';
 import Modal from './components/steps/modalComponent.vue';
@@ -32,12 +35,14 @@ import Configurator from "./pages/Configurator.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
 import Statistics from "./components/dashboard/statisticsComponent.vue";
+import Summary from "./components/summary/summaryComponent.vue";
 
 Vue.use(VueMask);
 Vue.use(Vuelidate);
+Vue.use(Vue2Filters)
 
 
-Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
+
 Vue.component('flash', require('./components/FlashComponent.vue').default);
 Vue.component('statistics', require('./components/dashboard/statisticsComponent.vue').default);
 // Vue.component('modal', require('./components/modalComponent.vue').default);
@@ -55,6 +60,9 @@ Vue.component('step-create-form', require('./components/steps/createStepForm.vue
 // Pages
 Vue.component('configurator-view', require('./pages/Configurator.vue').default);
 
+// Configurator
+Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
+Vue.component('summary', require('./components/summary/summaryComponent.vue').default)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -64,7 +72,8 @@ Vue.component('configurator-view', require('./pages/Configurator.vue').default);
 const app = new Vue({
     el: '#app',
     components: {
-        Configurator
+        Configurator,
+        Summary
     }
 });
 

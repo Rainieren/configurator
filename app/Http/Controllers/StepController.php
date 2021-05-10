@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Step;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StepController extends Controller
@@ -35,11 +36,31 @@ class StepController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        //
+
+
+//        dd($request->addToConfigurableProducts);
+        $step = Step::create([
+            'name' => $request->name,
+            'interaction_type' => $request->interaction_type,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+
+        foreach(json_decode($request->selectedProducts[0]) as $selectedProduct) {
+            Product::where('id', $selectedProduct->id)->update(['step_id' => $step->id]);
+        }
+
+        foreach(json_decode($request->addToConfigurableProducts[0]) as $configurableProduct) {
+            $product = Product::find($configurableProduct);
+            $product->steps()->attach($step->id);
+        }
+
+        return redirect('/dashboard/step/' . $step->id)->with('flash', 'Successful aangemaakt!');
     }
 
     /**

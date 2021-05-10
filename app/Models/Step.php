@@ -9,6 +9,10 @@ class Step extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name',
+        'interaction_type',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
