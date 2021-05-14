@@ -74,7 +74,11 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            € {{ $product->price }}
+                                            @if($product->price)
+                                                € {{ $product->price }}
+                                            @else
+                                                + {{ $product->percentage_increase }} %
+                                            @endif
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
                                             {{ $product->updated_at->diffForHumans() }}

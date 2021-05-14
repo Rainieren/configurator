@@ -16,6 +16,7 @@ class CreateSummariesTable extends Migration
         Schema::create('summaries', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
+            $table->decimal('total', $precision = 16, $scale = 2);
             $table->timestamps();
         });
     }

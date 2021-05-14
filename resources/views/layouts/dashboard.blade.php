@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="text-gray-900">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 </head>
-    <body class="antialiased bg-white">
-        <div class="w-80 bg-gray-100 h-screen border-r border-gray-200 fixed justify-between flex flex-col">
+    <body class="antialiased bg-gray-50">
+        <div class="w-80 bg-white h-screen border-r border-gray-200 fixed justify-between flex flex-col">
             <div class="h-auto w-full p-2 rounded flex items-center justify-center mb-3">
                 Logo
             </div>
@@ -28,7 +28,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                         </svg>
-                        Configurator
+                        Configurations
                     </a>
                 </li>
                 <li>

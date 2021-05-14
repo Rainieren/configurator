@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name');
             // Price is nullable in case the product has a price increase
-            $table->decimal('price', $precision = 8, $scale = 2)->nullable();
+            $table->decimal('price', $precision = 10, $scale = 2)->nullable();
             // If the product has a percentage increase instead of the price
             $table->integer('percentage_increase')->nullable();
             $table->integer('stock');
@@ -39,6 +39,7 @@ class CreateProductsTable extends Migration
             $table->string('sku');
             $table->integer('interaction_type')->nullable();
             $table->integer('step_id')->unsigned()->nullable();
+            $table->boolean('configurable')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('manufacturer_id')->unsigned()->nullable();
 

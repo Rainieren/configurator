@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-3 flex justify-center items-center">
+                        <div class="p-3 flex justify-center items-center h-64">
                             <img class="rounded" :src="product.thumbnail" width="50%">
                         </div>
                         <div class="p-3 text-left">
@@ -48,7 +48,8 @@
                                             <p v-if="option.description" class="text-gray-800">{{ option.description.substring(0,32) }}</p>
                                         </div>
                                         <div class="w-1/3 text-right">
-                                            <p class="text-md">€ {{ option.price }}</p>
+                                            <p class="text-md" v-if="option.price">{{ parseFloat(option.price) | currency('€ ')}}</p>
+                                            <p class="text-md" v-if="option.percentage_increase">+ {{ option.percentage_increase }} %</p>
                                         </div>
                                     </div>
                                 </div>
@@ -63,16 +64,17 @@
                         </div>
                     </div>
                 </div>
+                <button @click="ProcessConfiguration()" v-if="activeProduct" class="my-5 w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 transition font-medium">Configuratie afronden</button>
             </div>
             <Summary :active="activeProduct" :options="chosenOptions"></Summary>
         </div>
-
-
+        <ConfigurationModal ref="configurationModal" :active="activeProduct" :options="chosenOptions" :code="summary_code"></ConfigurationModal>
     </div>
 </template>
 
 <script>
     import Summary from "./summary/summaryComponent.vue";
+    import ConfigurationModal from "./configurationModal.vue"
 
     export default {
         data () {
@@ -84,11 +86,14 @@
                 steps: [],
                 stepsLoading: true,
                 loading: true,
+                summary_code: '',
+                // csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
 
             };
         },
         components: {
-            Summary
+            Summary,
+            ConfigurationModal
         },
         mounted: function() {
             this.getConfigurableProducts();
@@ -101,7 +106,12 @@
                             value[0].option = option
                         }
                     });
-                    this.summary += parseFloat(option.price)
+                    // if(option.price) {
+                        this.summary += parseFloat(option.price)
+                    // } else {
+                    //     this.summary * option.percentage_increase
+                    // }
+
                 } else {
                     this.chosenOptions.push([{step: step_name, option: option}])
                 }
@@ -123,6 +133,23 @@
                     }).catch(err => {
                     console.log(err)
                 });
+            },
+            openModal: function() {
+                this.$refs.configurationModal.showModal = true;
+            },
+            ProcessConfiguration: function() {
+                axios.post('/api/store/configuration', {
+                    activeProduct: this.activeProduct,
+                    chosenOptions: this.chosenOptions
+                }).then(response => {
+                    console.log(response.data)
+                    this.summary_code = response.data.code
+                    this.openModal();
+                }).catch(err => {
+                    console.log('Er is iets mis gegaan tijdens het opslaan van de configuratie')
+                    console.log(err);
+                })
+
             }
         },
         computed: {

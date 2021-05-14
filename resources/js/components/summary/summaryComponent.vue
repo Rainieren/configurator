@@ -27,7 +27,9 @@
                         <p class="text-gray-700">{{ option[0].option.name }}</p>
                     </div>
                     <div class="w-1/2 text-right">
-                        <p class="text-gray-700">{{ parseFloat(option[0].option.price) | currency('€ ') }}</p>
+                        <p class="text-gray-700" v-if="option[0].option.price">{{ parseFloat(option[0].option.price) | currency('€ ') }}</p>
+                        <p class="text-gray-700" v-if="option[0].option.percentage_increase">+ {{ option[0].option.percentage_increase }} %</p>
+
                     </div>
                 </div>
                 <div class="border-b border-gray-300 py-6 flex">

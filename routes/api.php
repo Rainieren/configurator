@@ -26,3 +26,8 @@ Route::get('/get/steps', [App\Http\Controllers\StepController::class, 'getSteps'
 Route::get('/get/interaction_types', [App\Http\Controllers\interactionTypeController::class, 'getInteractionTypes'])->name('getInteractionTypes');
 Route::get('/get/manufacturers', [App\Http\Controllers\ManufacturerController::class, 'getAllManufacturers'])->name('getManufacturers');
 
+
+Route::post('/store/configuration', [App\Http\Controllers\SummaryController::class, 'store'])->name('storeConfiguration');
+
+Route::get('/get/all/summaries', [App\Http\Controllers\SummaryController::class, 'getAllSummaries'])->name('getAllSummaries');
+

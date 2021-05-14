@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(20);
+        $products = Product::orderBy('created_at', 'desc')->paginate(20);
 
         return view('dashboard.products.products', compact('products'));
     }
@@ -58,6 +58,7 @@ class ProductController extends Controller
             'new_from' => $request->newFrom,
             'new_to' => $request->newTo,
             'sku' => $request->sku,
+            'configurable' => $request->configurable_product,
             'step_id' => $request->step,
 
             'interaction_type' => $request->interaction_type,

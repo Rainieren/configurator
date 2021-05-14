@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Summary;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SummaryController extends Controller
@@ -34,7 +37,20 @@ class SummaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $parentProduct = Product::find($request['activeProduct']['id']);
+
+        $summary = Summary::create([
+            'code' => strtoupper(bin2hex(openssl_random_pseudo_bytes(4))),
+            'total' => $parentProduct->price,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+
+
+        $summary->products()->attach($parentProduct->id);
+
+        return response()->json($summary);
     }
 
     /**
@@ -80,5 +96,9 @@ class SummaryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getAllSummaries() {
+        return response()->json(Summary::with('products')->get());
     }
 }

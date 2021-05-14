@@ -46,6 +46,7 @@ class StepController extends Controller
         $step = Step::create([
             'name' => $request->name,
             'interaction_type' => $request->interaction_type,
+            'is_options' => $request->is_optional,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

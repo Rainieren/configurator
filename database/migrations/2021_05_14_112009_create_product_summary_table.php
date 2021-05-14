@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSummaryHasProductsTable extends Migration
+class CreateProductSummaryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSummaryHasProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('summary_has_products', function (Blueprint $table) {
+        Schema::create('product_summary', function (Blueprint $table) {
             $table->id();
-            $table->integer('summary_id')->nullable()->unsigned();
-            $table->integer('product_id')->nullable()->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->integer('summary_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSummaryHasProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('summary_has_products');
+        Schema::dropIfExists('product_summary');
     }
 }

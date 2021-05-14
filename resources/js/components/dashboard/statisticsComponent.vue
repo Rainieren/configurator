@@ -5,16 +5,9 @@
                 <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Totaal geconfigureerde producten</p>
                 <div class="flex">
                     <p class="text-gray-900 text-3xl font-bold">
-                        50000000
+                        {{ summaries.length }}
                     </p>
-<!--                    <p class="text-green-500 font-medium flex items-center px-3">-->
-<!--                        <span class="mr-2">+15%</span>-->
-<!--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />-->
-<!--                        </svg>-->
-<!--                    </p>-->
                 </div>
-
             </div>
         </div>
         <div class="bg-white shadow-sm rounded-md border border-gray-100">
@@ -22,16 +15,9 @@
                 <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Gemiddelde prijs</p>
                 <div class="flex">
                     <p class="text-gray-900 text-3xl font-bold">
-                        500
+                        {{ parseFloat(averagePrice) | currency('€ ') }}
                     </p>
-<!--                    <p class="text-red-500 font-medium flex items-center px-3">-->
-<!--                        <span class="mr-2">+15%</span>-->
-<!--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />-->
-<!--                        </svg>-->
-<!--                    </p>-->
                 </div>
-
             </div>
         </div>
         <div class="bg-white shadow-sm rounded-md border border-gray-100">
@@ -49,7 +35,32 @@
 export default {
     data() {
         return {
+            summaries: [],
+            averagePrice: 0
+        }
+    },
+    mounted: function() {
+        this.getConfigurationsSum();
+    },
+    methods: {
+        getConfigurationsSum: function()
+        {
+            axios.get('/api/get/all/summaries')
+                .then(response => {
+                    this.summaries = response.data
+                    this.getConfigurationAverage();
+                }).catch(err => {
+                console.log(err)
+            });
+        },
+        getConfigurationAverage: function()
+        {
+            let sum = 0;
+            this.summaries.forEach((value, index) => {
+                sum += parseFloat(value['total'])
+            });
 
+            this.averagePrice = sum / this.summaries.length;
         }
     }
 }

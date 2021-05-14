@@ -36,6 +36,7 @@ import CreateProductForm from "./components/products/createProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
 import Statistics from "./components/dashboard/statisticsComponent.vue";
 import Summary from "./components/summary/summaryComponent.vue";
+import ConfigurationModal from "./components/configurationModal.vue";
 
 Vue.use(VueMask);
 Vue.use(Vuelidate);
@@ -73,7 +74,8 @@ const app = new Vue({
     el: '#app',
     components: {
         Configurator,
-        Summary
+        Summary,
+        ConfigurationModal,
     }
 });
 

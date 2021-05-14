@@ -86,8 +86,20 @@ class Product extends Model
         return $this->hasMany(Image::class);
     }
 
-    public function interactionType() {
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function interactionType()
+    {
         return $this->belongsTo(interactionType::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function summaries()
+    {
+        return $this->belongsToMany(Product::class, 'product_summary', 'summary_id','product_id');
     }
 
 }

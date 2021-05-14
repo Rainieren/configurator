@@ -43,7 +43,7 @@
                                     €
                                   </span>
                                 </div>
-                                <input v-model="fields.price" v-model.trim="$v.price.$model" v-mask="mask" :class="{ 'border-red-500' : submitted && $v.price.$error}" type="text" name="price" id="price" class="block w-full pl-8 pr-2 py-2 border border-gray-300 rounded-md" placeholder="0.00" :disabled="fields.hasPriceIncrease">
+                                <input v-model="fields.price" :maxlength="8" v-model.trim="$v.price.$model" v-mask="mask" :class="{ 'border-red-500' : submitted && $v.price.$error}" type="text" name="price" id="price" class="block w-full pl-8 pr-2 py-2 border border-gray-300 rounded-md" placeholder="0.00" :disabled="fields.hasPriceIncrease">
                             </div>
                             <p class="error text-red-500" v-if="submitted && !$v.price.required">Prijs is verplicht!</p>
                             <div class="" v-if="!fields.isConfigurableProduct">
