@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 xl:w-4/12 w-full border-l border-gray-300 h-screen fixed top-0 right-0 shadow-sm z-10">
+    <div class="bg-gray-100 xl:w-4/12 w-full h-screen fixed top-0 right-0 shadow-md z-10">
         <div class="h-4/5">
             <div class="border-b border-gray-300 flex justify-center items-center">
                 <img :src="active.thumbnail" v-if="active" class="shadow-sm h-32 w-32"  alt="">
@@ -28,7 +28,7 @@
                     </div>
                     <div class="w-1/2 text-right">
                         <p class="text-gray-700" v-if="option[0].option.price">{{ parseFloat(option[0].option.price) | currency('€ ') }}</p>
-                        <p class="text-gray-700" v-if="option[0].option.percentage_increase">+ {{ option[0].option.percentage_increase }} %</p>
+                        <p class="text-gray-700" v-if="option[0].option.percentage_increase">{{ (active.price * option[0].option.percentage_increase) | currency('€ ') }}</p>
 
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                         <p class="text-gray-700">Subtotaal </p>
                     </div>
                     <div class="w-1/2 text-right">
-                        <p class="text-gray-700" v-if="active">{{ (parseFloat(active.price)  + sum) | currency('€ ') }}</p>
+                        <p class="text-gray-700" v-if="active">0,21 min het totaal</p>
                     </div>
                 </div>
                 <div class="border-b border-gray-300 py-6 flex">
@@ -45,7 +45,7 @@
                         <p class="text-gray-700">BTW 21% </p>
                     </div>
                     <div class="w-1/2 text-right">
-                        <p class="text-gray-700" v-if="active">{{ (parseFloat(active.price)  + sum) * 0.21 | currency('€ ') }}</p>
+                        <p class="text-gray-700" v-if="active">0,21 van het totaal</p>
                     </div>
                 </div>
                 <div class="py-6 flex">
@@ -53,7 +53,7 @@
                         <p class="text-black text-2xl font-medium">Total</p>
                     </div>
                     <div class="w-1/2 text-right">
-                        <p class="text-black text-2xl font-medium" v-if="active">{{ (parseFloat(active.price) + sum) | currency('€ ') }}</p>
+                        <p class="text-black text-2xl font-medium" v-if="active">Totaal</p>
                     </div>
                 </div>
             </div>
@@ -80,9 +80,7 @@ export default {
     props: ['active', 'options'],
     computed: {
         sum() {
-            return this.options.reduce((sum, item) => {
-                return sum += parseFloat(item[0].option.price);
-            }, 0);
+
         }
     }
 }

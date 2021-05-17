@@ -60,11 +60,41 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-if="fields.hasPriceIncrease" class="my-3">
-                                    <label for="percentage" class="font-medium text-gray-700">Percentage</label>
-                                    <input v-model="fields.priceIncrease" v-model.trim="$v.price_percentage.$model" :class="{ 'border-red-500' : submitted && $v.price_percentage.$error}" type="text" name="percentage" id="percentage" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
-                                    <p class="error text-red-500" v-if="submitted && !$v.price_percentage.required">Percentage is verplicht!</p>
+                                <div v-if="fields.hasPriceIncrease">
+                                    <div class="my-3">
+                                        <label for="percentage" class="font-medium text-gray-700">Percentage</label>
+                                        <input v-model="fields.priceIncrease" v-mask="'###'" v-model.trim="$v.price_percentage.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.price_percentage.$error}" type="text" name="percentage" id="percentage" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                        <p class="error text-red-500" v-if="submitted && !$v.price_percentage.required">Percentage is verplicht!</p>
+                                    </div>
+                                    <div class="my-3">
+                                        <label for="percentage" class="font-medium text-gray-700">Moet gebaseerd zijn op de som van de volgende stappen</label>
+                                        <fieldset class="my-3">
+                                            <div class="space-y-4">
+                                                <div class="flex">
+                                                    <div class="flex items-center justify-center ">
+                                                        <input type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                                    </div>
+                                                    <div class="ml-3 flex w-100">
+                                                        <div class="w-4/6">
+                                                            <label class="font-medium text-gray-700 m-0">Hoofdproduct</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex" v-for="step in steps">
+                                                    <div class="flex items-center justify-center ">
+                                                        <input type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                                    </div>
+                                                    <div class="ml-3 flex w-100">
+                                                        <div class="w-4/6">
+                                                            <label class="font-medium text-gray-700 m-0">{{ step.name }}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -85,7 +115,7 @@
                             <p class="text-gray-500">How much do you have in stock?</p>
                         </div>
                         <div class="w-8/12">
-                            <input v-model="fields.stock" v-model.trim="$v.stock.$model" :maxlength="10" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
+                            <input v-model="fields.stock" v-model.trim="$v.stock.$model" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
                             <p class="error text-red-500" v-if="submitted && !$v.stock.required">Voorraad is verplicht!</p>
                         </div>
                     </div>
@@ -270,20 +300,6 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                            </div>
-                        </div>
-                        <hr class="my-4">
-                        <div class="flex space-x-5">
-                            <div class="w-4/12">
-                                <p class="text-gray-800 font-medium text-lg">Step</p>
-                                <p class="text-gray-500">To what step does this product belong to?</p>
-                            </div>
-                            <div class="w-8/12">
-                                <select v-model="fields.step" type="text" name="step" id="step" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
-                                    <option v-for="step in steps" :value="step.id" selected>{{ step.name }}</option>
-                                </select>
-                                <p class="font-medium text-red-500 my-2">This product can only be applied to steps that have products with the same configuration type! Please choose a step with where all the products are [variable] aswell.</p>
-                                <p class="text-gray-400 my-2">If there are no steps with your chosen configuration you can create a new step. Or change the product configuration</p>
                             </div>
                         </div>
                     </div>

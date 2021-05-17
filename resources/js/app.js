@@ -37,10 +37,21 @@ import CreateStepForm from "./components/steps/createStepForm.vue";
 import Statistics from "./components/dashboard/statisticsComponent.vue";
 import Summary from "./components/summary/summaryComponent.vue";
 import ConfigurationModal from "./components/configurationModal.vue";
+import CreateManufacturerForm from "./components/manufacturers/createManufacturerForm.vue";
+
+let Vue2FiltersConfig = {
+    percent: {
+        decimalDigits: 2,
+        multiplier: 100,
+        decimalSeparator: '.'
+    },
+}
 
 Vue.use(VueMask);
 Vue.use(Vuelidate);
-Vue.use(Vue2Filters)
+Vue.use(Vue2Filters, Vue2FiltersConfig)
+
+
 
 
 
@@ -56,6 +67,9 @@ Vue.component('radio-preview', require('./components/products/radioPreview.vue')
 
 // Steps
 Vue.component('step-create-form', require('./components/steps/createStepForm.vue').default);
+
+
+Vue.component('manufacturer-create-form', require('./components/manufacturers/createManufacturerForm.vue').default)
 
 
 // Pages
@@ -86,6 +100,7 @@ const dashboard = new Vue({
         Modal,
         CreateProductForm,
         CreateStepForm,
-        Statistics
+        Statistics,
+        CreateManufacturerForm
     }
 });

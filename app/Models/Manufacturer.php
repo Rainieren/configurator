@@ -19,6 +19,10 @@ class Manufacturer extends Model
         'zip_code',
         'city',
         'country_id',
+        'logo',
+        'state',
+        'description',
+
     ];
 
 

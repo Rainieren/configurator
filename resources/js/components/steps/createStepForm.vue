@@ -33,6 +33,15 @@
                     <hr class="my-4">
                     <div class="flex space-x-5">
                         <div class="w-4/12">
+                            <p class="text-gray-800 font-medium text-lg">Allow multiple select</p>
+                        </div>
+                        <div class="w-8/12">
+                            Als je deze optie aanzet kan je meerdere opties selecteren binnen de stap i.p.v 1
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="flex space-x-5">
+                        <div class="w-4/12">
                             <p class="text-gray-800 font-medium text-lg">Parent product</p>
                             <p class="text-gray-500">To which product would u like to add this step? To which products does this step apply?</p>
                         </div>
@@ -97,10 +106,12 @@
                             <div class="">
                                 <a href="#" @click="openModal(); getProductsWithInteractionType(fields.interactionType);">
                                     <div class="border-2 border-dashed border-gray-400 hover:border-blue-500 hover:text-blue-500 h-32 w-100 flex-column rounded-md flex justify-center items-center transition">
-                                        <p>Add a product</p>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                        </svg>
+                                        <div class="bg-gray-100 h-16 w-16 flex items-center justify-center rounded-full text-indigo-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                            </svg>
+                                        </div>
+
                                     </div>
                                 </a>
                             </div>

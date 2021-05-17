@@ -9,8 +9,8 @@
                 </div>
 
                 <div class="ml-4">
-                    <p class="font-bold">{{ message_body }}</p>
-                    <p class="text-gray-600">Het is succesvol opgeslagen</p>
+                    <p class="font-bold">Succesvol</p>
+                    <p class="text-gray-600">{{ message_body }}</p>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@ export default {
         window.events.$on('flash', message => this.flash(message));
     },
     methods: {
-        flash(message) {
+        flash(title, message) {
             this.message_body = message;
             this.show = true;
             this.hide();

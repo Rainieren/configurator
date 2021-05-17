@@ -25,6 +25,8 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/manufacturers', [App\Http\Controllers\ManufacturerController::class, 'index'])->name('manufacturers');
     Route::get('/steps', [App\Http\Controllers\StepController::class, 'index'])->name('steps');
 
+
+
     // All routes related to products
     Route::prefix('product')->group(function () {
 
@@ -37,9 +39,9 @@ Route::prefix('dashboard')->group(function () {
 
     // All routes related to manufacturers
     Route::prefix('manufacturer')->group(function () {
-        Route::get('/{id}', [App\Http\Controllers\ManufacturerController::class, 'show'])->name('manufacturer');
         Route::get('/create', [App\Http\Controllers\ManufacturerController::class, 'create'])->name('createManufacturer');
         Route::post('/store', [App\Http\Controllers\ManufacturerController::class, 'store'])->name('storeManufacturer');
+        Route::get('/{id}', [App\Http\Controllers\ManufacturerController::class, 'show'])->name('manufacturer');
         Route::patch('/{id}/edit', [App\Http\Controllers\ManufacturerController::class, 'edit'])->name('editManufacturer');
         Route::delete('/{id}/delete', [App\Http\Controllers\ManufacturerController::class, 'destroy'])->name('deleteManufacturer');
     });

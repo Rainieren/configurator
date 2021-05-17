@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-3 gap-5 my-4">
-        <div class="bg-white shadow-sm rounded-md border border-gray-100">
+        <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
                 <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Totaal geconfigureerde producten</p>
                 <div class="flex">
@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white shadow-sm rounded-md border border-gray-100">
+        <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
                 <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Gemiddelde prijs</p>
                 <div class="flex">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white shadow-sm rounded-md border border-gray-100">
+        <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
                 <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Populairst product</p>
                 <div class="flex">

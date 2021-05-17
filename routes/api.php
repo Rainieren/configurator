@@ -31,3 +31,5 @@ Route::post('/store/configuration', [App\Http\Controllers\SummaryController::cla
 
 Route::get('/get/all/summaries', [App\Http\Controllers\SummaryController::class, 'getAllSummaries'])->name('getAllSummaries');
 
+Route::get('/get/all/countries', [App\Http\Controllers\CountryController::class, 'getAllCountries'])->name('getAllCountries');
+

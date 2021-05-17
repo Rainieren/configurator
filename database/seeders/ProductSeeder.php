@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 // Create a random price bwteen null and 100
                 'price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
                 // Create a random percentage between null and 100
-                'percentage_increase' => $faker->numberBetween($min = 0, $max = 100),
+                'percentage_increase' => 0.00,
                 // Create a random in Stock number between 0 and 1000
                 'stock' => $faker->numberBetween($min = 0, $max = 1000),
                 // Create radom status whether it is enabled or not

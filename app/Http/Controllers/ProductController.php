@@ -43,7 +43,9 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price ? str_replace(",", "", $request->price) : null,
-            'percentage_increase' => $request->percentage,
+
+            'percentage_increase' => $request->percentage / 100,
+
             'stock' => $request->stock,
             'status' => 1,
             'visibility' => 1,
@@ -58,8 +60,7 @@ class ProductController extends Controller
             'new_from' => $request->newFrom,
             'new_to' => $request->newTo,
             'sku' => $request->sku,
-            'configurable' => $request->configurable_product,
-            'step_id' => $request->step,
+            'configurable' => $request->configurable_product ? 1 : null,
 
             'interaction_type' => $request->interaction_type,
 
@@ -117,14 +118,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::destroy($id);
+
+        return redirect('/dashboard/products')->with('flash', "Succesvol verwijderd");
     }
 
 
     // Vue methods
 
     public function getConfigurableProducts() {
-        return response()->json(Product::where('step_id', null)->get());
+        return response()->json(Product::where('configurable', 1)->get());
     }
 
 

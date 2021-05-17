@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -80,5 +81,13 @@ class CountryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function getAllCountries()
+    {
+        $countries = Country::all();
+
+        return response()->json($countries);
     }
 }

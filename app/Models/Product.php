@@ -36,7 +36,8 @@ class Product extends Model
         'interaction_type',
         'sub_product_id',
         'manufacturer_id',
-        'step_id'
+        'step_id',
+        'configurable'
     ];
 
     /**

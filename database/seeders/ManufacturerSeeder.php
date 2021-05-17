@@ -24,10 +24,13 @@ class ManufacturerSeeder extends Seeder
             DB::table('manufacturers')->insert([
 
                 'name' => $faker->word,
+                'logo' => $faker->imageUrl(640, 480, 'cats', true),
                 'address' => $faker->streetAddress,
                 'zip_code' => $faker->postcode,
+                'state' => $faker->word,
                 'city' => $faker->city,
                 'country_id' => $faker->numberBetween($min = 1, $max = 249),
+                'description' => $faker->realText(),
 
 
                 'created_at' => Carbon::now(),

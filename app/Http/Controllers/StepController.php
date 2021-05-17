@@ -17,7 +17,7 @@ class StepController extends Controller
     public function index()
     {
 
-        $steps = Step::all();
+        $steps = Step::orderBy('created_at', 'desc')->paginate(20);;
 
         return view('dashboard.steps.steps', compact('steps'));
     }
@@ -106,7 +106,9 @@ class StepController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Step::destroy($id);
+
+        return redirect('/dashboard/steps')->with('flash', "Succesvol verwijderd");
     }
 
     // Vue methods
