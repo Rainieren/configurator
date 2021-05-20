@@ -38,6 +38,7 @@ import Statistics from "./components/dashboard/statisticsComponent.vue";
 import Summary from "./components/summary/summaryComponent.vue";
 import ConfigurationModal from "./components/configurationModal.vue";
 import CreateManufacturerForm from "./components/manufacturers/createManufacturerForm.vue";
+import StepList from "./components/steps/stepsComponent.vue"
 
 let Vue2FiltersConfig = {
     percent: {
@@ -67,6 +68,7 @@ Vue.component('radio-preview', require('./components/products/radioPreview.vue')
 
 // Steps
 Vue.component('step-create-form', require('./components/steps/createStepForm.vue').default);
+Vue.component('step-list', require('./components/steps/stepsComponent.vue').default);
 
 
 Vue.component('manufacturer-create-form', require('./components/manufacturers/createManufacturerForm.vue').default)
@@ -101,6 +103,7 @@ const dashboard = new Vue({
         CreateProductForm,
         CreateStepForm,
         Statistics,
-        CreateManufacturerForm
+        CreateManufacturerForm,
+        StepList
     }
 });

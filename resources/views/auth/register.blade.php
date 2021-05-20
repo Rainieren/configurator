@@ -49,7 +49,7 @@
                                 <input id="password-confirm" type="password" class="px-3 py-2 border border-gray-300 w-full rounded" name="password_confirmation" required autocomplete="new-password">
                             </div>
                             <div class="w-1/2">
-                                <button type="submit" class="px-5 py-2 bg-blue-500 rounded shadow text-white hover:bg-blue-700 transition">
+                                <button type="submit" class="px-5 py-2 bg-indigo-500 rounded shadow text-white hover:bg-indigo-700 transition">
                                     {{ __('Register') }}
                                 </button>
                                 <div class="w-100 my-3">

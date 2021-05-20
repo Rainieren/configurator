@@ -40,6 +40,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $imageName = time().'.'.$request->thumbnail_upload->extension();
+        if($request->visualisation_upload) {
+            $visuName = time().'.'.$request->visualisation_upload->extension();
+            $request->visualisation_upload->storeAs('public/visualisations', $imageName);
+        }
+
+
+        $request->thumbnail_upload->storeAs('public/images', $imageName);
+
+
+
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price ? str_replace(",", "", $request->price) : null,
@@ -50,8 +61,8 @@ class ProductController extends Controller
             'status' => 1,
             'visibility' => 1,
             'description' => $request->description,
-            'thumbnail' => $request->file('thumbnail'),
-            'visualisation' => $request->file('visualisation'),
+            'thumbnail' => '/storage/images/' . $imageName,
+            'visualisation' => $request->visualisation_upload ? '/storage/visualisations/' . $visuName : null,
             'weight' => $request->weight,
             'height' => $request->height,
             'length' => $request->length,

@@ -28,6 +28,7 @@ Route::get('/get/manufacturers', [App\Http\Controllers\ManufacturerController::c
 
 
 Route::post('/store/configuration', [App\Http\Controllers\SummaryController::class, 'store'])->name('storeConfiguration');
+Route::put('/change/steps/order', [App\Http\Controllers\StepController::class, 'changeOrder'])->name('changeStepOrder');
 
 Route::get('/get/all/summaries', [App\Http\Controllers\SummaryController::class, 'getAllSummaries'])->name('getAllSummaries');
 

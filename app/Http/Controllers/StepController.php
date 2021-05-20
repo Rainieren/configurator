@@ -17,7 +17,7 @@ class StepController extends Controller
     public function index()
     {
 
-        $steps = Step::orderBy('created_at', 'desc')->paginate(20);;
+        $steps = Step::orderBy('order')->get();
 
         return view('dashboard.steps.steps', compact('steps'));
     }
@@ -40,13 +40,20 @@ class StepController extends Controller
      */
     public function store(Request $request)
     {
+        $steps = Step::all();
 
+        if(count($steps) == 0) {
+            $order = 0;
+        } else {
+            $order = $steps->max('order') + 1;
+        }
 
 //        dd($request->addToConfigurableProducts);
         $step = Step::create([
             'name' => $request->name,
             'interaction_type' => $request->interaction_type,
-            'is_options' => $request->is_optional,
+            'is_optional' => $request->is_optional ? 1 : null,
+            'order' => $order,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -72,7 +79,9 @@ class StepController extends Controller
      */
     public function show($id)
     {
-        //
+        $step = Step::where('id', $id)->with('interactionType', 'options')->firstOrFail();
+
+        return view('dashboard.steps.index', compact('step'));
     }
 
     /**
@@ -113,6 +122,10 @@ class StepController extends Controller
 
     // Vue methods
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getRelatedStepsAndProducts($id) {
         return response()->json(Step::whereHas('options', function ($q) use ($id) {
             $q->where('product_id', $id);
@@ -123,6 +136,26 @@ class StepController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSteps() {
-        return response()->json(Step::all());
+        return response()->json(Step::orderBy('order')->get());
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeOrder(Request $request)
+    {
+        $steps = Step::all();
+
+        foreach($steps as $step) {
+            $id = $step->id;
+            foreach($request->steps as $stepNew) {
+                if($stepNew['id'] == $id) {
+                    $step->update(['order' => $stepNew['order']]);
+                }
+            }
+        }
+
+        return response()->json();
     }
 }

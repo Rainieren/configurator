@@ -60,7 +60,7 @@ class Product extends Model
      */
     public function steps()
     {
-        return $this->belongsToMany(Step::class, 'product_step', 'product_id', 'step_id');
+        return $this->belongsToMany(Step::class, 'product_step', 'product_id', 'step_id')->orderBy('order');
     }
 
 //    /**

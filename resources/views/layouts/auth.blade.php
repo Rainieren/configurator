@@ -14,8 +14,8 @@
 
 <style>
     .background-pattern {
-        background-color: #3B82F5;
-        background-image: radial-gradient(#1D4ED8 0.9px, #3B82F5 0.9px);
+        background-color: rgb(99, 102, 241);
+        background-image: radial-gradient(#1D4ED8 0.9px, rgb(99, 102, 241) 0.9px);
         background-size: 18px 18px;
     }
 </style>

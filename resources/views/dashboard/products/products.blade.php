@@ -7,7 +7,7 @@
                 <p class="text-3xl font-bold text-indigo-900">Products</p>
             </div>
             <div class="w-1/2 text-right">
-                <a href="{{ route('createProduct') }}" type="button" class="w-full inline-flex justify-center rounded-md border border-blue-300 shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                <a href="{{ route('createProduct') }}" type="button" class="w-full inline-flex justify-center rounded-md border border-indigo-300 shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     Nieuw product
                 </a>
             </div>
