@@ -149,4 +149,10 @@ class ProductController extends Controller
     public function getInteractionTypeProducts($interaction_type) {
         return response()->json(Product::where('interaction_type', $interaction_type)->whereNull('step_id')->with('interactionType')->get());
     }
+
+    public function getParentProducts($id) {
+        return response()->json(Product::whereHas('steps', function($q) use ($id){
+            $q->where('step_id', $id);
+        })->get());
+    }
 }

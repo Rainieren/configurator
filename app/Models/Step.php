@@ -27,6 +27,14 @@ class Step extends Model
         return $this->belongsTo(interactionType::class);
     }
 
+    /**
+     * @return mixed
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_step', 'step_id', 'product_id');
+    }
+
 
 //    /**
 //     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

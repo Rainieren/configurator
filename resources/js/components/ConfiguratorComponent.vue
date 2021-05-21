@@ -100,11 +100,11 @@
                                         <p class="text-gray-500 text-sm" v-if="option.length">Length: {{ option.weight }}</p>
                                     </div>
                                 </button>
-    <!--                            <button v-if="step.is_optional" class="bg-white border-2 rounded-xl transition border-gray-200">-->
-    <!--                                <div class="flex p-3">-->
-    <!--                                    <p>No thank you</p>-->
-    <!--                                </div>-->
-    <!--                            </button>-->
+                                <button v-if="step.is_optional" v-on:click="removeChosenOptions(step)" class="bg-white border-2 rounded-xl transition border-gray-200" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.length === 0 ) || stepExistsInArray(step) === false }">
+                                    <div class="flex p-3">
+                                        <p>No thank you</p>
+                                    </div>
+                                </button>
                             </div>
                         </div>
                     </draggable>
@@ -146,7 +146,7 @@
             this.getConfigurableProducts();
         },
         methods: {
-            existInArray: function(name) {
+            optionExistInArray: function(name) {
                 let exists = false
                 this.chosenOptions.forEach(function(value, i) {
                     value[0].options.forEach(function(chOption, index) {
@@ -157,11 +157,23 @@
                 });
                 return exists;
             },
+            stepExistsInArray: function(step) {
+                let exists = false
+                this.chosenOptions.forEach(function(value, i) {
+                    if(value[0].step === step) {
+                        exists = true
+                    }
+                });
+                return exists;
+            },
+            onOrderChange() {
+
+            },
             addToChosenOptions(step, option) {
                 // Stap komt overeen met de stap die al in de array staat
                 if(this.chosenOptions.some(options => options[0].step.name === step.name)) {
                     if(step.allow_multiple) {
-                        if(this.existInArray(option.name)){
+                        if(this.optionExistInArray(option.name)){
                             this.chosenOptions.forEach(function(value, i) {
                                 value[0].options.forEach(function(chOption, index) {
                                     if(chOption.name === option.name) {
@@ -171,7 +183,7 @@
                             });
                         } else {
                             this.chosenOptions.forEach(function(value, i) {
-                                console.log(value)
+
                                 if(value[0].step.name === step.name) {
                                     value[0].options.push(option)
                                 }
@@ -191,8 +203,13 @@
                     this.chosenOptions.push([{step: step, options: [option]}])
                 }
             },
-            onOrderChange() {
-
+            removeChosenOptions: function(step) {
+                this.chosenOptions.forEach(function(value, i) {
+                    if(value[0].step.name === step.name) {
+                        value[0].options = []
+                        return
+                    }
+                });
             },
             getConfigurableProducts: function() {
                 axios.get('/api/get/configurable_products')

@@ -53,6 +53,7 @@ class StepController extends Controller
             'name' => $request->name,
             'interaction_type' => $request->interaction_type,
             'is_optional' => $request->is_optional ? 1 : null,
+            'allow_multiple' => $request->allow_multiple ? 1 : null,
             'order' => $order,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -92,7 +93,9 @@ class StepController extends Controller
      */
     public function edit($id)
     {
-        //
+        $step = Step::where('id', $id)->with('options')->firstOrFail();
+
+        return view('dashboard.steps.edit', compact('step'));
     }
 
     /**
@@ -100,11 +103,37 @@ class StepController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+
+//        dd(Step::find($id)->products());
+        $step = Step::find($id);
+        $step->update([
+            'name' => $request->data['fields']['name'],
+            'interaction_type' => $request->data['fields']['interaction_type'],
+            'is_optional' => $request->data['fields']['is_optional'],
+            'allow_multiple' => $request->data['fields']['allow_multiple'],
+            'updated_at' => Carbon::now()
+        ]);
+
+        foreach($request->data['fields']['options'] as $option) {
+            Product::where('id', $option['id'])->update(['step_id' => $id]);
+        }
+
+        $step->products()->sync(collect($request->data['parentProducts'])->pluck('id'));
+
+
+//        /
+//        if() {
+//            // Als de step een parent product heeft die niet in deze array staat, verwijderen
+//        }
+
+
+
+        return response()->json();
+
     }
 
     /**
@@ -155,6 +184,15 @@ class StepController extends Controller
                 }
             }
         }
+
+        return response()->json();
+    }
+
+    public function deleteStepOption($id, Request $request)
+    {
+        $step = Step::find($id);
+
+        $step->options()->where('id', $request->product['id'])->update(['step_id' => null]);
 
         return response()->json();
     }

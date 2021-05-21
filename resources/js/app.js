@@ -26,14 +26,13 @@ window.Vue = require('vue').default;
 
 import VueMask from 'v-mask';
 import Vue2Filters from 'vue2-filters'
-
-
 import Vuelidate from 'vuelidate';
 import Flash from './components/FlashComponent.vue';
 import Modal from './components/steps/modalComponent.vue';
 import Configurator from "./pages/Configurator.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
+import EditStepForm from "./components/steps/editStepForm.vue";
 import Statistics from "./components/dashboard/statisticsComponent.vue";
 import Summary from "./components/summary/summaryComponent.vue";
 import ConfigurationModal from "./components/configurationModal.vue";
@@ -68,6 +67,7 @@ Vue.component('radio-preview', require('./components/products/radioPreview.vue')
 
 // Steps
 Vue.component('step-create-form', require('./components/steps/createStepForm.vue').default);
+Vue.component('step-edit-form', require('./components/steps/editStepForm.vue').default);
 Vue.component('step-list', require('./components/steps/stepsComponent.vue').default);
 
 
@@ -102,6 +102,7 @@ const dashboard = new Vue({
         Modal,
         CreateProductForm,
         CreateStepForm,
+        EditStepForm,
         Statistics,
         CreateManufacturerForm,
         StepList
