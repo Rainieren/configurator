@@ -1,50 +1,34 @@
 image: php:7.2-fpm
 
 pipelines:
-    custom:
-      initialize_server:
-        - step:
-            name: Initialize server
-            script:
-              - ls -la
-      create_staging_database:
-        - step:
-            name: Create staging database
-            script:
-              - ls -la
-      create development_database:
-        - step:
-            name: Create development database
-            script:
-              - ls -la
-    tags:
-      v*:
-        - step:
-            image: composer
-            name: Build
-            caches:
-              - composer
-            script:
-              - ls -la
-        - step:
-            image:
-              name: registry.mountain-it.nl/mountain-it/base-php
-              username: registry
-              password: $REGISTRY_PASSWD
-            trigger: manual
-            name: Deploy to staging
-            deployment: staging
-            script:
-              - ls -la
-        - step:
-            image:
-              name: registry.mountain-it.nl/mountain-it/base-php
-              username: registry
-              password: $REGISTRY_PASSWD
-            trigger: manual
-            name: Deploy to production
-            deployment: production
-            script:
-              - ls -la
 
+  tags:
+    v*:
+      - step:
+          name: Deployment
+          script:
+            - apt-get update && apt-get install -qy git curl libmcrypt-dev mysql-client
+            - yes | pecl install mcrypt-1.0.1
+            - docker-php-ext-install pdo_mysql
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install
+            - rsync -a . root@206.189.110.154:/var/www/configurator
+            - ln -f -s .env.pipelines .env
+            - php artisan migrate
+            - php artisan serve &
+            - sleep 5
+            - ./vendor/bin/phpunit
+            - curl -vk http://localhost:8000
+          services:
+            - mysql
+          trigger: manual
 
+definitions:
+  services:
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: 'configurator'
+        MYSQL_RANDOM_ROOT_PASSWORD: 'no'
+        MYSQL_USER: 'root'
+        MYSQL_PASSWORD: ''
