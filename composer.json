@@ -2,6 +2,7 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
+    "version": "v0.0.1",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
