@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configurator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ConfiguratorController extends Controller
@@ -80,5 +82,21 @@ class ConfiguratorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllConfigurators()
+    {
+
+        return response()->json(Configurator::with('products')->whereHas('products', function ($query) {
+            $query->where('configurable', '=', true);
+        })->get());
+    }
+
+    public function getConfigurator($id)
+    {
+        return response()->json(Configurator::find($id));
     }
 }

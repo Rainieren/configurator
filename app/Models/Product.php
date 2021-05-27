@@ -37,14 +37,24 @@ class Product extends Model
         'sub_product_id',
         'manufacturer_id',
         'step_id',
-        'configurable'
+        'configurable',
+        'configurator_id'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function configurator()
+    {
+        return $this->belongsTo(Configurator::class, 'configurator_id');
     }
 
     /**

@@ -33,9 +33,11 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('createProduct');
         Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('storeProduct');
 
-        Route::get('/{id}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('editProduct');
+
 
         Route::get('/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('showProduct');
+
+        Route::get('/{id}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('editProduct');
 
         Route::delete('/{id}/delete', [App\Http\Controllers\ProductController::class, 'destroy'])->name('deleteProduct');
     });

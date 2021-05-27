@@ -1,5 +1,26 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid px-0">
+
+        <transition name="fade">
+            <div class="bg-white absolute w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
+                <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">Wat wil je configureren?</h2>
+                <div class="grid grid-cols-3 gap-6">
+                    <div v-for="(configator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s">
+                        <div v-on:click="getConfigurableProducts(configator.id)">
+                            <div class="p-3">
+                                <p class="font-medium text-xl text-center">{{ configator.name }}</p>
+                                <div class=" w-64 flex items-center justify-center h-32">
+                                    foto
+                                </div>
+                                <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
         <transition name="fade">
             <div class="w-screen h-screen absolute top-0 right-0 flex items-center justify-center bg-white flex-column" v-if="loading">
                 <svg class="animate-spin h-12 w-12 my-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -11,11 +32,24 @@
         </transition>
 
         <div class="flex flex-col xl:flex-row" v-if="!loading">
-            <div class="configurator bg-white xl:w-8/12 w-full min-h-screen p-20 space-y-15">
-                <h1 class="text-4xl font-medium mb-20">Product configureren</h1>
-                <!--        TODO:: Move this part into a new component called configurableProductComponent.vue -->
+            <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-20 space-y-15">
+                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = []">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                    </svg>
+                    <p class="text-gray-800 font-medium text-lg  cursor-pointer hover:text-indigo-500" >Andere configurator kiezen</p>
+                </div>
+
+                <div class="relative flex justify-between items-center pb-4">
+                    <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
+                </div>
                 <div class="grid grid-cols-3 gap-6">
-                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
+                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
+                        <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
                         <div class="p-3 border-b border-gray-300">
                             <div class="flex">
                                 <div class="w-2/3 text-left">
@@ -44,35 +78,33 @@
                     </button>
                 </div>
 
+
+<!--                <article class="option my-3 transition-all" :class="accordionClass">-->
+<!--                    <div class="header border border-gray-500 p-2 cursor-pointer" @click="toggleAccordion">-->
+<!--                        even testen-->
+<!--                    </div>-->
+<!--                    <div class="message border-b border-r border-l border-gray-500 overflow-hidden p-0 transition-all h-40" :class="accordionContainer">-->
+<!--                        <div class="body p-4" :class="accordionBody">-->
+<!--                            Bericht-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </article>-->
+
+
                 <div class="space-y-5" v-if="!stepsLoading" v-for="product in steps">
-
                     <draggable :options="{animation:200, handle: '.handle'}" :element="'div'" @change="onOrderChange()">
-                        <div v-for="step in product.steps" class="my-5 relative">
-
-
-                            <div class="handle mr-3 cursor-pointer absolute top-1 -left-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                                </svg>
+                        <div v-for="(step, i) in product.steps" class="my-5 relative">
+                            <div class="relative flex justify-between items-center pb-4">
+                                <h1 class="text-3xl font-medium">{{ step.name }}</h1>
                             </div>
-                            <p class="text-black text-2xl font-medium mb-3">{{ step.name }}</p>
-    <!--                        TODO:: Dit moet collapable zijn, wanneer iemand de configuratie afrond moet de stap er zo uitzien -->
-    <!--                        <div class="flex border-b border-gray-300 py-3 items-center my-2">-->
-    <!--                            <div class="w-1/2 flex items-center">-->
-    <!--                                <div class="h-12 w-12 bg-indigo-500 rounded-full  flex items-center justify-center text-white">-->
-    <!--                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-    <!--                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />-->
-    <!--                                    </svg>-->
-    <!--                                </div>-->
-    <!--                                <p class="text-black text-2xl font-medium ml-3">{{ step.name }}</p>-->
-    <!--                            </div>-->
-    <!--                            <div class="w-1/2 flex justify-end items-center">-->
-    <!--                                <a href="" class="text-gray-500 font-medium">Bewerken</a>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
 
                             <div class="grid grid-cols-3 gap-6">
-                                <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))}">
+                                <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))}">
+                                    <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
                                     <div class="p-3 border-b border-gray-300">
                                         <div class="flex">
                                             <div class="w-2/3 text-left">
@@ -133,8 +165,11 @@
                 stepsLoading: true,
                 loading: true,
                 summary_code: '',
+                configurationFinished: false,
+                configuratorChosen: false,
+                configurators: [],
+                configurator: '',
                 // csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-
             };
         },
         components: {
@@ -143,7 +178,8 @@
             draggable,
         },
         mounted: function() {
-            this.getConfigurableProducts();
+            // this.getConfigurableProducts();
+            this.getAllConfigurators();
         },
         methods: {
             optionExistInArray: function(name) {
@@ -211,11 +247,32 @@
                     }
                 });
             },
-            getConfigurableProducts: function() {
-                axios.get('/api/get/configurable_products')
+            getConfigurableProducts: function(id) {
+                axios.all([
+                    axios.get('/api/get/configurable_products/' + id)
                     .then(response => {
                         this.configurableProducts = response.data
                         this.loading = false
+                    }).catch(err => {
+                        console.log(err)
+                    }),
+                    axios.get('/api/get/configuration/' + id)
+                        .then(response => {
+                            this.configurator = response.data
+                            this.configuratorChosen = true
+                            this.loading = false
+                        }).catch(err => {
+                        console.log(err)
+                    })
+                ]);
+
+
+
+            },
+            getAllConfigurators: function() {
+                axios.get('/api/get/all/configurators')
+                    .then(response => {
+                        this.configurators = response.data
                     }).catch(err => {
                     console.log(err)
                 });
@@ -233,17 +290,39 @@
                 this.$refs.configurationModal.showModal = true;
             },
             ProcessConfiguration: function() {
-                axios.post('/api/store/configuration', {
-                    activeProduct: this.activeProduct,
-                    chosenOptions: this.chosenOptions
-                }).then(response => {
-                    console.log(response.data)
-                    this.summary_code = response.data.code
-                    this.openModal();
-                }).catch(err => {
-                    console.log('Er is iets mis gegaan tijdens het opslaan van de configuratie')
-                    console.log(err);
-                })
+                this.configurationFinished = true
+
+                // axios.post('/api/store/configuration', {
+                //     activeProduct: this.activeProduct,
+                //     chosenOptions: this.chosenOptions
+                // }).then(response => {
+                //     console.log(response.data)
+                //     this.summary_code = response.data.code
+                //     this.openModal();
+                // }).catch(err => {
+                //     console.log('Er is iets mis gegaan tijdens het opslaan van de configuratie')
+                //     console.log(err);
+                // })
+
+            },
+            lowestPriceInConfigurator: function(id) {
+                let array = [];
+                this.configurators.forEach(function(value, i) {
+                    let prices =  []
+                    value.products.forEach(function(item, i) {
+                        if(item.configurable) {
+                            prices.push(parseFloat(item.price))
+                        }
+
+                    })
+                    array.push({configurator: i, prices: [prices]})
+                });
+
+                return array;
+                // this.configurators[0].products.forEach(function(value, i) {
+                //     array.push(value.price);
+                // });
+
 
             }
         },
@@ -253,7 +332,7 @@
                 return this.steps.filter(step => {
                     return step.includes(this.activeProduct.id)
                 });
-            },
+            }
         }
     }
 </script>

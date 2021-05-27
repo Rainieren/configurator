@@ -106,7 +106,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('dashboard.products.edit', compact('product'));
     }
 
     /**
@@ -136,6 +138,10 @@ class ProductController extends Controller
 
 
     // Vue methods
+
+    public function getConfigurableProductsFromId($id) {
+        return response()->json(Product::where('configurable', 1)->where('configurator_id', $id)->get());
+    }
 
     public function getConfigurableProducts() {
         return response()->json(Product::where('configurable', 1)->get());

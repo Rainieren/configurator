@@ -42,6 +42,7 @@ class CreateProductsTable extends Migration
             $table->boolean('configurable')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('manufacturer_id')->unsigned()->nullable();
+            $table->integer('configurator_id')->unsigned()->nullable();
 
             $table->timestamps();
         });

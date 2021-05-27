@@ -60,9 +60,15 @@ class ProductSeeder extends Seeder
 
                 'sku' => $faker->randomNumber($nbDigits = NULL, $strict = false),
 
-                'step_id' => $index > 4 ? $index + 1 : null,
+                'step_id' => rand(1,5),
+
+                'configurable' => $index < 4,
+
+                'interaction_type' => rand(1,3),
 
                 'manufacturer_id' => $faker->numberBetween($min = 0, $max = 50),
+
+                'configurator_id' => rand(1,3),
 
                 'created_at' => Carbon::now(),
 

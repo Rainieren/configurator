@@ -17,8 +17,12 @@ class CreateStepsTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->integer('interaction_type')->nullable()->unsigned();
+
             $table->boolean('is_optional')->nullable();
             $table->boolean('allow_multiple')->nullable();
+
+            $table->integer('default_product')->nullable();
+
             $table->integer('order');
             $table->timestamps();
         });

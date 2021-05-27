@@ -21,7 +21,7 @@
                             <fieldset>
                                 <div class="flex items-start">
                                     <div class="flex items-center h-5">
-                                        <input v-model="fields.isOptional" id="is_optional" name="is_optional" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                        <input v-model="fields.is_optional" id="is_optional" name="is_optional" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="is_optional" class="font-medium text-gray-700">This step is optional</label>
@@ -36,7 +36,16 @@
                             <p class="text-gray-800 font-medium text-lg">Allow multiple select</p>
                         </div>
                         <div class="w-8/12">
-                            Als je deze optie aanzet kan je meerdere opties selecteren binnen de stap i.p.v 1
+                            <fieldset>
+                                <div class="flex items-start">
+                                    <div class="flex items-center h-5">
+                                        <input id="allow_multiple" v-model="fields.allow_multiple" name="allow_multiple" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" :checked="fields.allow_multiple">
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="allow_multiple" class="font-medium text-gray-700">Allow mutiple selection</label>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -89,8 +98,12 @@
                                 <div class="di">
                                     <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
                                 </div>
-                                <div class="col-span-8 flex items-center">
+                                <div class="col-span-6 flex items-center">
                                     <p class="font-medium">{{ product.name }}</p>
+                                </div>
+                                <div class="col-span-2 flex items-center">
+                                    <input type="radio" class="">
+                                    Default
                                 </div>
                                 <div class="flex items-center">
                                     <div class="flex space-x-4">
@@ -144,7 +157,8 @@
             return {
                 fields: {
                     interactionType: 1,
-                    isOptional: false
+                    is_optional: false,
+                    allow_multiple: false,
                 },
                 selectedProducts: [],
                 interactionTypes: {},

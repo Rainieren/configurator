@@ -31,6 +31,7 @@ import Flash from './components/FlashComponent.vue';
 import Modal from './components/steps/modalComponent.vue';
 import Configurator from "./pages/Configurator.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
+import EditProductForm from "./components/products/editProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
 import EditStepForm from "./components/steps/editStepForm.vue";
 import Statistics from "./components/dashboard/statisticsComponent.vue";
@@ -61,6 +62,7 @@ Vue.component('statistics', require('./components/dashboard/statisticsComponent.
 
 // Product
 Vue.component('product-create-form', require('./components/products/createProductForm.vue').default);
+Vue.component('product-edit-form', require('./components/products/editProductForm.vue').default);
 Vue.component('product-preview', require('./components/products/productPreview').default)
 Vue.component('card-preview', require('./components/products/cardPreview').default)
 Vue.component('radio-preview', require('./components/products/radioPreview.vue').default)
@@ -101,6 +103,7 @@ const dashboard = new Vue({
         Flash,
         Modal,
         CreateProductForm,
+        EditProductForm,
         CreateStepForm,
         EditStepForm,
         Statistics,

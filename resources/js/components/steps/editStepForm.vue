@@ -272,6 +272,7 @@ export default {
                     headers: { "X-Requested-With": "XMLHttpRequest","Content-Type": "application/json" }
                 }).then(response => {
                     this.loading = false
+                    window.location = "/dashboard/steps"
                 }).catch(err => {
                     console.log(err)
                 });
