@@ -40,41 +40,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $imageName = time().'.'.$request->thumbnail_upload->extension();
+//        dd($request);
+        if($request->thumbnail_upload) {
+            $imageName = time() . '.' . $request->thumbnail_upload->extension();
+            $request->thumbnail_upload->storeAs('public/images', $imageName);
+        }
         if($request->visualisation_upload) {
             $visuName = time().'.'.$request->visualisation_upload->extension();
             $request->visualisation_upload->storeAs('public/visualisations', $imageName);
         }
 
-
-        $request->thumbnail_upload->storeAs('public/images', $imageName);
-
-
-
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price ? str_replace(",", "", $request->price) : null,
-
             'percentage_increase' => $request->percentage / 100,
-
             'stock' => $request->stock,
             'status' => 1,
             'visibility' => 1,
             'description' => $request->description,
-            'thumbnail' => '/storage/images/' . $imageName,
+            'thumbnail' => $request->visualisation_upload ? '/storage/images/' . $imageName : null,
             'visualisation' => $request->visualisation_upload ? '/storage/visualisations/' . $visuName : null,
             'weight' => $request->weight,
             'height' => $request->height,
             'length' => $request->length,
             'width' => $request->width,
             'url_key' => strtolower(str_replace(' ', '_', $request->name)),
-            'new_from' => $request->newFrom,
-            'new_to' => $request->newTo,
+            'new_from' => $request->new_from,
+            'new_to' => $request->new_to,
             'sku' => $request->sku,
             'configurable' => $request->configurable_product ? 1 : null,
-
             'interaction_type' => $request->interaction_type,
-
             'user_id' => auth()->user()->id,
             'manufacturer_id' => $request->manufacturer,
             'created_at' => Carbon::now(),

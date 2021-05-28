@@ -26,6 +26,7 @@ class Product extends Model
         'weight',
         'height',
         'length',
+        'width',
         'url_key',
         'new_from',
         'new_to',

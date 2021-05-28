@@ -2,7 +2,7 @@
     <div class="px-20">
         <div class="flex space-x-10">
             <div class="w-6/12">
-                <form action="/dashboard/product/store" method="POST" class="w-full my-2" id="productCreateForm" enctype="multipart/form-data">
+                <form action="/dashboard/product/store" method="POST" enctype="multipart/form-data" class="w-full my-2" id="productCreateForm" >
                     <input type="hidden" name="_token" :value="csrf">
                     <div class="flex space-x-5">
                         <div class="w-4/12">
@@ -10,13 +10,15 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model="fields.name"  v-model.trim="$v.name.$model" :class="{'border-2 border-red-600': submitted && $v.name.$error}" name="name"  class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" id="name" type="text">
-                                <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.name.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                                <input v-model.trim="$v.fields.name.$model" :class="{'border-red-600': submitted && !$v.fields.name.required || !$v.fields.name.maxLength }" name="name"  class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" id="name" type="text" autofocus>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
+                                    <svg v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.name.required">Naam is verplicht!</p>
-
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.name.required">Naam is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.name.maxLength">Naam mag niet meer dan 128 Karakters bevatten!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -26,17 +28,17 @@
                         </div>
                         <div class="w-8/12">
                             <fieldset>
-                                <div class="flex items-start">
+                                <div class="flex items-center">
                                     <div class="flex items-center h-5">
                                         <div class="flex justify-between items-center" @click="[fields.isConfigurableProduct = !fields.isConfigurableProduct], isConfigurableProductFunc()">
-                                            <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-indigo-500': fields.isConfigurableProduct}">
+                                            <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.isConfigurableProduct}">
                                                 <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.isConfigurableProduct,}"></div>
                                             </div>
                                         </div>
                                         <input v-model="fields.isConfigurableProduct" id="configurable_product" name="configurable_product" type="hidden" class="focus:ring-indigo-500 h-4 w-4 form-checkbox text-indigo-500 border-gray-200 focus:bg-indigo-500 rounded">
                                     </div>
                                     <div class="ml-3 text-sm">
-                                        <label for="configurable_product" class="font-medium text-gray-700">This product is a configurable product</label>
+                                        <label for="configurable_product" class="font-medium text-gray-700 m-0">This product is a configurable product</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -54,20 +56,22 @@
                                     €
                                   </span>
                                 </div>
-                                <input v-model="fields.price" :maxlength="8" v-model.trim="$v.price.$model" v-mask="mask" :class="{ 'border-red-500' : submitted && $v.price.$error}" type="text" name="price" id="price" class="appearance-none block border border-gray-200 pl-8 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="0.00" :disabled="fields.hasPriceIncrease">
-                                <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.price.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                                <input :maxlength="8" v-model.trim="$v.fields.price.$model" v-mask="mask" :class="{ 'border-red-500' : submitted && !$v.fields.price.required}" type="text" name="price" id="price" class="appearance-none block border border-gray-200 pl-8 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="0.00" :disabled="fields.hasPriceIncrease">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.price.required">
+                                    <svg v-if="submitted && !$v.fields.price.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.price.required">Prijs is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.price.required">Prijs is verplicht!</p>
 
                             <div class="" v-if="!fields.isConfigurableProduct">
                                 <fieldset>
                                     <div class="mt-3 space-y-2">
-                                        <div class="flex items-start">
+                                        <div class="flex items-center">
                                             <div class="flex items-center">
                                                 <div class="flex justify-between items-center" @click="[fields.hasPriceIncrease = !fields.hasPriceIncrease], priceIncreaseFunc()">
-                                                    <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-indigo-500': fields.hasPriceIncrease}">
+                                                    <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.hasPriceIncrease}">
                                                         <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.hasPriceIncrease,}"></div>
                                                     </div>
                                                 </div>
@@ -84,12 +88,14 @@
                                     <div class="my-3">
                                         <label for="percentage" class="font-medium text-gray-700">Percentage</label>
                                         <div class="relative">
-                                            <input v-model="fields.priceIncrease" v-mask="'###'" v-model.trim="$v.price_percentage.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.price_percentage.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.price_percentage.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
+                                            <input v-mask="'###'" v-model.trim="$v.fields.priceIncrease.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.fields.priceIncrease.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.priceIncrease.required">
+                                                <svg v-if="submitted && !$v.fields.priceIncrease.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.price_percentage.required">Percentage is verplicht!</p>
+                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.priceIncrease.required">Percentage is verplicht!</p>
                                     </div>
                                     <div class="my-3">
                                         <label for="percentage" class="font-medium text-gray-700">Moet gebaseerd zijn op de som van de volgende stappen</label>
@@ -130,12 +136,14 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model="fields.sku" v-model.trim="$v.sku.$model" type="text" id="sku" name="sku"  :class="{ 'border-red-500' : submitted && $v.sku.$error}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.sku.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                                <input v-model.trim="$v.fields.sku.$model" type="text" id="sku" name="sku" v-on:keypress="isLetterOrDash($event)" maxlength="191"  :class="{ 'border-red-500' : submitted && !$v.fields.sku.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.sku.required">
+                                    <svg v-if="submitted && !$v.fields.sku.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.sku.required">SKU is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.sku.required">SKU is verplicht!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -146,12 +154,14 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model="fields.stock" v-model.trim="$v.stock.$model" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.stock.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                                <input v-model.trim="$v.fields.stock.$model" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && !$v.fields.stock.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.stock.required">
+                                    <svg v-if="submitted && !$v.fields.stock.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.stock.required">Voorraad is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.stock.required">Voorraad is verplicht!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -178,7 +188,7 @@
                                         <div class="flex text-sm text-gray-600">
                                             <label for="thumbnail_upload" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                 <span>Upload a file</span>
-                                                <input id="thumbnail_upload" v-on:change="onThumbnailChanged" name="thumbnail_upload" type="file" class="sr-only">
+                                                <input id="thumbnail_upload" v-on:change="onThumbnailChanged" name="thumbnail_upload" type="file" accept="image/*" class="sr-only">
                                             </label>
                                             <p class="pl-1">or drag and drop</p>
                                         </div>
@@ -206,7 +216,7 @@
                                         <div class="flex text-sm text-gray-600">
                                             <label for="visualisation_upload" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                 <span>Upload a file</span>
-                                                <input id="visualisation_upload" @change="onVisualisationChanged" name="visualisation_upload" type="file" class="sr-only">
+                                                <input id="visualisation_upload" @change="onVisualisationChanged" name="visualisation_upload" accept="image/*" type="file" class="sr-only">
                                             </label>
                                             <p class="pl-1">or drag and drop</p>
                                         </div>
@@ -250,11 +260,18 @@
                         </div>
                         <div class="w-8/12">
                             <div class="flex">
-                                <input v-model="fields.newFrom" type="date" name="new_from" id="new_from" v-on:change="alert('test')" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                <div class="w-full flex-column">
+                                    <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" v-on:change="alert('test')" :class="{'border-red-600': submitted && !$v.fields.newFrom.required || !$v.fields.newFrom.minValue}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.required">Nieuw vanaf is verplicht!</p>
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.minValue">Nieuw vanaf mag niet lager zijn dan vandaag!</p>
+                                </div>
                                 <div class="mx-3 flex items-center justify-center">
                                     <p class="text-gray-900 font-medium">To</p>
                                 </div>
-                                <input v-model="fields.newTo" type="date" name="new_to" id="new_to" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                <div class="w-full flex-column">
+                                    <input v-model.trim="$v.fields.newTo.$model" type="date" name="new_to" id="new_to"  :class="{'border-red-600': submitted && !$v.fields.newTo.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newTo.required">Nieuw tot is verplicht!</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -265,16 +282,26 @@
                             <p class="text-gray-500">Who made the product?</p>
                         </div>
                         <div class="w-8/12">
-                            <select v-model="fields.manufacturer" type="text" name="manufacturer" id="manufacturer" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" :disabled="fields.hasManufacturer">
-                                <option :value="manufacturer.id" v-for="manufacturer in manufacturers">{{  manufacturer.name }}</option>
-                            </select>
+                            <div class="relative">
+                                <select v-model.trim="$v.fields.manufacturer.$model" :class="{'border-red-600': submitted && !$v.fields.manufacturer.required}" type="text" name="manufacturer" id="manufacturer" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" :disabled="!fields.hasManufacturer">
+                                    <option selected value="">Selecteer een fabrikant</option>
+                                    <option :value="manufacturer.id" v-for="manufacturer in manufacturers">{{  manufacturer.name }}</option>
+                                </select>
+
+                                <div class="absolute inset-y-2 right-0 pr-3 flex items-start pointer-events-none" v-if="!$v.fields.manufacturer.required">
+                                    <svg v-if="submitted && !$v.fields.manufacturer.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.manufacturer.required">Fabrikant is verplicht!</p>
+                            </div>
                             <fieldset>
                                 <div class="mt-3 space-y-2">
                                     <div class="flex items-start">
                                         <div class="flex items-center">
                                             <div class="flex justify-between items-center" @click="[fields.hasManufacturer = !fields.hasManufacturer], fields.manufacturer = ''">
-                                                <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-indigo-500': fields.hasManufacturer}">
-                                                    <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.hasManufacturer,}"></div>
+                                                <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': !fields.hasManufacturer}">
+                                                    <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': !fields.hasManufacturer}"></div>
                                                 </div>
                                             </div>
                                             <input v-model="fields.hasManufacturer" id="has_manufacturer" name="has_manufacturer" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
@@ -299,7 +326,7 @@
                                     <div class="space-y-4">
 
                                         <div class="flex items-center">
-                                            <input v-model="fields.interactionType" @click="fields.interactionInputType = ''" id="configuration_card" name="interaction_type" value="1" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                            <input v-model.trim="$v.fields.interactionType.$model" @click="fields.interactionInputType = ''" id="configuration_card" name="interaction_type" value="1" type="radio" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" class="mr-3 form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border border-gray-300">
                                             <div class="flex flex-column">
                                                 <label for="push_everything" class="block text-sm font-medium text-gray-700 mb-0">
                                                     Card
@@ -311,7 +338,7 @@
 
                                         </div>
                                         <div class="flex items-center">
-                                            <input v-model="fields.interactionType" id="configuration_input" name="interaction_type" value="3" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                            <input v-model.trim="$v.fields.interactionType.$model" id="configuration_input" name="interaction_type" value="3" type="radio" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" class="mr-3 form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border border-gray-300">
                                             <div class="flex flex-column">
                                                 <label for="configuration_input" class="mb-0 block text-sm font-medium text-gray-700">
                                                     Input field
@@ -330,7 +357,7 @@
                                         </div>
 
                                         <div class="flex items-center">
-                                            <input v-model="fields.interactionType"  @click="fields.interactionInputType = ''" id="configuration_input" name="interaction_type" value="2" type="radio" class="mr-3 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                            <input v-model.trim="$v.fields.interactionType.$model"  @click="fields.interactionInputType = ''" id="configuration_radio" name="interaction_type" value="2" type="radio" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" class="mr-3 form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border border-gray-300">
                                             <div class="flex flex-column">
                                                 <label for="configuration_input" class="mb-0 block text-sm font-medium text-gray-700">
                                                     Radio button
@@ -338,6 +365,7 @@
                                                 <p class="text-gray-400 text-sm font-medium m-0">The user can select what they want using rounded buttons</p>
                                             </div>
                                         </div>
+                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.interactionType.required">Interactie type is verplicht!</p>
                                     </div>
                                 </fieldset>
                             </div>
@@ -357,8 +385,6 @@
                     <product-preview :data="fields"></product-preview>
                 </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -367,7 +393,7 @@
     import createNumberMask from 'text-mask-addons/dist/createNumberMask';
     import productPreview from "./productPreview.vue";
     import radioPreview from "./radioPreview";
-    import { required, email, minLength, maxLength, requiredIf } from "vuelidate/lib/validators";
+    import { required, email, minLength, maxLength, requiredIf, minValue } from "vuelidate/lib/validators";
 
     const currencyMask = createNumberMask({
         prefix: '',
@@ -382,7 +408,7 @@
         data () {
             return {
                 fields: {
-                    name: "",
+                    name: null,
                     isConfigurableProduct: false,
                     hasPriceIncrease: false,
                     price: null,
@@ -400,7 +426,7 @@
                     newFrom: null,
                     newTo: null,
                     manufacturer: '',
-                    hasManufacturer: false,
+                    hasManufacturer: true,
                     interactionType: null,
                     interactionInputType: '',
                     step: '',
@@ -443,6 +469,7 @@
             },
             onThumbnailChanged (event) {
                 const file = event.target.files[0];
+                this.fields.thumbnail = file;
                 this.fields.thumbnailPreview = URL.createObjectURL(file);
             },
             onVisualisationChanged(event) {
@@ -455,9 +482,6 @@
                     }).catch(err => {
                     console.log("There has been an error getting all manufacturers")
                 });
-            },
-            getAllConfigurators: function() {
-
             },
             getSteps: function() {
                 axios.get('/api/get/steps')
@@ -480,38 +504,67 @@
             isLetter: function(event) {
                 event = (event) ? event : window.event;
                 var charCode = (event.which) ? event.which : event.keyCode;
-                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
                     event.preventDefault();;
+                } else {
+                    return true;
+                }
+            },
+            isLetterOrDash: function(event) {
+                event = (event) ? event : window.event;
+                var charCode = (event.which) ? event.which : event.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 45 && charCode !== 95) {
+                    event.preventDefault();
                 } else {
                     return true;
                 }
             },
         },
         validations: {
-            name: {
-                required
+            fields: {
+                name: {
+                    required,
+                    maxLength: maxLength(128)
+                },
+                price: {
+                    required: requiredIf(function() {
+                        return !this.fields.hasPriceIncrease
+                    })
+                },
+                priceIncrease: {
+                    required: requiredIf(function() {
+                        return this.fields.hasPriceIncrease
+                    })
+                },
+                stock: {
+                    required
+                },
+                sku: {
+                    required
+                },
+                newFrom: {
+                    required: requiredIf(function() {
+                        return this.fields.newTo
+                    }),
+                    minValue: minValue(new Date().toISOString().substr(0,10)),
+                },
+                newTo: {
+                    required: requiredIf(function() {
+                        return this.fields.newFrom
+                    }),
+                },
+                manufacturer: {
+                    required: requiredIf(function() {
+                        return this.fields.hasManufacturer;
+                    })
+                },
+                interactionType: {
+                    required: requiredIf(function() {
+                        return !this.fields.isConfigurableProduct
+                    })
+                }
             },
-            price: {
-                required: requiredIf(function() {
-                    return !this.fields.hasPriceIncrease
-                })
-            },
-            configurator: {
-                required: requiredIf(function() {
-                    return this.fields.isConfigurableProduct
-                })
-            },
-            price_percentage: {
-                required: requiredIf(function() {
-                    return this.fields.hasPriceIncrease
-                })
-            },
-            stock: {
-                required
-            },
-            sku: {
-                required
-            }
+
         }
     }
 </script>

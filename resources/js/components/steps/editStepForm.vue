@@ -3,22 +3,27 @@
         <div class="px-20 pt-10 pb-10">
             <div class="flex">
                 <div class="w-1/2 flex items-center">
-                    <p class="text-3xl font-bold text-indigo-900">{{ fields.name }}</p>
+                    <p class="text-3xl font-bold text-gray-900">{{ fields.name }}</p>
                 </div>
             </div>
         </div>
         <div class="px-20">
             <div class="flex space-x-10">
                 <div class="w-6/12">
-
-
                     <div class="flex space-x-5">
                         <div class="w-4/12">
                             <p class="text-gray-800 font-medium text-lg">Name</p>
                         </div>
                         <div class="w-8/12">
-                            <input name="name" id="name" v-model="fields.name" v-model.trim="$v.ValName.$model" type="text" :class="{ 'border-red-500' : submitted && $v.ValName.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
-                            <p class="error text-red-500 font-medium" v-if="submitted && !$v.ValName.required">Naam is verplicht!</p>
+                            <div class="relative">
+                                <input name="name" id="name" v-model.trim="$v.fields.name.$model" type="text" :class="{ 'border-red-500' : submitted && !$v.fields.name.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
+                                    <svg v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="error text-red-500 font-medium my-3" v-if="submitted && !$v.fields.name.required">Naam is verplicht!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -30,7 +35,14 @@
                             <fieldset>
                                 <div class="flex items-start">
                                     <div class="flex items-center h-5">
-                                        <input id="is_optional" v-model="fields.is_optional" name="is_optional" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" :checked="fields.is_optional">
+                                        <div class="flex items-center h-5">
+                                            <div class="flex justify-between items-center" @click="[fields.is_optional = !fields.is_optional]">
+                                                <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.is_optional}">
+                                                    <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.is_optional}"></div>
+                                                </div>
+                                            </div>
+                                            <input v-model="fields.is_optional" id="is_optional" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                        </div>
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="is_optional" class="font-medium text-gray-700">This step is optional</label>
@@ -48,7 +60,12 @@
                             <fieldset>
                                 <div class="flex items-start">
                                     <div class="flex items-center h-5">
-                                        <input id="allow_multiple" v-model="fields.allow_multiple" name="allow_multiple" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" :checked="fields.allow_multiple">
+                                        <div class="flex justify-between items-center" @click="[fields.allow_multiple = !fields.allow_multiple]">
+                                            <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.allow_multiple}">
+                                                <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.allow_multiple}"></div>
+                                            </div>
+                                        </div>
+                                        <input id="allow_multiple" v-model="fields.allow_multiple" name="allow_multiple" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="allow_multiple" class="font-medium text-gray-700">Allow mutiple selection</label>
@@ -68,7 +85,15 @@
                                 <div class="space-y-4">
                                     <div class="flex" v-for="product in configurableProducts">
                                         <div class="flex items-center justify-center ">
-                                            <input :id="product.id" :value="product.id" v-on:change="AddOrDeleteFromSelectedConfigurableProducts(product)" :name="product.id" :checked="parentProducts.some(value => value.id === product.id )" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                            <div class="flex items-center h-5">
+                                                <div class="flex justify-between items-center" @click="()=>{AddOrDeleteFromSelectedConfigurableProducts(product)}">
+                                                    <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': parentProducts.some(value => value.id === product.id )}">
+                                                        <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': parentProducts.some(value => value.id === product.id )}"></div>
+                                                    </div>
+                                                </div>
+                                                <input v-model="fields.is_optional" id="is_optional" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                            </div>
+                                            <input :id="product.id" :value="product.id" :name="product.id" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                         </div>
                                         <div class="ml-3 flex w-100">
                                             <div class="w-4/6">
@@ -91,9 +116,18 @@
                             <p class="text-gray-500">How do you want the useers to interact with this step. This will only allow products to be added with the selected interaction type</p>
                         </div>
                         <div class="w-8/12">
-                            <select v-model="fields.interaction_type" type="text" name="interaction_type" id="interaction_type" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
-                                <option v-for="type in interactionTypes" :value="type.id" :selected="fields.interaction_type === type">{{ type.name }}</option>
-                            </select>
+                            <div class="relative">
+                                <select v-model.trim="$v.fields.interaction_type.$model" type="text" :class="{ 'border-red-500' : submitted && !$v.fields.interaction_type.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                    <option value="">Kies een type</option>
+                                    <option v-for="type in interactionTypes" :value="type.id" :selected="fields.interaction_type === type">{{ type.name }}</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.interaction_type.required">
+                                    <svg v-if="submitted && !$v.fields.interaction_type.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="error text-red-500 font-medium my-3" v-if="submitted && !$v.fields.interaction_type.required">Interactie type is verplicht!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -280,9 +314,14 @@ export default {
         }
     },
     validations: {
-        ValName: {
-            required
-        },
+        fields: {
+            name: {
+                required
+            },
+            interaction_type: {
+                required
+            }
+        }
     }
 }
 </script>

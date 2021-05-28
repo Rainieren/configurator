@@ -2,7 +2,7 @@
     <button type="button" class="bg-white shadow-sm min-h-32 w-50 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200 relative">
         <div class="p-3 border-b border-gray-300">
             <div class="flex">
-                <div class="w-2/3 text-left">
+                <div class="w-2/3 text-left overflow-hidden break-word">
                     <p class="font-bold">{{ data.name}}</p>
                     <p v-if="data.description" class="text-gray-700">{{ data.description.substring(0,32) + '...' }}</p>
                 </div>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="p-3 flex justify-center items-center">
-            <img :src="data.thumbnailPreview" v-if="data.thumbnailPreview" width="100" height="100"/>
+            <img :src="data.thumbnailPreview" v-if="data.thumbnailPreview" class="object-contain object-center h-full w-full rounded-xl"/>
         </div>
         <div class="p-3 text-left">
             <p class="text-gray-500 text-sm" v-if="data.weight">Weight: {{ data.weight }}</p>

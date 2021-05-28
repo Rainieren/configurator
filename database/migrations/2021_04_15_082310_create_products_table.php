@@ -29,10 +29,10 @@ class CreateProductsTable extends Migration
             $table->string('thumbnail')->nullable();
             // An image thgat visuablises the product configuration
             $table->string('visualisation')->nullable();
-            $table->integer('weight')->nullable();
-            $table->integer('height')->nullable();
-            $table->integer('length')->nullable();
-            $table->integer('width')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('height')->nullable();
+            $table->string('length')->nullable();
+            $table->string('width')->nullable();
             $table->string('url_key')->unique();
             $table->dateTime('new_from')->nullable();
             $table->dateTime('new_to')->nullable();

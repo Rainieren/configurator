@@ -9,7 +9,9 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-      extend: {},
+      extend: {
+          fontWeight: ['hover']
+      },
       colors: {
         bluegray: colors.blueGray,
         coolgray: colors.coolGray,

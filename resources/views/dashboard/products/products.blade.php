@@ -4,7 +4,7 @@
     <div class="px-20 pt-10 pb-10">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-3xl font-bold text-indigo-900">Products</p>
+                <p class="text-3xl font-bold text-gray-900">Products</p>
             </div>
             <div class="w-1/2 text-right">
                 <a href="{{ route('createProduct') }}" type="button" class="w-full inline-flex justify-center rounded-md border border-indigo-300 shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -18,8 +18,8 @@
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 ">
                 <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
                     {{ $products->links() }}
-                    <div class="overflow-hidden border-b border-gray-200 sm:rounded-lg shadow-sm rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200">
+                    <div class="overflow-hidden border-b border-gray-200 sm:rounded-lg shadow-md rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200 ">
                             <thead class="bg-white">
                             <tr>
 {{--                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">--}}

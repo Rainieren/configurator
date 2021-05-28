@@ -3,7 +3,7 @@
         <div class="px-20 pt-10 pb-10">
             <div class="flex">
                 <div class="w-1/2 flex items-center">
-                    <p class="text-3xl font-bold text-indigo-900">{{  this.fields.name }}</p>
+                    <p class="text-3xl font-bold text-gray-900">{{  this.fields.name }}</p>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                                 <p class="text-gray-800 font-medium text-lg">Name</p>
                             </div>
                             <div class="w-8/12">
-                                <input v-model="fields.name"  name="name" id="name" type="text" :class="{ 'border-red-500' : submitted && $v.name.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm" >
+                                <input v-model="fields.name"  name="name" id="name" type="text" :class="{ 'border-red-500' : submitted && $v.name.$error}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
                                 <p class="error text-red-500" v-if="submitted && !$v.name.required">Naam is verplicht!</p>
                             </div>
                         </div>
@@ -28,25 +28,20 @@
                             </div>
                             <div class="w-8/12">
                                 <fieldset>
-                                    <div class="flex items-start">
+                                    <div class="flex items-center">
                                         <div class="flex items-center h-5">
-                                            <input v-model="fields.isConfigurableProduct" v-on:click="isConfigurableProductFunc()" :checked="fields.isConfigurableProduct" id="configurable_product" name="configurable_product" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                            <div class="flex justify-between items-center" @click="[fields.isConfigurableProduct = !fields.isConfigurableProduct], isConfigurableProductFunc()">
+                                                <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.isConfigurableProduct}">
+                                                    <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.isConfigurableProduct,}"></div>
+                                                </div>
+                                            </div>
+                                            <input v-model="fields.isConfigurableProduct" id="configurable_product" name="configurable_product" type="hidden" class="focus:ring-indigo-500 h-4 w-4 form-checkbox text-indigo-500 border-gray-200 focus:bg-indigo-500 rounded">
                                         </div>
                                         <div class="ml-3 text-sm">
-                                            <label for="configurable_product" class="font-medium text-gray-700">This product is a configurable product</label>
+                                            <label for="configurable_product" class="font-medium text-gray-700 m-0">This product is a configurable product</label>
                                         </div>
                                     </div>
                                 </fieldset>
-                            </div>
-                        </div>
-                        <div class="flex space-x-5 my-5" v-if="fields.isConfigurableProduct">
-                            <div class="w-4/12">
-                                <p class="text-gray-800 font-medium text-lg">Configurator</p>
-                            </div>
-                            <div class="w-8/12">
-                                <select v-model="fields.configurator_id" type="text" name="configurator_id" id="configurator_id" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
-                                    <option :value="1">Fietsen</option>
-                                </select>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -61,18 +56,23 @@
                                     €
                                   </span>
                                     </div>
-                                    <input v-model="fields.price" :maxlength="8" v-mask="mask" :class="{ 'border-red-500' : submitted && $v.price.$error}" type="text" name="price" id="price" class="block w-full pl-8 pr-2 py-2 border border-gray-300 rounded-md" placeholder="0.00" :disabled="fields.hasPriceIncrease">
+                                    <input v-model="fields.price" :maxlength="8" v-mask="mask" :class="{ 'border-red-500' : submitted && $v.price.$error}" type="text" name="price" id="price" class="appearance-none block border border-gray-200 pl-8 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="0.00" :disabled="fields.hasPriceIncrease">
                                 </div>
                                 <p class="error text-red-500" v-if="submitted && !$v.price.required">Prijs is verplicht!</p>
                                 <div class="" v-if="!fields.isConfigurableProduct">
                                     <fieldset>
                                         <div class="mt-3 space-y-2">
-                                            <div class="flex items-start">
-                                                <div class="flex items-center h-5">
-                                                    <input v-model="fields.hasPriceIncrease" v-on:click="priceIncreaseFunc()" id="price_increase" name="price_increase" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-200 rounded">
+                                            <div class="flex items-center">
+                                                <div class="flex items-center">
+                                                    <div class="flex justify-between items-center" @click="[fields.hasPriceIncrease = !fields.hasPriceIncrease], priceIncreaseFunc()">
+                                                        <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.hasPriceIncrease}">
+                                                            <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.hasPriceIncrease,}"></div>
+                                                        </div>
+                                                    </div>
+                                                    <input v-model="fields.hasPriceIncrease" id="price_increase" name="price_increase" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-200 rounded">
                                                 </div>
                                                 <div class="ml-3 text-sm">
-                                                    <label for="comments" class="font-medium text-gray-700">This product has a price increase</label>
+                                                    <label for="price_increase" class="font-medium text-gray-700">This product has a price increase</label>
                                                     <p class="text-gray-500">Select this option if the product should increase the price with a percentage</p>
                                                 </div>
                                             </div>
@@ -81,7 +81,7 @@
                                     <div v-if="fields.hasPriceIncrease">
                                         <div class="my-3">
                                             <label for="percentage" class="font-medium text-gray-700">Percentage</label>
-                                            <input v-model="fields.priceIncrease" v-mask="'###'" v-model.trim="$v.price_percentage.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.price_percentage.$error}" type="text" name="percentage" id="percentage" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                            <input v-model="fields.priceIncrease" v-mask="'###'" v-model.trim="$v.price_percentage.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.price_percentage.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                             <p class="error text-red-500" v-if="submitted && !$v.price_percentage.required">Percentage is verplicht!</p>
                                         </div>
                                         <div class="my-3">
@@ -122,7 +122,7 @@
                                 <p class="text-gray-800 font-medium text-lg">SKU</p>
                             </div>
                             <div class="w-8/12">
-                                <input v-model="fields.sku" type="text" id="sku" name="sku"  :class="{ 'border-red-500' : submitted && $v.sku.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
+                                <input v-model="fields.sku" type="text" id="sku" name="sku"  :class="{ 'border-red-500' : submitted && $v.sku.$error}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                 <p class="error text-red-500" v-if="submitted && !$v.sku.required">SKU is verplicht!</p>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                                 <p class="text-gray-500">How much do you have in stock?</p>
                             </div>
                             <div class="w-8/12">
-                                <input v-model="fields.stock" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm">
+                                <input v-model="fields.stock" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && $v.stock.$error}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                 <p class="error text-red-500" v-if="submitted && !$v.stock.required">Voorraad is verplicht!</p>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                 <p class="text-gray-800 font-medium text-lg">Description</p>
                             </div>
                             <div class="w-8/12">
-                                <textarea v-model="fields.description" id="description" name="description" rows="5" class="p-2 shadow-sm block w-full border border-gray-300 rounded-md" placeholder="Write something beautiful"></textarea>
+                                <textarea v-model="fields.description" id="description" name="description" rows="5" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="Write something beautiful"></textarea>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -210,19 +210,19 @@
                             <div class="w-8/12">
                                 <div class="mb-3">
                                     <label for="weight" class="font-medium text-gray-700">Weight</label>
-                                    <input v-model="fields.weight" type="text" name="weight" :maxlength="10" v-on:keypress="isLetter($event)" id="weight" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                    <input v-model="fields.weight" type="text" name="weight" :maxlength="10" v-on:keypress="isLetter($event)" id="weight" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                 </div>
                                 <div class="mb-3">
                                     <label for="height" class="font-medium text-gray-700">Height</label>
-                                    <input v-model="fields.height" type="text" name="height" :maxlength="10" v-on:keypress="isLetter($event)" id="height" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                    <input v-model="fields.height" type="text" name="height" :maxlength="10" v-on:keypress="isLetter($event)" id="height" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                 </div>
                                 <div class="mb-3">
                                     <label for="length" class="font-medium text-gray-700">Length</label>
-                                    <input v-model="fields.length" type="text" name="length" :maxlength="10" v-on:keypress="isLetter($event)" id="length" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                    <input v-model="fields.length" type="text" name="length" :maxlength="10" v-on:keypress="isLetter($event)" id="length" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                 </div>
                                 <div class="mb-3">
                                     <label for="width" class="font-medium text-gray-700">Width</label>
-                                    <input v-model="fields.width" type="text" name="width" :maxlength="10" v-on:keypress="isLetter($event)" id="width" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                    <input v-model="fields.width" type="text" name="width" :maxlength="10" v-on:keypress="isLetter($event)" id="width" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -233,11 +233,11 @@
                             </div>
                             <div class="w-8/12">
                                 <div class="flex">
-                                    <input v-model="fields.newFrom" type="date" name="new_from" id="new_from" v-on:change="alert('test')" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                    <input v-model="fields.newFrom" type="date" name="new_from" id="new_from" v-on:change="alert('test')" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                     <div class="mx-3 flex items-center justify-center">
                                         <p class="text-gray-900 font-medium">To</p>
                                     </div>
-                                    <input v-model="fields.newTo" type="date" name="new_to" id="new_to" class="p-2 border border-gray-300 rounded-md w-100 shadow-sm" placeholder="">
+                                    <input v-model="fields.newTo" type="date" name="new_to" id="new_to" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -248,14 +248,19 @@
                                 <p class="text-gray-500">Who made the product?</p>
                             </div>
                             <div class="w-8/12">
-                                <select v-model="fields.manufacturer" type="text" name="manufacturer" id="manufacturer" class="p-2 border border-gray-500 rounded-md w-100 shadow-sm" :disabled="fields.hasManufacturer">
+                                <select v-model="fields.manufacturer" type="text" name="manufacturer" id="manufacturer" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" :disabled="!fields.hasManufacturer">
                                     <option :value="manufacturer.id" v-for="manufacturer in manufacturers">{{  manufacturer.name }}</option>
                                 </select>
                                 <fieldset>
                                     <div class="mt-3 space-y-2">
                                         <div class="flex items-start">
-                                            <div class="flex items-center h-5">
-                                                <input v-model="fields.hasManufacturer" @click="fields.manufacturer = ''" id="has_manufacturer" name="has_manufacturer" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                            <div class="flex items-center">
+                                                <div class="flex justify-between items-center" @click="[fields.hasManufacturer = !fields.hasManufacturer], fields.manufacturer = ''">
+                                                    <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': !fields.hasManufacturer}">
+                                                        <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': !fields.hasManufacturer}"></div>
+                                                    </div>
+                                                </div>
+                                                <input v-model="fields.hasManufacturer" id="has_manufacturer" name="has_manufacturer" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                             </div>
                                             <div class="ml-3 text-sm">
                                                 <label for="has_manufacturer" class="font-medium text-gray-700">This product does not have a manufacturer</label>
@@ -381,7 +386,7 @@ export default {
                 newFrom: this.product.new_from,
                 newTo: this.product.new_to,
                 manufacturer: this.product.manufacturer_id,
-                hasManufacturer: !this.product.manufacturer_id,
+                hasManufacturer: !!this.product.manufacturer_id,
                 interactionType: this.product.interaction_type,
                 interactionInputType: '',
                 step: this.product.step_id,

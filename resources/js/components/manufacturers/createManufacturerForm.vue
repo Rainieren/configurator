@@ -9,14 +9,14 @@
                     </div>
                     <div class="w-8/12">
                         <div class="col-span-6 relative">
-                            <input  v-model.trim="$v.name.$model" v-model="fields.name" :class='{ "border-2 border-red-500" : submitted && $v.name.$error}'  name="name" id="name" type="text" class="p-2 appearance-none block border border-gray-500 rounded-md w-full shadow-sm">
+                            <input v-model.trim="$v.fields.name.$model" :class='{ "border-2 border-red-500" : submitted && !$v.fields.name.required}'  name="name" id="name" type="text" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
 
-                            <div class="absolute inset-y-7 top-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.name.required">
-                                <svg v-if="$v.name.$error" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <div class="absolute inset-y-7 top-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
+                                <svg v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <p class="error text-red-500 mt-2" v-if="submitted && !$v.name.required">Naam is verplicht!</p>
+                            <p class="error text-red-500 mt-2" v-if="submitted && !$v.fields.name.required">Naam is verplicht!</p>
                         </div>
 
                     </div>
@@ -30,64 +30,63 @@
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 relative">
                                 <label for="street_address" class="block text-sm font-medium text-gray-700">Street address</label>
-                                <input type="text" v-model.trim="$v.street_address.$model" name="street_address" :class="{ 'border-red-500' : submitted && $v.street_address.$error}" id="street_address" autocomplete="street-address" class="p-2 border border-gray-500 rounded-md w-full shadow-sm">
+                                <input type="text" v-model.trim="$v.fields.street_address.$model" name="street_address" :class="{ 'border-red-500' : submitted && !$v.fields.street_address.required}" id="street_address" autocomplete="street-address" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.street_address.required">
-                                    <svg v-if="$v.street_address.$error" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.street_address.required">
+                                    <svg v-if="submitted && !$v.fields.street_address.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-
-                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.street_address.required">Address is verplicht!</p>
+                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.fields.street_address.required">Address is verplicht!</p>
                             </div>
 
                             <div class="col-span-6 sm:col-span-6 lg:col-span-2 relative">
                                 <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                                <input type="text" v-model.trim="$v.city.$model" name="city" :class="{ 'border-red-500' : submitted && $v.city.$error}" id="city" class="p-2 border border-gray-500 rounded-md w-full shadow-sm">
+                                <input type="text" v-model.trim="$v.fields.city.$model" name="city" :class="{'border-red-500' : submitted && !$v.fields.city.required}" id="city" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.city.required">
-                                    <svg v-if="$v.city.$error" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.city.required">
+                                    <svg v-if="submitted && !$v.fields.city.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.city.required">City is verplicht!</p>
+                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.fields.city.required">City is verplicht!</p>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3 lg:col-span-2 relative">
                                 <label for="state" class="block text-sm font-medium text-gray-700">State / Province</label>
-                                <input type="text" v-model.trim="$v.state.$model" name="state" :class="{ 'border-red-500' : submitted && $v.state.$error}" id="state" class="p-2 border border-gray-500 rounded-md w-full shadow-sm">
+                                <input type="text" v-model.trim="$v.fields.state.$model" name="state" :class="{ 'border-red-500' : submitted && !$v.fields.state.required}" id="state" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.state.required">
-                                    <svg v-if="$v.state.$error" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.state.required">
+                                    <svg v-if="submitted && !$v.fields.state.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.state.required">State is verplicht!</p>
+                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.fields.state.required">State is verplicht!</p>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3 lg:col-span-2 relative">
                                 <label for="postal_code" class="block text-sm font-medium text-gray-700">ZIP / Postal</label>
-                                <input type="text" v-model.trim="$v.postal_code.$model" name="postal_code" :class="{ 'border-red-500' : submitted && $v.postal_code.$error}" id="postal_code" autocomplete="postal-code" class="p-2 border border-gray-500 rounded-md w-full shadow-sm">
+                                <input type="text" v-model.trim="$v.fields.postal_code.$model" name="postal_code" :class="{ 'border-red-500' : submitted && !$v.fields.postal_code.required}" id="postal_code" autocomplete="postal-code" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.postal_code.required">
-                                    <svg v-if="$v.postal_code.$error" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.postal_code.required">
+                                    <svg v-if="submitted && !$v.fields.postal_code.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.postal_code.required">Postal code is verplicht!</p>
+                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.fields.postal_code.required">Postal code is verplicht!</p>
                             </div>
 
                             <div class="col-span-6 relative">
                                 <label for="country" class="block text-sm font-medium text-gray-700">Country / Region</label>
-                                <select id="country" v-model.trim="$v.country.$model" name="country" :class="{ 'border-red-500' : submitted && $v.country.$error}" autocomplete="country" class="p-2 border border-gray-500 rounded-md w-full shadow-sm">
+                                <select id="country" v-model.trim="$v.fields.country.$model" name="country" :class="{ 'border-red-500' : submitted && !$v.fields.country.required}" autocomplete="country" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option v-for="country in countries" :value="country.id">{{ country.name }}</option>
                                 </select>
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.country.required">
-                                    <svg v-if="$v.country.$error" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.country.required">
+                                    <svg v-if="submitted && !$v.fields.country.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.country.required">Country is verplicht!</p>
+                                <p class="error text-red-500 mt-2" v-if="submitted && !$v.fields.country.required">Country is verplicht!</p>
                             </div>
                         </div>
                     </div>
@@ -123,7 +122,7 @@
                         <p class="text-gray-800 font-medium text-lg">Description</p>
                     </div>
                     <div class="w-8/12">
-                        <textarea id="description" name="description" rows="5" class="p-2 shadow-sm block w-full border border-gray-300 rounded-md" placeholder="Write something beautiful"></textarea>
+                        <textarea id="description" name="description" rows="5" class="p-2 shadow-sm block w-full border border-gray-200 rounded-md" placeholder="Write something beautiful"></textarea>
                     </div>
                 </div>
 
@@ -140,16 +139,19 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { required, email, minLength, maxLength, requiredIf } from "vuelidate/lib/validators";
-import Vuelidate from "vuelidate";
-Vue.use(Vuelidate)
+import { required } from "vuelidate/lib/validators";
+
 
 export default {
     data () {
         return {
             fields: {
                 name: '',
+                street_address: '',
+                city: '',
+                country: '',
+                state: '',
+                postal_code: '',
             },
             countries: [],
             submitted: false,
@@ -180,24 +182,26 @@ export default {
         },
     },
     validations: {
-        name: {
-            required
-        },
-        street_address: {
-            required
-        },
-        city: {
-            required
-        },
-        country: {
-            required
-        },
-        state: {
-            required
-        },
-        postal_code: {
-            required
-        },
+        fields: {
+            name: {
+                required
+            },
+            street_address: {
+                required
+            },
+            city: {
+                required
+            },
+            country: {
+                required
+            },
+            state: {
+                required
+            },
+            postal_code: {
+                required
+            },
+        }
     }
 }
 </script>
