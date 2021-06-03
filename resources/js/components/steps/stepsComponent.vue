@@ -11,7 +11,7 @@
                 <p>Succesvol opgeslagen!</p>
             </div>
         </transition>
-        <table class="min-w-full divide-y divide-gray-200 shadow-md rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200 shadow-md rounded-lg overflow-x-scroll">
             <thead class="bg-white">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

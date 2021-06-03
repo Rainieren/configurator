@@ -1999,7 +1999,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -46404,7 +46403,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "grid grid-cols-3 gap-6" },
+                    { staticClass: "grid grid-cols-3 md:grid-cols-2 gap-6" },
                     _vm._l(_vm.configurableProducts, function(product) {
                       return _c(
                         "button",
@@ -46663,7 +46662,10 @@ var render = function() {
                                     _vm._v(" "),
                                     _c(
                                       "div",
-                                      { staticClass: "grid grid-cols-3 gap-6" },
+                                      {
+                                        staticClass:
+                                          "grid grid-cols-3 md:grid-cols-2 gap-6"
+                                      },
                                       [
                                         _vm._l(step.options, function(
                                           option,
@@ -54841,7 +54843,7 @@ var render = function() {
         "table",
         {
           staticClass:
-            "min-w-full divide-y divide-gray-200 shadow-md rounded-lg"
+            "min-w-full divide-y divide-gray-200 shadow-md rounded-lg overflow-x-scroll"
         },
         [
           _vm._m(0),
@@ -55217,7 +55219,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "p-16" },
+          { staticClass: "p-16 md:p-8" },
           [
             _vm.active
               ? _c(
@@ -55229,7 +55231,7 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "bg-white border rounded-sm border-black w-auto text-center min-w-0 shadow-sm px-1 mr-2"
+                            "bg-white border rounded-sm border-black w-auto text-center flex align-center justify-center shadow-sm px-1 mr-2"
                         },
                         [
                           _vm._v(
@@ -55273,7 +55275,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "bg-white border rounded-sm border-black w-auto h-6 flex items-center text-center min-w-0 shadow-sm px-2 mr-2"
+                              "bg-white border rounded-sm border-black w-auto h-6 flex items-center text-center flex align-center justify-center shadow-sm px-2 mr-2"
                           },
                           [
                             _vm._v(
@@ -55333,7 +55335,7 @@ var render = function() {
             _c("div", { staticClass: "border-b border-gray-300 py-6 flex" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "w-1/2 text-right" }, [
+              _c("div", { staticClass: "w-1/4 text-right" }, [
                 _vm.active
                   ? _c("p", { staticClass: "text-gray-700" }, [
                       _vm._v(
@@ -55352,7 +55354,7 @@ var render = function() {
             _c("div", { staticClass: "border-b border-gray-300 py-6 flex" }, [
               _vm._m(1),
               _vm._v(" "),
-              _c("div", { staticClass: "w-1/2 text-right" }, [
+              _c("div", { staticClass: "w-1/4 text-right" }, [
                 _vm.active
                   ? _c("p", { staticClass: "text-gray-700" }, [
                       _vm._v(
@@ -55390,7 +55392,8 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "border-t border-gray-300 px-16 py-8 space-y-2 h-auto "
+          staticClass:
+            "border-t border-gray-300 px-16 md:px-8 py-8 space-y-2 h-auto "
         },
         [
           _c("p", { staticClass: "font-bold font-lg" }, [_vm._v("Need help?")]),
@@ -55500,7 +55503,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-1/2" }, [
+    return _c("div", { staticClass: "w-3/4" }, [
       _c("p", { staticClass: "text-gray-700" }, [_vm._v("Subtotaal ")])
     ])
   },
@@ -55508,7 +55511,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-1/2" }, [
+    return _c("div", { staticClass: "w-3/4" }, [
       _c("p", { staticClass: "text-gray-700" }, [_vm._v("BTW 21% ")])
     ])
   },

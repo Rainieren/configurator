@@ -12,18 +12,18 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="space-y-6">
-                            <div class="w-1/2">
+                            <div class="w-3/4">
                                 <label for="email" class="block text-xs my-2 font-medium text-gray-700 uppercase tracking-wide">{{ __('Email address') }}</label>
-                                <input id="email" type="email" class="@error('email') is-invalid @enderror px-3 py-2 border border-gray-300 w-full rounded focus:border-indigo-500" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="@error('email') is-invalid @enderror px-3 py-2 border border-gray-200 w-full rounded focus:border-indigo-500" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                            <div class="w-1/2">
+                            <div class="w-3/4">
                                 <label for="password" class="block text-xs my-2 font-medium text-gray-700 uppercase tracking-wide">{{ __('Password') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror px-3 py-2 border border-gray-300 w-full rounded focus:border-indigo-500" name="password" required autocomplete="current-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror px-3 py-2 border border-gray-200 w-full rounded focus:border-indigo-500" name="password" required autocomplete="current-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

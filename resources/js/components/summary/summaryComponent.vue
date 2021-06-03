@@ -13,10 +13,10 @@
                     </div>
                 </div>
             </div>
-            <div class="p-16">
+            <div class="p-16 md:p-8">
                 <div class="border-b border-gray-300 py-6 flex" v-if="active">
                     <div class="w-1/2 flex">
-                        <div class="bg-white border rounded-sm border-black w-auto text-center min-w-0 shadow-sm px-1 mr-2">
+                        <div class="bg-white border rounded-sm border-black w-auto text-center flex align-center justify-center shadow-sm px-1 mr-2">
                             Product
                         </div>
                         <p class="text-gray-700">{{ active.name }}</p>
@@ -29,7 +29,7 @@
                 <div class="border-b border-gray-300 py-6 flex h-75 overflow-y-scroll" v-for="(option, index) in options" v-if="option[0].options.length">
 
                     <div class="w-1/2 flex">
-                        <div class="bg-white border rounded-sm border-black w-auto h-6 flex items-center text-center min-w-0 shadow-sm px-2 mr-2">
+                        <div class="bg-white border rounded-sm border-black w-auto h-6 flex items-center text-center flex align-center justify-center shadow-sm px-2 mr-2">
                             {{option[0].step.name}}
                         </div>
                         <ul>
@@ -72,18 +72,18 @@
 <!--                </div>-->
 
                 <div class="border-b border-gray-300 py-6 flex">
-                    <div class="w-1/2">
+                    <div class="w-3/4">
                         <p class="text-gray-700">Subtotaal </p>
                     </div>
-                    <div class="w-1/2 text-right">
+                    <div class="w-1/4 text-right">
                         <p class="text-gray-700" v-if="active">{{ calculateSum - (calculateSum * 0.21) | currency('€ ') }}</p>
                     </div>
                 </div>
                 <div class="border-b border-gray-300 py-6 flex">
-                    <div class="w-1/2">
+                    <div class="w-3/4">
                         <p class="text-gray-700">BTW 21% </p>
                     </div>
-                    <div class="w-1/2 text-right">
+                    <div class="w-1/4 text-right">
                         <p class="text-gray-700" v-if="active">{{ calculateSum * 0.21 | currency('€ ') }}</p>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
 
             </div>
         </div>
-        <div class="border-t border-gray-300 px-16 py-8 space-y-2 h-auto ">
+        <div class="border-t border-gray-300 px-16 md:px-8 py-8 space-y-2 h-auto ">
             <p class="font-bold font-lg">Need help?</p>
             <p class="text-gray-500">Lorem ipsum dolar amet rados</p>
             <div class="flex space-x-10">

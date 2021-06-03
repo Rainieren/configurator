@@ -14,7 +14,6 @@
                                 </div>
                                 <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -43,7 +42,7 @@
                 <div class="relative flex justify-between items-center pb-4">
                     <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
                 </div>
-                <div class="grid grid-cols-3 gap-6">
+                <div class="grid grid-cols-3 md:grid-cols-2 gap-6">
                     <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,7 +97,7 @@
                                 <h1 class="text-3xl font-medium">{{ step.name }}</h1>
                             </div>
 
-                            <div class="grid grid-cols-3 gap-6">
+                            <div class="grid grid-cols-3 md:grid-cols-2 gap-6">
                                 <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))}">
                                     <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
