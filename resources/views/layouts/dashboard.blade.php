@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('configurator') }}" class="p-2.5 px-4 flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('configurator') ? 'bg-indigo-600 text-white' : '' }}">
+                    <a href="{{ route('configurators') }}" class="p-2.5 px-4 flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('configurators') ? 'bg-indigo-600' : '' }}">
                         Configurators
                     </a>
                 </li>

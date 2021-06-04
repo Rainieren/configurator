@@ -55,8 +55,8 @@ class ProductController extends Controller
             'price' => $request->price ? str_replace(",", "", $request->price) : null,
             'percentage_increase' => $request->percentage / 100,
             'stock' => $request->stock,
-            'status' => 1,
-            'visibility' => 1,
+            'status' => !$request->isEnabled ? 1 : 0,
+            'visibility' => !$request->isVisible ? 1 : 0,
             'description' => $request->description,
             'thumbnail' => $request->visualisation_upload ? '/storage/images/' . $imageName : null,
             'visualisation' => $request->visualisation_upload ? '/storage/visualisations/' . $visuName : null,
@@ -115,7 +115,42 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        if($request->data['fields']['thumbnail']) {
+            $imageName = time() . '.' . $request->data['fields']['thumbnail']->extension();
+            $request->data['fields']['thumbnail']->storeAs('public/images', $imageName);
+        }
+        if($request->data['fields']['visualisation']) {
+            $visuName = time().'.'.$request->data['fields']['visualisation']->extension();
+            $request->data['fields']['visualisation']->storeAs('public/visualisations', $imageName);
+        }
+
+        $product->update([
+            'name' => $request->data['fields']['name'],
+            'price' => $request->data['fields']['price'] ? str_replace(",", "", $request->data['fields']['price']) : null,
+            'percentage_increase' => $request->data['fields']['priceIncrease'] / 100,
+            'stock' => $request->data['fields']['stock'],
+            'status' => $request->data['fields']['isEnabled'],
+            'visibility' => $request->data['fields']['isVisible'],
+            'description' => $request->data['fields']['description'],
+            'thumbnail' => $request->data['fields']['thumbnail'] ? '/storage/images/' . $imageName : null,
+            'visualisation' => $request->data['fields']['visualisation'] ? '/storage/visualisations/' . $visuName : null,
+            'weight' => $request->data['fields']['weight'],
+            'height' => $request->data['fields']['height'],
+            'length' => $request->data['fields']['length'],
+            'width' => $request->data['fields']['width'],
+            'url_key' => strtolower(str_replace(' ', '_', $request->data['fields']['name'])),
+            'new_from' => $request->data['fields']['newFrom'],
+            'new_to' => $request->data['fields']['newTo'],
+            'sku' => $request->data['fields']['sku'],
+            'configurable' => $request->data['fields']['isConfigurableProduct'],
+            'interaction_type' => $request->data['fields']['interactionType'],
+            'manufacturer_id' => $request->data['fields']['manufacturer'],
+            'updated_at' => Carbon::now()
+        ]);
+
+        return response()->json();
     }
 
     /**

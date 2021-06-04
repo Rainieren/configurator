@@ -5,7 +5,8 @@
             <div class="bg-white absolute w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
                 <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">Wat wil je configureren?</h2>
                 <div class="grid grid-cols-3 gap-6">
-                    <div v-for="(configator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s">
+                    <div v-for="(configator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configator.theme_color)">
+                        <p>{{  }}</p>
                         <div v-on:click="getConfigurableProducts(configator.id)">
                             <div class="p-3">
                                 <p class="font-medium text-xl text-center">{{ configator.name }}</p>
@@ -323,6 +324,9 @@
                 // });
 
 
+            },
+            styleBorder: function(themeColor) {
+                return {'--borderHoverColor': themeColor};
             }
         },
         computed: {
@@ -331,7 +335,8 @@
                 return this.steps.filter(step => {
                     return step.includes(this.activeProduct.id)
                 });
-            }
+            },
+
         }
     }
 </script>
@@ -342,5 +347,8 @@
     }
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
         opacity: 0;
+    }
+    .cardhover:hover {
+        border-color: var(--borderHoverColor) !important;
     }
 </style>

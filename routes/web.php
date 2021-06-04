@@ -24,6 +24,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
     Route::get('/manufacturers', [App\Http\Controllers\ManufacturerController::class, 'index'])->name('manufacturers');
     Route::get('/steps', [App\Http\Controllers\StepController::class, 'index'])->name('steps');
+    Route::get('/configurators', [App\Http\Controllers\ConfiguratorController::class, 'index'])->name('configurators');
 
 
 
@@ -58,6 +59,17 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/store', [App\Http\Controllers\StepController::class, 'store'])->name('storeStep');
         Route::get('/{id}/edit', [App\Http\Controllers\StepController::class, 'edit'])->name('editStep');
         Route::delete('/{id}/delete', [App\Http\Controllers\StepController::class, 'destroy'])->name('deleteStep');
+    });
+
+    Route::prefix('configurator')->group(function () {
+
+        Route::get('/create', [App\Http\Controllers\ConfiguratorController::class, 'create'])->name('createConfigurator');
+        Route::post('/store', [App\Http\Controllers\ConfiguratorController::class, 'store'])->name('storeConfigurator');
+
+        Route::get('/{id}', [App\Http\Controllers\ConfiguratorController::class, 'show'])->name('configurator');
+        Route::get('/{id}/edit', [App\Http\Controllers\ConfiguratorController::class, 'edit'])->name('editConfigurator');
+
+        Route::delete('/{id}/delete', [App\Http\Controllers\ConfiguratorController::class, 'destroy'])->name('deleteConfigurator');
     });
 });
 

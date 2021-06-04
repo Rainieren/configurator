@@ -30,6 +30,8 @@ import Vuelidate from 'vuelidate';
 import Flash from './components/FlashComponent.vue';
 import Modal from './components/steps/modalComponent.vue';
 import Configurator from "./pages/Configurator.vue";
+import CreateConfiguratorForm from "./components/configurators/createConfiguratorForm.vue";
+import EditConfiguratorForm from "./components/configurators/editConfiguratorForm.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
 import EditProductForm from "./components/products/editProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
@@ -75,6 +77,9 @@ Vue.component('step-list', require('./components/steps/stepsComponent.vue').defa
 
 Vue.component('manufacturer-create-form', require('./components/manufacturers/createManufacturerForm.vue').default)
 
+Vue.component('configurator-create-form', require('./components/configurators/createConfiguratorForm.vue').default)
+Vue.component('configurator-edit-form', require('./components/configurators/editConfiguratorForm.vue').default)
+
 
 // Pages
 Vue.component('configurator-view', require('./pages/Configurator.vue').default);
@@ -108,6 +113,8 @@ const dashboard = new Vue({
         EditStepForm,
         Statistics,
         CreateManufacturerForm,
-        StepList
+        StepList,
+        CreateConfiguratorForm,
+        EditConfiguratorForm
     }
 });

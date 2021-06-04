@@ -17,6 +17,8 @@ class Configurator extends Model
     protected $fillable = ['name',
         'theme_color',
         'language_id',
+        'created_at',
+        'updated_at'
     ];
 
     /**

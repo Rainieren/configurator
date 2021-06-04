@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Configurator;
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use League\Flysystem\Config;
 
 class ConfiguratorController extends Controller
 {
@@ -15,7 +18,9 @@ class ConfiguratorController extends Controller
      */
     public function index()
     {
-        return view('dashboard.configurator');
+        $configurators = Configurator::all();
+
+        return view('dashboard.configurators.configurators', compact('configurators'));
     }
 
     /**
@@ -25,7 +30,7 @@ class ConfiguratorController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.configurators.create');
     }
 
     /**
@@ -36,7 +41,14 @@ class ConfiguratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $configurator = Configurator::create([
+            'name' => $request->name,
+            'theme_color' => $request->theme_color,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        return redirect('/dashboard/configurators');
     }
 
     /**
@@ -58,7 +70,9 @@ class ConfiguratorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $configurator = Configurator::find($id);
+
+        return view('dashboard.configurators.edit', compact('configurator'));
     }
 
     /**
@@ -70,7 +84,15 @@ class ConfiguratorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $configurator = Configurator::find($id);
+
+        $configurator->update([
+           'name' => $request->data['fields']['name'],
+           'theme_color' => $request->data['fields']['themeColor'],
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return response()->json();
     }
 
     /**
@@ -81,7 +103,9 @@ class ConfiguratorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Configurator::destroy($id);
+
+        return redirect('/dashboard/configurators')->with('flash', "Succesvol verwijderd");
     }
 
     /**
