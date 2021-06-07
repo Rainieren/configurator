@@ -17,7 +17,6 @@ class CreateProductSummaryTable extends Migration
             $table->id();
             $table->integer('product_id')->unsigned();
             $table->integer('summary_id')->unsigned();
-            $table->timestamps();
         });
     }
 

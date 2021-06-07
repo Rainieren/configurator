@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
                 // Create a random description
                 'description' => $faker->realText($maxNbChars = 200, $indexSize = 2),
                 // Fetch a random image
-                'thumbnail' => 'placeholder.png',
+                'thumbnail' => '/storage/images/placeholder.png',
 
                 'visualisation' => null,
 

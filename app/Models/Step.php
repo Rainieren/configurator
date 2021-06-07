@@ -10,7 +10,7 @@ class Step extends Model
     use HasFactory;
 
     protected $fillable = ['name',
-        'interaction_type', 'is_optional', 'order', 'allow_multiple'
+        'interaction_type', 'is_optional', 'order', 'allow_multiple', 'default_product'
     ];
 
     /**

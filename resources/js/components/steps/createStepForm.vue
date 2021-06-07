@@ -33,9 +33,9 @@
                             <fieldset>
                                 <div class="flex items-center">
                                     <div class="flex items-center h-5">
-                                        <div class="flex justify-between items-center" @click="[fields.is_optional = !fields.is_optional]">
-                                            <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.is_optional}">
-                                                <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.is_optional}"></div>
+                                        <div class="flex justify-between items-center" @click="[fields.is_optional = !fields.is_optional], [fields.defaultProduct = '']">
+                                            <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': !fields.defaultProduct && fields.is_optional}">
+                                                <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': !fields.defaultProduct && fields.is_optional}"></div>
                                             </div>
                                         </div>
                                         <input v-model="fields.is_optional" id="is_optional" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
@@ -87,7 +87,7 @@
                                                         <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': selectedConfigurableProducts.includes(product.id)}"></div>
                                                     </div>
                                                 </div>
-                                                <input v-model="fields.is_optional" id="is_optional" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                                <input v-model="fields.is_optional" id="ddd" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                             </div>
                                             <input :id="product.id" :value="product.id" :name="product.id" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                         </div>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <select v-model.trim="$v.fields.interactionType.$model" type="text" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <select v-model.trim="$v.fields.interactionType.$model" @change="selectedProducts = []" type="text" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option value="" selected>Kies een interactie type</option>
                                     <option v-for="type in interactionTypes" :value="type.id">{{ type.name }}</option>
                                 </select>
@@ -133,16 +133,19 @@
                             <p class="text-gray-500">Which products would you like to add to this step? These are the products that the user can add to the configuration</p>
                         </div>
                         <div class="w-8/12 space-y-5">
-                            <div class="grid grid-cols-10 gap-5 space-x-5 shadow-sm p-3" v-for="product in selectedProducts">
-                                <div class="di">
+                            <div class="grid grid-cols-10 gap-5 space-x-5 shadow-sm p-3 border border-gray-200 rounded-md" v-for="product in selectedProducts">
+                                <div class="flex align-items-center">
                                     <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
                                 </div>
-                                <div class="col-span-6 flex items-center">
+                                <div class="col-span-4 flex flex-column">
                                     <p class="font-medium">{{ product.name }}</p>
+                                    <p class="font-medium text-gray-500">{{ parseFloat(product.price) | currency('€ ') }}</p>
                                 </div>
-                                <div class="col-span-2 flex items-center">
-                                    <input type="radio" class="">
-                                    Default
+                                <div class="col-span-4 flex items-center">
+                                    <input @click="fields.defaultProduct = product" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                    <label for="default_product" class="ml-3 mb-0 block text-sm font-medium">
+                                        Default
+                                    </label>
                                 </div>
                                 <div class="flex items-center">
                                     <div class="flex space-x-4">
@@ -200,6 +203,7 @@
                     interactionType: null,
                     is_optional: false,
                     allow_multiple: false,
+                    defaultProduct: '',
                 },
                 selectedProducts: [],
                 interactionTypes: {},
@@ -258,7 +262,7 @@
             },
             AddSelectedConfigurableProducts: function(id) {
                 if(this.selectedConfigurableProducts.includes(id)){
-                    this.selectedConfigurableProducts=_.without(this.selectedConfigurableProducts,id)
+                    this.selectedConfigurableProducts=_.without(this.selectedConfigurableProducts.id)
                 }else{
                     this.selectedConfigurableProducts.push(id)
                 }

@@ -48,12 +48,13 @@ class StepController extends Controller
             $order = $steps->max('order') + 1;
         }
 
-//        dd($request->addToConfigurableProducts);
+//        dd($request);
         $step = Step::create([
             'name' => $request->name,
             'interaction_type' => $request->interaction_type,
-            'is_optional' => $request->is_optional ? 1 : null,
-            'allow_multiple' => $request->allow_multiple ? 1 : null,
+            'is_optional' => filter_var($request->is_optional, FILTER_VALIDATE_BOOLEAN),
+            'allow_multiple' => filter_var($request->allow_multiple, FILTER_VALIDATE_BOOLEAN),
+            'default_product' => $request->default_product,
             'order' => $order,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

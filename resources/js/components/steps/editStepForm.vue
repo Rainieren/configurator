@@ -138,12 +138,18 @@
                         </div>
                         <div class="w-8/12 space-y-5">
                             <div class="grid grid-cols-10 gap-5 space-x-5 shadow-sm p-3" v-for="product in fields.options">
-                                <div class="di">
-                                    <img :src="product.thumbnail" alt="" class="w-16 rounded bg-contain">
+                                <div class="flex align-items-center">
+                                    <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
                                 </div>
-                                <div class="col-span-8 flex flex-column justify-center">
-                                    <span class="font-medium">{{ product.name }}</span>
-                                    <span class="font-medium text-sm text-gray-500">{{ parseFloat(product.price) | currency('€ ') }}</span>
+                                <div class="col-span-4 flex flex-column">
+                                    <p class="font-medium">{{ product.name }}</p>
+                                    <p class="font-medium text-gray-500">{{ parseFloat(product.price) | currency('€ ') }}</p>
+                                </div>
+                                <div class="col-span-4 flex items-center">
+                                    <input @click="fields.defaultProduct = product" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                    <label for="default_product" class="ml-3 mb-0 block text-sm font-medium">
+                                        Default
+                                    </label>
                                 </div>
                                 <div class="flex items-center">
                                     <div class="flex space-x-4">
@@ -203,6 +209,7 @@ export default {
                 is_optional: this.step.is_optional,
                 name: this.step.name,
                 options: this.step.options,
+                defaultProduct: this.step.defaultProduct
             },
             ValName: this.step.name,
             interactionTypes: {},

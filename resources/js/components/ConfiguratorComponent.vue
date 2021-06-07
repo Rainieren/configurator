@@ -33,7 +33,7 @@
 
         <div class="flex flex-col xl:flex-row" v-if="!loading">
             <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-20 space-y-15">
-                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = []">
+                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = [], steps = []">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg>
@@ -43,7 +43,7 @@
                 <div class="relative flex justify-between items-center pb-4">
                     <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
                 </div>
-                <div class="grid grid-cols-3 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,7 +98,7 @@
                                 <h1 class="text-3xl font-medium">{{ step.name }}</h1>
                             </div>
 
-                            <div class="grid grid-cols-3 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))}">
                                     <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,7 +141,7 @@
                         </div>
                     </draggable>
                 </div>
-                <button @click="ProcessConfiguration()" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Configuratie afronden</button>
+                <button @click="ProcessConfiguration(), openModal()" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Configuratie afronden</button>
             </div>
             <Summary :active="activeProduct" :options="chosenOptions"></Summary>
         </div>
@@ -181,7 +181,18 @@
             // this.getConfigurableProducts();
             this.getAllConfigurators();
         },
+        computed: {
+            // Only show the steps that a the selected product has
+            filteredSteps() {
+                return this.steps.filter(step => {
+                    return step.includes(this.activeProduct.id)
+                });
+            }
+        },
         methods: {
+            openModal() {
+                this.$refs.ConfigurationModal.showModal = true;
+            },
             optionExistInArray: function(name) {
                 let exists = false
                 this.chosenOptions.forEach(function(value, i) {
@@ -201,9 +212,6 @@
                     }
                 });
                 return exists;
-            },
-            onOrderChange() {
-
             },
             addToChosenOptions(step, option) {
                 // Stap komt overeen met de stap die al in de array staat
@@ -265,9 +273,6 @@
                         console.log(err)
                     })
                 ]);
-
-
-
             },
             getAllConfigurators: function() {
                 axios.get('/api/get/all/configurators')
@@ -281,10 +286,24 @@
                 axios.get('/api/get/getRelatedSteps/' +  id)
                     .then(response => {
                         this.steps = response.data
+
+                        this.addDefaultProductsToArrayBeforehand()
+
                         this.stepsLoading = false
                     }).catch(err => {
                     console.log(err)
                 });
+            },
+            addDefaultProductsToArrayBeforehand() {
+                console.log("Default producten toevoegen aan array")
+                this.steps[0].steps.forEach(function(value, index) {
+                    value.options.forEach(function(option, index) {
+                        if(option.id === value.default_product) {
+                            this.chosenOptions.push([{step: value, options: [option]}])
+                        }
+                    }, this);
+                }, this);
+                // this.chosenOptions.push([{step: step, options: [option]}])
             },
             openModal: function() {
                 this.$refs.configurationModal.showModal = true;
@@ -292,17 +311,7 @@
             ProcessConfiguration: function() {
                 this.configurationFinished = true
 
-                // axios.post('/api/store/configuration', {
-                //     activeProduct: this.activeProduct,
-                //     chosenOptions: this.chosenOptions
-                // }).then(response => {
-                //     console.log(response.data)
-                //     this.summary_code = response.data.code
-                //     this.openModal();
-                // }).catch(err => {
-                //     console.log('Er is iets mis gegaan tijdens het opslaan van de configuratie')
-                //     console.log(err);
-                // })
+
 
             },
             lowestPriceInConfigurator: function(id) {
@@ -328,15 +337,6 @@
             styleBorder: function(themeColor) {
                 return {'--borderHoverColor': themeColor};
             }
-        },
-        computed: {
-            // Only show the steps that a the selected product has
-            filteredSteps() {
-                return this.steps.filter(step => {
-                    return step.includes(this.activeProduct.id)
-                });
-            },
-
         }
     }
 </script>

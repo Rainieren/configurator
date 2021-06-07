@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Configurator;
 use App\Models\Product;
+use App\Models\Summary;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -19,8 +20,9 @@ class ConfiguratorController extends Controller
     public function index()
     {
         $configurators = Configurator::all();
+        $summaries = Summary::all();
 
-        return view('dashboard.configurators.configurators', compact('configurators'));
+        return view('dashboard.configurators.configurators', compact('configurators', 'summaries'));
     }
 
     /**

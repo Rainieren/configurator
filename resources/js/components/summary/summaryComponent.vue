@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="border-b border-gray-300 py-6 flex h-75 overflow-y-scroll" v-for="(option, index) in options" v-if="option[0].options.length">
+                <div class="border-b border-gray-300 py-6 flex h-75" v-for="(option, index) in options" v-if="option[0].options.length">
 
                     <div class="w-1/2 flex">
                         <div class="bg-white border rounded-sm border-black w-auto h-6 flex items-center text-center flex align-center justify-center shadow-sm px-2 mr-2">
@@ -76,8 +76,9 @@
                         <p class="text-gray-700">Subtotaal </p>
                     </div>
                     <div class="w-1/4 text-right">
-                        <p class="text-gray-700" v-if="active">{{ calculateSum - (calculateSum * 0.21) | currency('€ ') }}</p>
+                        <p class="text-gray-700" v-if="active">{{ calculateSum | currency('€ ') }}</p>
                     </div>
+<!--                    // {{ calculateSum - (calculateSum * 0.21) | currency('€ ') }}-->
                 </div>
                 <div class="border-b border-gray-300 py-6 flex">
                     <div class="w-3/4">
@@ -109,7 +110,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
-                    <a href="" class="font-medium ml-3 hover:text-indigo-500 hover:no-underline">info@mountain-it.nl</a>
+                    <a href="" class="font-medium ml-3 hover:text-indigo-500 hover:no-underline">info@mcompany.nl</a>
                 </div>
                 <div class="flex items-center my-3">
                     <div class="bg-white border border-gray-100 text-indigo-500 h-12 w-12 rounded-full flex justify-center items-center">
@@ -126,7 +127,7 @@
 </template>
 
 <script>
-
+import Vue2Filters from "vue2-filters";
 
 export default {
     data() {
@@ -134,6 +135,7 @@ export default {
             sum: 0,
         };
     },
+    mixins: [Vue2Filters.mixin],
     props: ['active', 'options'],
     methods: {
         calculateOptionsSum: function(list) {

@@ -13,7 +13,19 @@
             </div>
         </div>
     </div>
+
     <div class="px-20">
+        {{ $sum = 0 }}
+        @foreach($summaries as $summary)
+            {{ $summary->id }}
+            <ul>
+                @foreach($summary->products as $product)
+                    <li>{{ $product->name }}</li>
+                    {{ $sum += $product->price }}
+                @endforeach
+            </ul>
+        @endforeach
+        {{ $sum }}
         <div class="flex flex-col">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 ">
                 <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
