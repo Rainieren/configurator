@@ -1,24 +1,50 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="px-20 pt-10 pb-10">
+    <div class="px-10 py-5 md:px-20 md:py-10 transition-all">
         <div class="flex">
             <div class="w-1/2 flex items-center">
                 <p class="text-3xl font-bold text-gray-900">Products</p>
             </div>
             <div class="w-1/2 text-right">
-                <a href="{{ route('createProduct') }}" type="button" class="w-full inline-flex justify-center rounded-md border border-indigo-300 shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    Nieuw product
+                <a href="{{ route('createProduct') }}" type="button" class="inline-flex justify-center rounded-md border border-indigo-300 shadow-sm p-2 lg:px-4 lg:py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <span class="hidden lg:block">Nieuw product</span>
+                    <span class="block lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </span>
                 </a>
             </div>
         </div>
     </div>
-    <div class="px-20">
+    <div class="px-10 md:px-20 transition-all">
+        <div class="flex space-x-4 align-items-center">
+            <input type="text" class="appearance-none block border border-gray-200 p-2 pr-6 rounded-md w-64 shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="Search..." autofocus>
+            <select id="country" name="country" autocomplete="country" class="appearance-none block border border-gray-200 p-2 pr-6 rounded-md w-64 shadow-sm focus:border-indigo-500 focus:outline-none">
+                <option>ID</option>
+                <option>Name</option>
+                <option>Description</option>
+                <option>Created_at</option>
+                <option>Updated_at</option>
+            </select>
+            <a href="" class="border border-gray-200 rounded-md hover:shadow-md transition p-2 hover:text-indigo-500 flex items-center justify-content-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                </svg>
+            </a>
+            <a href="" class="border border-gray-200 rounded-md hover:shadow-md transition p-2 hover:text-indigo-500 flex items-center justify-content-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                </svg>
+            </a>
+        </div>
+
         <div class="flex flex-col">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 ">
                 <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
                     {{ $products->links() }}
-                    <div class="overflow-x-scroll border-b border-gray-200 sm:rounded-lg shadow-md rounded-lg">
+                    <div class="border-b border-gray-200 sm:rounded-lg shadow-md rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200 ">
                             <thead class="bg-white">
                             <tr>

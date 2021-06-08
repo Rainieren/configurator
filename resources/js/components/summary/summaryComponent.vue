@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 xl:w-4/12 w-full h-screen fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between">
+    <div class="w-full bg-gray-100 xl:w-4/12 h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between">
         <div class="h-auto">
             <div class="border-b border-gray-300 flex justify-center items-center">
                 <img :src="active.visualisation" v-if="active" class="shadow-sm h-32 w-32"  alt="">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-16 md:p-8">
+            <div class="p-8 md:p-16">
                 <div class="border-b border-gray-300 py-6 flex" v-if="active">
                     <div class="w-1/2 flex">
                         <div class="bg-white border rounded-sm border-black w-auto text-center flex align-center justify-center shadow-sm px-1 mr-2">

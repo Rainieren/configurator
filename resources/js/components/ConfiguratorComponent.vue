@@ -1,12 +1,10 @@
 <template>
     <div class="container-fluid px-0">
-
         <transition name="fade">
-            <div class="bg-white absolute w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
+            <div class="bg-white fixed w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
                 <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">Wat wil je configureren?</h2>
-                <div class="grid grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     <div v-for="(configator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configator.theme_color)">
-                        <p>{{  }}</p>
                         <div v-on:click="getConfigurableProducts(configator.id)">
                             <div class="p-3">
                                 <p class="font-medium text-xl text-center">{{ configator.name }}</p>
@@ -32,7 +30,7 @@
         </transition>
 
         <div class="flex flex-col xl:flex-row" v-if="!loading">
-            <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-20 space-y-15">
+            <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-10 pt-20 lg:p-20 space-y-15">
                 <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = [], steps = []">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -43,7 +41,7 @@
                 <div class="relative flex justify-between items-center pb-4">
                     <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
                 </div>
-                <div class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                     <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,7 +96,7 @@
                                 <h1 class="text-3xl font-medium">{{ step.name }}</h1>
                             </div>
 
-                            <div class="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                                 <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))}">
                                     <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">

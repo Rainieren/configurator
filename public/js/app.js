@@ -2002,8 +2002,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -46954,7 +46952,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "bg-white absolute w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30"
+                  "bg-white fixed w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30"
               },
               [
                 _c(
@@ -46968,7 +46966,10 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "grid grid-cols-3 gap-6" },
+                  {
+                    staticClass:
+                      "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+                  },
                   _vm._l(_vm.configurators, function(configator, i) {
                     return _c(
                       "div",
@@ -46978,8 +46979,6 @@ var render = function() {
                         style: _vm.styleBorder(configator.theme_color)
                       },
                       [
-                        _c("p", [_vm._v(_vm._s())]),
-                        _vm._v(" "),
                         _c(
                           "div",
                           {
@@ -47102,7 +47101,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "configurator bg-white relative xl:w-8/12 w-full min-h-screen p-20 space-y-15"
+                    "configurator bg-white relative xl:w-8/12 w-full min-h-screen p-10 pt-20 lg:p-20 space-y-15"
                 },
                 [
                   _c(
@@ -47171,7 +47170,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6"
                     },
                     _vm._l(_vm.configurableProducts, function(product) {
                       return _c(
@@ -47433,7 +47432,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6"
                                       },
                                       [
                                         _vm._l(step.options, function(
@@ -49267,55 +49266,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "grid grid-cols-3 gap-5 my-4" }, [
-    _c("div", { staticClass: "bg-gray-100 rounded-xl" }, [
-      _c("div", { staticClass: "p-5 space-y-1" }, [
-        _c(
-          "p",
-          {
-            staticClass:
-              "text-gray-500 text-sm uppercase tracking-widest font-semibold"
-          },
-          [_vm._v("Totaal geconfigureerde producten")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex" }, [
-          _c("p", { staticClass: "text-gray-900 text-3xl font-bold" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.summaries.length) +
-                "\n                "
-            )
+  return _c(
+    "div",
+    {
+      staticClass: "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 my-4"
+    },
+    [
+      _c("div", { staticClass: "bg-gray-100 rounded-xl" }, [
+        _c("div", { staticClass: "p-5 space-y-1" }, [
+          _c(
+            "p",
+            {
+              staticClass:
+                "text-gray-500 text-sm uppercase tracking-widest font-semibold"
+            },
+            [_vm._v("Totaal geconfigureerde producten")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex" }, [
+            _c("p", { staticClass: "text-gray-900 text-3xl font-bold" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.summaries.length) +
+                  "\n                "
+              )
+            ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "bg-gray-100 rounded-xl" }, [
-      _c("div", { staticClass: "p-5 space-y-1" }, [
-        _c(
-          "p",
-          {
-            staticClass:
-              "text-gray-500 text-sm uppercase tracking-widest font-semibold"
-          },
-          [_vm._v("Gemiddelde prijs")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex" }, [
-          _c("p", { staticClass: "text-gray-900 text-3xl font-bold" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm._f("currency")(parseFloat(_vm.averagePrice), "€ ")) +
-                "\n                "
-            )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "bg-gray-100 rounded-xl" }, [
+        _c("div", { staticClass: "p-5 space-y-1" }, [
+          _c(
+            "p",
+            {
+              staticClass:
+                "text-gray-500 text-sm uppercase tracking-widest font-semibold"
+            },
+            [_vm._v("Gemiddelde prijs")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex" }, [
+            _c("p", { staticClass: "text-gray-900 text-3xl font-bold" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(
+                    _vm._f("currency")(parseFloat(_vm.averagePrice), "€ ")
+                  ) +
+                  "\n                "
+              )
+            ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -55744,6 +55751,7 @@ var render = function() {
                               _c(
                                 "a",
                                 {
+                                  staticClass: "hover:text-indigo-500",
                                   attrs: { href: "#" },
                                   on: {
                                     click: function($event) {
@@ -56692,6 +56700,7 @@ var render = function() {
                               _c(
                                 "a",
                                 {
+                                  staticClass: "hover:text-indigo-500",
                                   attrs: { href: "#" },
                                   on: {
                                     click: function($event) {
@@ -57855,7 +57864,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "bg-gray-100 xl:w-4/12 w-full h-screen fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between"
+        "w-full bg-gray-100 xl:w-4/12 h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between"
     },
     [
       _c("div", { staticClass: "h-auto" }, [
@@ -57920,7 +57929,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "p-16 md:p-8" },
+          { staticClass: "p-8 md:p-16" },
           [
             _vm.active
               ? _c(

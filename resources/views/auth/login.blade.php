@@ -4,10 +4,10 @@
     <div class="flex items-center justify-center h-screen overflow-hidden z-10">
         <div class="container mx-auto">
             <div class="flex shadow-xl rounded-lg animate__animated animate__zoomIn animate__faster">
-                <div class="w-2/4 bg-indigo-500 text-white p-5 auth-vector rounded-l-lg">
+                <div class="hidden md:block md:w-1/4 lg:w-2/4 bg-indigo-500 text-white p-5 auth-vector rounded-l-lg">
                     <h1 class="text-3xl font-bold">Welkom</h1>
                 </div>
-                <div class="w-2/4 p-10 bg-white rounded-r-lg">
+                <div class="w-full md:w-3/4 lg:w-2/4 p-10 bg-white rounded-r-lg ">
                     <h1 class="text-3xl mb-4 font-serif font-bold">Login</h1>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
