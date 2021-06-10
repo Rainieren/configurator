@@ -17,6 +17,7 @@ class CreateConfiguratorsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('theme_color');
+            $table->string('thumbnail')->nullable();
             $table->integer('language_id')->nullable()->unsigned();
             $table->timestamps();
         });

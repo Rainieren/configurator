@@ -54,11 +54,11 @@ class ProductController extends Controller
             'name' => $request->name,
             'price' => $request->price ? str_replace(",", "", $request->price) : null,
             'percentage_increase' => $request->percentage / 100,
-            'stock' => $request->stock,
-            'status' => !$request->isEnabled ? 1 : 0,
-            'visibility' => !$request->isVisible ? 1 : 0,
+            'stock' => filter_var($request->stock, FILTER_VALIDATE_BOOLEAN),
+            'status' => filter_var($request->isEnabled , FILTER_VALIDATE_BOOLEAN),
+            'visibility' => filter_var($request->isVisible, FILTER_VALIDATE_BOOLEAN),
             'description' => $request->description,
-            'thumbnail' => $request->visualisation_upload ? '/storage/images/' . $imageName : null,
+            'thumbnail' => $request->thumbnail_upload ? '/storage/images/' . $imageName : '/storage/images/placeholder.png',
             'visualisation' => $request->visualisation_upload ? '/storage/visualisations/' . $visuName : null,
             'weight' => $request->weight,
             'height' => $request->height,
@@ -68,10 +68,11 @@ class ProductController extends Controller
             'new_from' => $request->new_from,
             'new_to' => $request->new_to,
             'sku' => $request->sku,
-            'configurable' => $request->configurable_product ? 1 : null,
+            'configurable' => filter_var($request->configurable_product, FILTER_VALIDATE_BOOLEAN),
             'interaction_type' => $request->interaction_type,
             'user_id' => auth()->user()->id,
             'manufacturer_id' => $request->manufacturer,
+            'configurator_id' => $request->configurator,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -115,42 +116,44 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        dd($request->thumbnail_upload);
         $product = Product::find($id);
 
-        if($request->data['fields']['thumbnail']) {
-            $imageName = time() . '.' . $request->data['fields']['thumbnail']->extension();
-            $request->data['fields']['thumbnail']->storeAs('public/images', $imageName);
+        if($request->thumbnail_upload) {
+            $imageName = time() . '.' . $request->thumbnail_upload->extension();
+            $request->thumbnail_upload->storeAs('public/images', $imageName);
         }
-        if($request->data['fields']['visualisation']) {
-            $visuName = time().'.'.$request->data['fields']['visualisation']->extension();
-            $request->data['fields']['visualisation']->storeAs('public/visualisations', $imageName);
+        if($request->visualisation_upload) {
+            $visuName = time().'.'.$request->visualisation_upload->extension();
+            $request->visualisation_upload->storeAs('public/visualisations', $visuName);
         }
 
         $product->update([
-            'name' => $request->data['fields']['name'],
-            'price' => $request->data['fields']['price'] ? str_replace(",", "", $request->data['fields']['price']) : null,
-            'percentage_increase' => $request->data['fields']['priceIncrease'] / 100,
-            'stock' => $request->data['fields']['stock'],
-            'status' => $request->data['fields']['isEnabled'],
-            'visibility' => $request->data['fields']['isVisible'],
-            'description' => $request->data['fields']['description'],
-            'thumbnail' => $request->data['fields']['thumbnail'] ? '/storage/images/' . $imageName : null,
-            'visualisation' => $request->data['fields']['visualisation'] ? '/storage/visualisations/' . $visuName : null,
-            'weight' => $request->data['fields']['weight'],
-            'height' => $request->data['fields']['height'],
-            'length' => $request->data['fields']['length'],
-            'width' => $request->data['fields']['width'],
-            'url_key' => strtolower(str_replace(' ', '_', $request->data['fields']['name'])),
-            'new_from' => $request->data['fields']['newFrom'],
-            'new_to' => $request->data['fields']['newTo'],
-            'sku' => $request->data['fields']['sku'],
-            'configurable' => $request->data['fields']['isConfigurableProduct'],
-            'interaction_type' => $request->data['fields']['interactionType'],
-            'manufacturer_id' => $request->data['fields']['manufacturer'],
+            'name' => $request->name,
+            'price' => $request->price ? str_replace(",", "", $request->price) : null,
+            'percentage_increase' => $request->percentage / 100,
+            'stock' => filter_var($request->stock, FILTER_VALIDATE_BOOLEAN),
+            'status' => filter_var($request->isEnabled, FILTER_VALIDATE_BOOLEAN),
+            'visibility' => filter_var($request->isVisible, FILTER_VALIDATE_BOOLEAN),
+            'description' => $request->description,
+            'thumbnail' => $request->thumbnail_upload ? '/storage/images/' . $imageName : $product->thumbnail,
+            'visualisation' => $request->visualisation_upload ? '/storage/visualisations/' . $visuName : $product->visualisation,
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'length' => $request->length,
+            'width' => $request->width,
+            'url_key' => strtolower(str_replace(' ', '_', $request->name)),
+            'new_from' => $request->new_from,
+            'new_to' => $request->new_to,
+            'sku' => $request->sku,
+            'configurable' => $request->configurable_product ? 1 : null,
+            'interaction_type' => $request->interaction_type,
+            'manufacturer_id' => $request->manufacturer,
+            'configurator_id' => $request->configurator,
             'updated_at' => Carbon::now()
         ]);
 
-        return response()->json();
+        return redirect()->back();
     }
 
     /**
@@ -170,11 +173,16 @@ class ProductController extends Controller
     // Vue methods
 
     public function getConfigurableProductsFromId($id) {
-        return response()->json(Product::where('configurable', 1)->where('configurator_id', $id)->get());
+        return response()->json(Product::where(['configurable' => 1, 'visibility' => 1])->where('configurator_id', $id)->get());
     }
 
     public function getConfigurableProducts() {
-        return response()->json(Product::where('configurable', 1)->get());
+        return response()->json(Product::where(['configurable' => 1, 'step_id' => null, 'visibility' => 1])->get());
+    }
+
+    public function getAllProductsWithNoConfigurator()
+    {
+        return response()->json(Product::where(['configurable' => 1, 'step_id' => null, 'visibility' => 1])->get());
     }
 
 

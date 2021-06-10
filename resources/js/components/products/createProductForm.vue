@@ -95,6 +95,18 @@
                                     </div>
                                 </div>
                             </fieldset>
+                            <div v-if="fields.isConfigurableProduct" class="my-3">
+                                <label for="height" class="font-medium text-gray-700">Configurator</label>
+                                <select v-model.trim="$v.fields.configurator_id.$model" :class="{'border-red-600': submitted && !$v.fields.configurator_id.required}" type="text" name="configurator" id="configurator" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                    <option :value="configurator.id" selected v-for="configurator in configurators">{{ configurator.name }}</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.stock.required">
+                                    <svg v-if="submitted && !$v.fields.configurator_id.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.configurator_id.required">Configurator is verplicht!</p>
+                            </div>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -207,7 +219,10 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model.trim="$v.fields.stock.$model" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && !$v.fields.stock.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <select v-model.trim="$v.fields.stock.$model" :class="{'border-red-600': submitted && !$v.fields.stock.required}" type="text" name="stock" id="stock" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                    <option value="1" selected>In stock</option>
+                                    <option selected value="0">Out of stock</option>
+                                </select>
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.stock.required">
                                     <svg v-if="submitted && !$v.fields.stock.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -481,7 +496,7 @@
                     price: null,
                     priceIncrease: null,
                     sku: '',
-                    stock: '',
+                    stock: "1",
                     description: '',
                     thumbnail: '',
                     thumbnailPreview: null,
@@ -497,10 +512,12 @@
                     interactionType: null,
                     interactionInputType: '',
                     step: '',
+                    configurator_id: '',
                 },
                 mask: currencyMask,
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 manufacturers: {},
+                configurators: [],
                 steps: {},
                 submitted: false,
                 toggleActive: false,
@@ -513,6 +530,7 @@
         mounted: function() {
             this.getManufacturers();
             this.getSteps();
+            this.getAllConfigurators();
         },
         computed: {
 
@@ -533,6 +551,14 @@
                 } else {
                     this.fields.priceIncrease = null
                 }
+            },
+            getAllConfigurators: function() {
+                axios.get('/api/get/configurators')
+                    .then(response => {
+                        this.configurators = response.data
+                    }).catch(err => {
+                    console.log(err)
+                });
             },
             onThumbnailChanged (event) {
                 const file = event.target.files[0];
@@ -601,6 +627,11 @@
                 priceIncrease: {
                     required: requiredIf(function() {
                         return this.fields.hasPriceIncrease
+                    })
+                },
+                configurator_id: {
+                    required: requiredIf(function() {
+                        return this.fields.isConfigurableProduct
                     })
                 },
                 stock: {

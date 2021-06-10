@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/get/configurable_products/{id}', [App\Http\Controllers\ProductController::class, 'getConfigurableProductsFromId']);
 Route::get('/get/configurable_products', [App\Http\Controllers\ProductController::class, 'getConfigurableProducts']);
+
+Route::get('/get/configurable_products_with_no_configurator', [App\Http\Controllers\ProductController::class, 'getAllProductsWithNoConfigurator']);
+
 Route::get('/get/products/interaction_type/{interaction_type}', [App\Http\Controllers\ProductController::class, 'getInteractionTypeProducts'])->name('getInteractionTypeProducts');
 Route::patch('/update/product/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('updateProduct');
 
@@ -44,7 +47,10 @@ Route::get('/get/all/summaries', [App\Http\Controllers\SummaryController::class,
 Route::get('/get/all/countries', [App\Http\Controllers\CountryController::class, 'getAllCountries'])->name('getAllCountries');
 
 
-Route::get('/get/all/configurators', [App\Http\Controllers\ConfiguratorController::class, 'getAllConfigurators']);
+
+
+Route::get('/get/all/configurators', [App\Http\Controllers\ConfiguratorController::class, 'getAllConfiguratorsWithProducts']);
+Route::get('/get/configurators', [App\Http\Controllers\ConfiguratorController::class, 'getAllConfigurators']);
 Route::get('/get/configuration/{id}', [App\Http\Controllers\ConfiguratorController::class, 'getConfigurator']);
 Route::patch('/configurator/{id}/update', [App\Http\Controllers\ConfiguratorController::class, 'update'])->name('updateConfigurator');
 

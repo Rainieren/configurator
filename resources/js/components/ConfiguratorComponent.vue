@@ -8,8 +8,8 @@
                         <div v-on:click="getConfigurableProducts(configator.id)">
                             <div class="p-3">
                                 <p class="font-medium text-xl text-center">{{ configator.name }}</p>
-                                <div class=" w-64 flex items-center justify-center h-32">
-                                    foto
+                                <div class=" w-64 flex items-center justify-center h-32 py-3">
+                                    <img :src="configator.thumbnail" v-if="configator.thumbnail" alt="">
                                 </div>
                                 <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
                             </div>
@@ -42,13 +42,13 @@
                     <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product }">
+                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
                         </div>
-                        <div class="p-3 border-b border-gray-300">
+                        <div class="p-3 border-b border-gray-300 h-auto w-100">
                             <div class="flex">
                                 <div class="w-2/3 text-left">
                                     <p class="font-bold">{{ product.name }}</p>
@@ -56,6 +56,22 @@
                                 </div>
                                 <div class="w-1/3 text-right">
                                     <p class="text-md">{{ parseFloat(product.price) | currency('€ ')}}</p>
+                                    <p class="" v-if="product.stock === 1">
+                                        <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                            </svg>
+                                            Op voorraad
+                                        </span>
+                                    </p>
+                                    <p v-if="product.stock === 0">
+                                        <span class="text-red-500 font-medium font-sm flex justify-end align-items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                            </svg>
+                                            Niet op voorraad
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -67,11 +83,13 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="p-3 text-left" v-if="product.height || product.length || product.width || product.weight">
-                            <p class="text-gray-500 text-sm" v-if="product.height">Height: {{ product.height }}</p>
-                            <p class="text-gray-500 text-sm" v-if="product.length">Length: {{ product.length }}</p>
-                            <p class="text-gray-500 text-sm" v-if="product.length">Width: {{ product.width }}</p>
-                            <p class="text-gray-500 text-sm" v-if="product.length">Weight: {{ product.weight }}</p>
+                        <div class="p-3 text-left">
+                            <div class="" v-if="product.height || product.length || product.width || product.weight">
+                                <p class="text-gray-500 text-sm" v-if="product.height">Height: {{ product.height }}</p>
+                                <p class="text-gray-500 text-sm" v-if="product.length">Length: {{ product.length }}</p>
+                                <p class="text-gray-500 text-sm" v-if="product.length">Width: {{ product.width }}</p>
+                                <p class="text-gray-500 text-sm" v-if="product.length">Weight: {{ product.weight }}</p>
+                            </div>
                         </div>
                     </button>
                 </div>
@@ -95,15 +113,14 @@
                             <div class="relative flex justify-between items-center pb-4">
                                 <h1 class="text-3xl font-medium">{{ step.name }}</h1>
                             </div>
-
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                                <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))}">
+                                <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative flex flex-column" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option)), 'pointer-events-none opacity-50': option.stock === 0}">
                                     <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
-                                    <div class="p-3 border-b border-gray-300">
+                                    <div class="p-3 border-b border-gray-300 h-auto w-100">
                                         <div class="flex">
                                             <div class="w-2/3 text-left">
                                                 <p class="font-bold">{{ option.name }}</p>
@@ -112,6 +129,22 @@
                                             <div class="w-1/3 text-right">
                                                 <p class="text-md" v-if="option.price">{{ parseFloat(option.price) | currency('€ ')}}</p>
                                                 <p class="text-md" v-if="!option.price">{{ parseFloat((activeProduct.price * option.percentage_increase)) | currency('€ ')}}</p>
+                                                <p class="" v-if="option.stock === 1">
+                                                    <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        Op voorraad
+                                                    </span>
+                                                </p>
+                                                <p v-if="option.stock === 0">
+                                                    <span class="text-red-500 font-medium font-sm flex justify-end align-items-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        Niet op voorraad
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -212,37 +245,41 @@
                 return exists;
             },
             addToChosenOptions(step, option) {
-                // Stap komt overeen met de stap die al in de array staat
-                if(this.chosenOptions.some(options => options[0].step.name === step.name)) {
-                    if(step.allow_multiple) {
-                        if(this.optionExistInArray(option.name)){
-                            this.chosenOptions.forEach(function(value, i) {
-                                value[0].options.forEach(function(chOption, index) {
-                                    if(chOption.name === option.name) {
-                                        value[0].options.splice(index, 1);
-                                    }
-                                });
-                            });
-                        } else {
-                            this.chosenOptions.forEach(function(value, i) {
+                if(option.stock === 1) {
 
+
+                    // Stap komt overeen met de stap die al in de array staat
+                    if(this.chosenOptions.some(options => options[0].step.name === step.name)) {
+                        if(step.allow_multiple) {
+                            if(this.optionExistInArray(option.name)){
+                                this.chosenOptions.forEach(function(value, i) {
+                                    value[0].options.forEach(function(chOption, index) {
+                                        if(chOption.name === option.name) {
+                                            value[0].options.splice(index, 1);
+                                        }
+                                    });
+                                });
+                            } else {
+                                this.chosenOptions.forEach(function(value, i) {
+
+                                    if(value[0].step.name === step.name) {
+                                        value[0].options.push(option)
+                                    }
+                                },this);
+                            }
+                        } else {
+                            // Stap staat NIET meerdere producten toe
+                            this.chosenOptions.forEach(function(value, i) {
+                                // Als de stap overeen komt met de stap die in de array staat
                                 if(value[0].step.name === step.name) {
-                                    value[0].options.push(option)
+                                    // Vervang de huidige optie met de nieuwe
+                                    Vue.set(this.chosenOptions[i][0].options, 0, option)
                                 }
-                            },this);
+                            }, this);
                         }
                     } else {
-                        // Stap staat NIET meerdere producten toe
-                        this.chosenOptions.forEach(function(value, i) {
-                            // Als de stap overeen komt met de stap die in de array staat
-                            if(value[0].step.name === step.name) {
-                                // Vervang de huidige optie met de nieuwe
-                                Vue.set(this.chosenOptions[i][0].options, 0, option)
-                            }
-                        }, this);
+                        this.chosenOptions.push([{step: step, options: [option]}])
                     }
-                } else {
-                    this.chosenOptions.push([{step: step, options: [option]}])
                 }
             },
             removeChosenOptions: function(step) {

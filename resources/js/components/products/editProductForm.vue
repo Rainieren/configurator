@@ -10,8 +10,9 @@
         <div class="px-20">
             <div class="flex space-x-10">
                 <div class="w-6/12">
-                    <form action="" class="w-full my-2" id="productCreateForm" enctype="multipart/form-data">
+                    <form :action="'/dashboard/product/' + product.id + '/update'" method="POST" class="w-full my-2" id="productEditForm" enctype="multipart/form-data">
                         <input type="hidden" name="_token" :value="csrf">
+                        <input type="hidden" name="_method" value="PATCH">
                         <div class="flex space-x-5">
                             <div class="w-4/12">
                                 <p class="text-gray-800 font-medium text-lg">Name</p>
@@ -103,6 +104,18 @@
                                         </div>
                                     </div>
                                 </fieldset>
+                                <div v-if="fields.isConfigurableProduct" class="my-3">
+                                    <label for="height" class="font-medium text-gray-700">Configurator</label>
+                                    <select v-model.trim="$v.fields.configurator_id.$model" :class="{'border-red-600': submitted && !$v.fields.configurator_id.required}" type="text" name="configurator" id="configurator" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                        <option :value="configurator.id" v-for="configurator in configurators">{{ configurator.name }}</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.stock.required">
+                                        <svg v-if="submitted && !$v.fields.configurator_id.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.configurator_id.required">Configurator is verplicht!</p>
+                                </div>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -215,7 +228,10 @@
                             </div>
                             <div class="w-8/12">
                                 <div class="relative">
-                                    <input v-model.trim="$v.fields.stock.$model" :maxlength="9" v-on:keypress="isLetter($event)" type="text" id="stock" name="stock" :class="{ 'border-red-500' : submitted && !$v.fields.stock.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                    <select v-model.trim="$v.fields.stock.$model" :class="{'border-red-600': submitted && !$v.fields.stock.required}" type="text" name="stock" id="stock" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                        <option value="1" selected>In stock</option>
+                                        <option selected value="0">Out of stock</option>
+                                    </select>
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.stock.required">
                                         <svg v-if="submitted && !$v.fields.stock.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -444,6 +460,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" :value="this.fields.par">
                         <div class="flex float-right my-5 space-x-5">
                             <button type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                                 Cancel
@@ -496,7 +513,7 @@ export default {
                 sku: this.product.sku,
                 stock: this.product.stock,
                 description: this.product.description,
-                thumbnail: '',
+                thumbnail: this.product.thumbnail,
                 thumbnailPreview: null,
                 visualisation: '',
                 weight: this.product.weight,
@@ -510,11 +527,12 @@ export default {
                 interactionType: this.product.interaction_type,
                 interactionInputType: '',
                 step: this.product.step_id,
-                configurator_id: ''
+                configurator_id: this.product.configurator_id
             },
             mask: currencyMask,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             manufacturers: {},
+            configurators: [],
             steps: {},
             submitted: false,
         };
@@ -527,6 +545,7 @@ export default {
     mounted: function() {
         this.getManufacturers();
         this.getSteps();
+        this.getAllConfigurators();
     },
     computed: {
 
@@ -548,8 +567,17 @@ export default {
                 this.fields.priceIncrease = null
             }
         },
+        getAllConfigurators: function() {
+            axios.get('/api/get/configurators')
+                .then(response => {
+                    this.configurators = response.data
+                }).catch(err => {
+                console.log(err)
+            });
+        },
         onThumbnailChanged (event) {
             const file = event.target.files[0];
+            this.fields.thumbnail = file;
             this.fields.thumbnailPreview = URL.createObjectURL(file);
         },
         onVisualisationChanged(event) {
@@ -585,7 +613,7 @@ export default {
             event = (event) ? event : window.event;
             var charCode = (event.which) ? event.which : event.keyCode;
             if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-                event.preventDefault();;
+                event.preventDefault();
             } else {
                 return true;
             }
@@ -597,18 +625,20 @@ export default {
             if(this.$v.$error) {
                 return
             } else {
-                axios.patch('/api/update/product/' + this.product.id, {
-                    data: {
-                        fields: this.fields,
-                        parentProducts: this.parentProducts,
-                    },
-                    headers: { "X-Requested-With": "XMLHttpRequest","Content-Type": "application/json" }
-                }).then(response => {
-                    this.loading = false
-                    window.location = "/dashboard/products"
-                }).catch(err => {
-                    console.log(err)
-                });
+                document.getElementById("productEditForm").submit();
+                // axios.post('/api/update/product/' + this.product.id, {
+                //     _method: 'patch',
+                //     data: {
+                //         fields: this.fields,
+                //         parentProducts: this.parentProducts,
+                //     },
+                //     headers: { "X-Requested-With": "XMLHttpRequest", "Content-Type": "multipart/form-data" }
+                // }).then(response => {
+                //     this.loading = false
+                //     // window.location = "/dashboard/products"
+                // }).catch(err => {
+                //     console.log(err)
+                // });
             }
         }
     },
@@ -626,6 +656,11 @@ export default {
             priceIncrease: {
                 required: requiredIf(function() {
                     return this.fields.hasPriceIncrease
+                })
+            },
+            configurator_id: {
+                required: requiredIf(function() {
+                    return this.fields.isConfigurableProduct
                 })
             },
             stock: {

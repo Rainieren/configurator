@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', $precision = 10, $scale = 2)->nullable();
             // If the product has a percentage increase instead of the price
             $table->decimal('percentage_increase', 5,2)->nullable();
-            $table->integer('stock');
+            $table->boolean('stock');
             $table->boolean('status');
             $table->boolean('visibility');
             $table->text('description')->nullable();

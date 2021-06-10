@@ -1,17 +1,22 @@
 <template>
     <div class="w-full bg-gray-100 xl:w-4/12 h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between">
         <div class="h-auto">
-            <div class="border-b border-gray-300 flex justify-center items-center">
-                <img :src="active.visualisation" v-if="active" class="shadow-sm h-32 w-32"  alt="">
+            <div class="border-b border-gray-300 flex justify-center items-center relative h-96" v-if="active">
+                <img :src="active.visualisation" v-if="active" class="shadow-sm h-96 w-auto absolute" alt="">
 
-                <img v-if="option[0].options.visualisation" :src="option[0].options.visualisation" class="shadow-sm h-32 w-32" v-for="option in options" alt="">
-                <div v-else>
-                    <div class="w-100 h-100 flex items-center justify-center text-gray-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                </div>
+                <img v-if="option[0].options[0].visualisation" :src="option[0].options[0].visualisation" class="shadow-sm h-96 w-auto absolute" v-for="(option, index) in options" alt="">
+
+
+<!--                <div class="" v-for="(option, index) in options">-->
+<!--                    <p>{{ option[index].options[0].visualisation }}</p>-->
+<!--                </div>-->
+<!--                <div v-else>-->
+<!--                    <div class="w-100 h-100 flex items-center justify-center text-gray-200">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="p-8 md:p-16">
                 <div class="border-b border-gray-300 py-6 flex" v-if="active">
