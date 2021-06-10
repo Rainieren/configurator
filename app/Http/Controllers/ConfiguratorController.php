@@ -43,9 +43,15 @@ class ConfiguratorController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->thumbnail_upload) {
+            $imageName = time() . '.' . $request->thumbnail_upload->extension();
+            $request->thumbnail_upload->storeAs('public/images', $imageName);
+        }
+
          $configurator = Configurator::create([
             'name' => $request->name,
             'theme_color' => $request->theme_color,
+            'thumbnail' => $request->thumbnail_upload ? '/storage/images/' . $imageName : '/storage/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -113,12 +119,23 @@ class ConfiguratorController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllConfigurators()
+    public function getAllConfiguratorsWithProducts()
     {
 
         return response()->json(Configurator::with('products')->whereHas('products', function ($query) {
             $query->where('configurable', '=', true);
         })->get());
+    }
+
+
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllConfigurators()
+    {
+
+        return response()->json(Configurator::all());
     }
 
     public function getConfigurator($id)

@@ -19,25 +19,28 @@ class ConfiguratorSeeder extends Seeder
         $faker = Factory::create();
 
         DB::table('configurators')->insert([
-            'name' => 'Stoels',
+            'name' => 'Auto',
             'theme_color' => $faker->hexColor,
             'language_id' => 1,
+            'thumbnail' => '/storage/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('configurators')->insert([
-            'name' => 'Tafels',
+            'name' => 'Bus',
             'theme_color' => $faker->hexColor,
             'language_id' => 1,
+            'thumbnail' => '/storage/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         DB::table('configurators')->insert([
-            'name' => 'Plantenpot',
+            'name' => 'Vrachtwagen',
             'theme_color' => $faker->hexColor,
             'language_id' => 1,
+            'thumbnail' => '/storage/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

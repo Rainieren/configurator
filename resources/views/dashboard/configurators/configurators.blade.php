@@ -20,17 +20,6 @@
     </div>
 
     <div class="px-10 md:px-20 transition-all">
-        {{ $sum = 0 }}
-        @foreach($summaries as $summary)
-            {{ $summary->id }}
-            <ul>
-                @foreach($summary->products as $product)
-                    <li>{{ $product->name }}</li>
-                    {{ $sum += $product->price }}
-                @endforeach
-            </ul>
-        @endforeach
-        {{ $sum }}
         <div class="flex flex-col">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 ">
                 <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
@@ -38,9 +27,9 @@
                         <table class="min-w-full divide-y divide-gray-200 ">
                             <thead class="bg-white">
                             <tr>
-                                {{--                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">--}}
-                                {{--                                    Thumbnail--}}
-                                {{--                                </th>--}}
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Thumbnail
+                                </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Name
                                 </th>
@@ -64,6 +53,10 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($configurators as $configurator)
                                 <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <img src="{{ $configurator->thumbnail }}" class="h-12 w-12 rounded bg-cover" alt="">
+                                    </td>
+
                                     <td class="px-6 py-3 whitespace-nowrap text-sm">
                                         {{ $configurator->name }}
                                     </td>

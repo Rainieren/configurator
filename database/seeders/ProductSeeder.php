@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 // Create a random percentage between null and 100
                 'percentage_increase' => 0.00,
                 // Create a random in Stock number between 0 and 1000
-                'stock' => $faker->numberBetween($min = 0, $max = 1000),
+                'stock' => 1,
                 // Create radom status whether it is enabled or not
                 'status' => $faker->boolean($chanceOfGettingTrue = 50),
                 // Create random status whether it is visible or not

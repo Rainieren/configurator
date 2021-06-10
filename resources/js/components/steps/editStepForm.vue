@@ -146,7 +146,7 @@
                                     <p class="font-medium text-gray-500">{{ parseFloat(product.price) | currency('€ ') }}</p>
                                 </div>
                                 <div class="col-span-4 flex items-center">
-                                    <input @click="fields.defaultProduct = product" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                    <input v-on:click="fields.defaultProduct = product" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                     <label for="default_product" class="ml-3 mb-0 block text-sm font-medium">
                                         Default
                                     </label>
@@ -156,16 +156,23 @@
                                         <form action="">
                                             <input type="hidden" name="_token" :value="csrf">
                                             <input type="hidden" :value="JSON.stringify(product)" name="product">
-                                            <a href="#" class="hover:text-indigo-500" v-on:click="removeProductFromList(product)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </a>
+                                            <div class="flex flex-column space-x-4">
+                                                <a :href="'/dashboard/product/' + product.id + '/edit'" class="hover:text-indigo-500 text-black">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                    </svg>
+                                                </a>
+                                                <a href="#" class="hover:text-indigo-500" v-on:click="removeProductFromList(product)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="">
                                 <a href="#" v-on:click="openModal(); getProductsWithInteractionType(fields.interaction_type);">
                                     <div class="border-2 border-dashed border-gray-400 hover:border-blue-500 hover:text-blue-500 h-32 w-100 flex-column rounded-md flex justify-center items-center transition">
