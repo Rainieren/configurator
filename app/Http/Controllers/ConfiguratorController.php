@@ -123,7 +123,7 @@ class ConfiguratorController extends Controller
     {
 
         return response()->json(Configurator::with('products')->whereHas('products', function ($query) {
-            $query->where('configurable', '=', true);
+            $query->where('configurable', '=', 1);
         })->get());
     }
 

@@ -4,12 +4,12 @@
             <div class="bg-white fixed w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
                 <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">Wat wil je configureren?</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <div v-for="(configator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configator.theme_color)">
-                        <div v-on:click="getConfigurableProducts(configator.id)">
+                    <div v-for="(configurator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configurator.theme_color)">
+                        <div v-on:click="getConfigurableProducts(configurator.id)">
                             <div class="p-3">
-                                <p class="font-medium text-xl text-center">{{ configator.name }}</p>
-                                <div class=" w-64 flex items-center justify-center h-32 py-3">
-                                    <img :src="configator.thumbnail" v-if="configator.thumbnail" alt="">
+                                <p class="font-medium text-xl text-center">{{ configurator.name }}</p>
+                                <div class=" w-64 flex items-center justify-center h-32 my-8">
+                                    <img :src="configurator.thumbnail" v-if="configurator.thumbnail" alt="">
                                 </div>
                                 <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
                             </div>
@@ -31,8 +31,8 @@
 
         <div class="flex flex-col xl:flex-row" v-if="!loading">
             <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-10 pt-20 lg:p-20 space-y-15">
-                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = [], steps = []">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500 bg-white rounded-md shadow-sm px-2 py-1.5 hover:shadow-md transition-all border border-gray-200" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = [], steps = []">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg>
                     <p class="text-gray-800 font-medium text-lg  cursor-pointer hover:text-indigo-500" >Andere configurator kiezen</p>
@@ -107,63 +107,66 @@
 <!--                </article>-->
 
 
-                <div class="space-y-5" v-if="!stepsLoading" v-for="product in steps">
+                <div class="space-y-5 " v-if="!stepsLoading" v-for="product in steps" >
                     <draggable :options="{animation:200, handle: '.handle'}" :element="'div'" @change="onOrderChange()">
                         <div v-for="(step, i) in product.steps" class="my-5 relative">
                             <div class="relative flex justify-between items-center pb-4">
                                 <h1 class="text-3xl font-medium">{{ step.name }}</h1>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                                <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative flex flex-column" v-for="(option, index) in step.options" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option)), 'pointer-events-none opacity-50': option.stock === 0}">
-                                    <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                    <div class="p-3 border-b border-gray-300 h-auto w-100">
-                                        <div class="flex">
-                                            <div class="w-2/3 text-left">
-                                                <p class="font-bold">{{ option.name }}</p>
-                                                <p v-if="option.description" class="text-gray-800">{{ option.description.substring(0,32) }}</p>
-                                            </div>
-                                            <div class="w-1/3 text-right">
-                                                <p class="text-md" v-if="option.price">{{ parseFloat(option.price) | currency('€ ')}}</p>
-                                                <p class="text-md" v-if="!option.price">{{ parseFloat((activeProduct.price * option.percentage_increase)) | currency('€ ')}}</p>
-                                                <p class="" v-if="option.stock === 1">
-                                                    <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        Op voorraad
-                                                    </span>
-                                                </p>
-                                                <p v-if="option.stock === 0">
-                                                    <span class="text-red-500 font-medium font-sm flex justify-end align-items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        Niet op voorraad
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-3 h-64 w-100 overflow-hidden">
-                                        <img class="object-contain object-center h-full w-full rounded-xl" v-if="option.thumbnail" :src="option.thumbnail">
-                                        <div class="w-100 h-100 flex items-center justify-center text-gray-200" v-if="!option.thumbnail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                <div v-for="(option, index) in step.options" v-bind:key="index" class="relative">
+                                    <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative flex flex-column animate__animated animate__fadeInUp animate__faster w-100" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option)), 'pointer-events-none opacity-50': option.stock === 0}">
+                                        <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                    </div>
-                                    <div class="p-3 text-left" v-if="option.height || option.length || option.width || option.weight">
-                                        <p class="text-gray-500 text-sm" v-if="option.height">Height: {{ option.height }}</p>
-                                        <p class="text-gray-500 text-sm" v-if="option.length">Length: {{ option.length }}</p>
-                                        <p class="text-gray-500 text-sm" v-if="option.length">Length: {{ option.width }}</p>
-                                        <p class="text-gray-500 text-sm" v-if="option.length">Length: {{ option.weight }}</p>
-                                    </div>
-                                </button>
-                                <button v-if="step.is_optional" v-on:click="removeChosenOptions(step)" class="bg-white border-2 rounded-xl transition border-gray-200" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.length === 0 ) || stepExistsInArray(step) === false }">
+                                        <div class="p-3 border-b border-gray-300 h-auto w-100">
+                                            <div class="flex">
+                                                <div class="w-2/3 text-left">
+                                                    <p class="font-bold">{{ option.name }}</p>
+                                                    <p v-if="option.description" class="text-gray-800">{{ option.description.substring(0,32) }}</p>
+                                                </div>
+                                                <div class="w-1/3 text-right">
+                                                    <p class="text-md" v-if="option.price">{{ parseFloat(option.price) | currency('€ ')}}</p>
+                                                    <p class="text-md" v-if="!option.price">{{ parseFloat((activeProduct.price * option.percentage_increase)) | currency('€ ')}}</p>
+                                                    <p class="" v-if="option.stock === 1">
+                                                        <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            Op voorraad
+                                                        </span>
+                                                    </p>
+                                                    <p v-if="option.stock === 0">
+                                                        <span class="text-red-500 font-medium font-sm flex justify-end align-items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            Niet op voorraad
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-3 h-64 w-100 overflow-hidden">
+                                            <img class="object-contain object-center h-full w-full rounded-xl" v-if="option.thumbnail" :src="option.thumbnail">
+                                            <div class="w-100 h-100 flex items-center justify-center text-gray-200" v-if="!option.thumbnail">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                    </button>
+                                    <button @click="openProductModal(option)" class="text-black rounded-lg absolute bottom-5 right-5 animate__animated animate__fadeInUp animate__faster">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </button>
+
+                                </div>
+                                <button v-if="step.is_optional" v-on:click="removeChosenOptions(step)" class="bg-white border-2 rounded-xl transition border-gray-200 animate__animated animate__fadeInUp animate__faster" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.length === 0 ) || stepExistsInArray(step) === false }">
                                     <div class="flex p-3">
                                         <p>No thank you</p>
                                     </div>
@@ -177,12 +180,15 @@
             <Summary :active="activeProduct" :options="chosenOptions"></Summary>
         </div>
         <ConfigurationModal ref="configurationModal" :active="activeProduct" :options="chosenOptions" :code="summary_code"></ConfigurationModal>
+        <product-modal ref="productModal"></product-modal>
+
     </div>
 </template>
 
 <script>
     import Summary from "./summary/summaryComponent.vue";
     import ConfigurationModal from "./configurationModal.vue"
+    import ProductModal from "./products/productModal.vue"
     import draggable from 'vuedraggable'
 
     export default {
@@ -200,12 +206,12 @@
                 configuratorChosen: false,
                 configurators: [],
                 configurator: '',
-                // csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             };
         },
         components: {
             Summary,
             ConfigurationModal,
+            ProductModal,
             draggable,
         },
         mounted: function() {
@@ -221,8 +227,10 @@
             }
         },
         methods: {
-            openModal() {
-                this.$refs.ConfigurationModal.showModal = true;
+            openProductModal(product) {
+                // console.log(this.$refs.productModal.showModal)
+                this.$refs.productModal.product = product;
+                this.$refs.productModal.showModal = true;
             },
             optionExistInArray: function(name) {
                 let exists = false
@@ -246,22 +254,26 @@
             },
             addToChosenOptions(step, option) {
                 if(option.stock === 1) {
-
-
                     // Stap komt overeen met de stap die al in de array staat
                     if(this.chosenOptions.some(options => options[0].step.name === step.name)) {
                         if(step.allow_multiple) {
                             if(this.optionExistInArray(option.name)){
                                 this.chosenOptions.forEach(function(value, i) {
-                                    value[0].options.forEach(function(chOption, index) {
-                                        if(chOption.name === option.name) {
-                                            value[0].options.splice(index, 1);
-                                        }
-                                    });
-                                });
+                                    // Check if it is the last one
+                                    if(value[0].options.length === 1) {
+                                        // Delete the array if its the last one
+                                        this.chosenOptions.splice(i, 1)
+                                    } else {
+                                        // Just delete the option
+                                        value[0].options.forEach(function(chOption, index) {
+                                            if(chOption.name === option.name) {
+                                                value[0].options.splice(index, 1);
+                                            }
+                                        });
+                                    }
+                                }, this);
                             } else {
                                 this.chosenOptions.forEach(function(value, i) {
-
                                     if(value[0].step.name === step.name) {
                                         value[0].options.push(option)
                                     }
@@ -283,12 +295,11 @@
                 }
             },
             removeChosenOptions: function(step) {
-                this.chosenOptions.forEach(function(value, i) {
+                this.chosenOptions.forEach(function(value, index) {
                     if(value[0].step.name === step.name) {
-                        value[0].options = []
-                        return
+                        this.chosenOptions.splice(index, 1)
                     }
-                });
+                }, this);
             },
             getConfigurableProducts: function(id) {
                 axios.all([
@@ -338,16 +349,9 @@
                         }
                     }, this);
                 }, this);
-                // this.chosenOptions.push([{step: step, options: [option]}])
-            },
-            openModal: function() {
-                this.$refs.configurationModal.showModal = true;
             },
             ProcessConfiguration: function() {
                 this.configurationFinished = true
-
-
-
             },
             lowestPriceInConfigurator: function(id) {
                 let array = [];
@@ -361,13 +365,7 @@
                     })
                     array.push({configurator: i, prices: [prices]})
                 });
-
                 return array;
-                // this.configurators[0].products.forEach(function(value, i) {
-                //     array.push(value.price);
-                // });
-
-
             },
             styleBorder: function(themeColor) {
                 return {'--borderHoverColor': themeColor};

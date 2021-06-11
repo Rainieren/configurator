@@ -33,6 +33,7 @@ import Configurator from "./pages/Configurator.vue";
 import CreateConfiguratorForm from "./components/configurators/createConfiguratorForm.vue";
 import EditConfiguratorForm from "./components/configurators/editConfiguratorForm.vue";
 import CreateProductForm from "./components/products/createProductForm.vue";
+import ProductModal from "./components/products/productModal.vue";
 import EditProductForm from "./components/products/editProductForm.vue";
 import CreateStepForm from "./components/steps/createStepForm.vue";
 import EditStepForm from "./components/steps/editStepForm.vue";
@@ -64,6 +65,7 @@ Vue.component('statistics', require('./components/dashboard/statisticsComponent.
 
 // Product
 Vue.component('product-create-form', require('./components/products/createProductForm.vue').default);
+Vue.component('product-modal', require('./components/products/productModal.vue').default);
 Vue.component('product-edit-form', require('./components/products/editProductForm.vue').default);
 Vue.component('product-preview', require('./components/products/productPreview').default)
 Vue.component('card-preview', require('./components/products/cardPreview').default)
@@ -99,6 +101,7 @@ const app = new Vue({
         Configurator,
         Summary,
         ConfigurationModal,
+        ProductModal,
     }
 });
 

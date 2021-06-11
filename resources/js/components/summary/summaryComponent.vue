@@ -2,9 +2,9 @@
     <div class="w-full bg-gray-100 xl:w-4/12 h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between">
         <div class="h-auto">
             <div class="border-b border-gray-300 flex justify-center items-center relative h-96" v-if="active">
-                <img :src="active.visualisation" v-if="active" class="shadow-sm h-96 w-auto absolute" alt="">
+                <img :src="active.visualisation" v-if="active" class="h-96 w-auto absolute animate__animated animate__fadeIn" alt="">
 
-                <img v-if="option[0].options[0].visualisation" :src="option[0].options[0].visualisation" class="shadow-sm h-96 w-auto absolute" v-for="(option, index) in options" alt="">
+                <img v-if="option[0].options[0].visualisation" :src="option[0].options[0].visualisation" class="h-96 w-auto absolute animate__animated animate__fadeIn" v-for="(option, index) in options" alt="">
 
 
 <!--                <div class="" v-for="(option, index) in options">-->
@@ -20,33 +20,34 @@
             </div>
             <div class="p-8 md:p-16">
                 <div class="border-b border-gray-300 py-6 flex" v-if="active">
-                    <div class="w-1/2 flex">
-                        <div class="bg-white border rounded-sm border-black w-auto text-center flex align-center justify-center shadow-sm px-1 mr-2">
-                            Product
-                        </div>
+                    <div class="w-1/2 ">
+<!--                        <div class="bg-white border rounded-sm border-black w-auto text-center flex align-center justify-center shadow-sm px-1 mr-2">-->
+<!--                            Product-->
+<!--                        </div>-->
+                        <p class="font-bold text-lg">Product</p>
                         <p class="text-gray-700">{{ active.name }}</p>
                     </div>
-                    <div class="w-1/2 text-right">
+                    <div class="w-1/2 flex flex-column items-end justify-end">
                         <p class="text-gray-700">{{ parseFloat(active.price) | currency('€ ') }}</p>
                     </div>
                 </div>
 
                 <div class="border-b border-gray-300 py-6 flex h-75" v-for="(option, index) in options" v-if="option[0].options.length">
 
-                    <div class="w-1/2 flex">
-                        <div class="bg-white border rounded-sm border-black w-auto h-6 flex items-center text-center flex align-center justify-center shadow-sm px-2 mr-2">
+                    <div class="w-100 animate__animated animate__bounceInRight animate__faster">
+                        <p class="font-bold text-lg">
                             {{option[0].step.name}}
-                        </div>
+                        </p>
                         <ul>
-                            <li class="text-gray-700" v-for="option in option[0].options">- {{ option.name }}</li>
+                            <li class="text-gray-700 flex" v-for="option in option[0].options">
+                                <div class="w-1/2">
+                                    {{ option.name }}
+                                </div>
+                                <div class="w-1/2 flex flex-column items-end justify-end">
+                                    {{ option.price | currency('€ ') }}
+                                </div>
+                            </li>
                         </ul>
-                    </div>
-                    <div class="w-1/2 text-right">
-                        <p class="text-gray-700" v-if="option[0].options[0].price">{{ calculateOptionsSum(option[0].options) | currency('€ ') }}</p>
-<!--                        <button class="bg-teal-500 text-white" @click="calculateOptionsSum(option[0].options)">Klik me</button>-->
-                        <p class="text-black"></p>
-                        <p class="text-gray-700" v-if="!option[0].options[0].price">{{ (active.price * option[0].options[0].percentage_increase) | currency('€ ') }}</p>
-
                     </div>
                 </div>
 

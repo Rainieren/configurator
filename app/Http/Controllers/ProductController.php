@@ -146,7 +146,7 @@ class ProductController extends Controller
             'new_from' => $request->new_from,
             'new_to' => $request->new_to,
             'sku' => $request->sku,
-            'configurable' => $request->configurable_product ? 1 : null,
+            'configurable' => filter_var($request->configurable_product, FILTER_VALIDATE_BOOLEAN),
             'interaction_type' => $request->interaction_type,
             'manufacturer_id' => $request->manufacturer,
             'configurator_id' => $request->configurator,

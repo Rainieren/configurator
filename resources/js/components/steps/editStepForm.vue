@@ -137,26 +137,26 @@
                             <p class="text-gray-500">Which products would you like to add to this step? These are the products that the user can add to the configuration</p>
                         </div>
                         <div class="w-8/12 space-y-5">
-                            <div class="grid grid-cols-10 gap-5 space-x-5 shadow-sm p-3" v-for="product in fields.options">
-                                <div class="flex align-items-center">
+                            <div class="grid grid-cols-12 gap-5 space-x-5 shadow-sm p-3" v-for="product in fields.options">
+                                <div class="col-span-2 flex align-items-center">
                                     <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
                                 </div>
                                 <div class="col-span-4 flex flex-column">
                                     <p class="font-medium">{{ product.name }}</p>
                                     <p class="font-medium text-gray-500">{{ parseFloat(product.price) | currency('€ ') }}</p>
                                 </div>
-                                <div class="col-span-4 flex items-center">
+                                <div class="col-span-4 flex items-center justify-center">
                                     <input v-on:click="fields.defaultProduct = product" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                     <label for="default_product" class="ml-3 mb-0 block text-sm font-medium">
                                         Default
                                     </label>
                                 </div>
-                                <div class="flex items-center">
+                                <div class="col-span-2 flex items-center">
                                     <div class="flex space-x-4">
                                         <form action="">
                                             <input type="hidden" name="_token" :value="csrf">
                                             <input type="hidden" :value="JSON.stringify(product)" name="product">
-                                            <div class="flex flex-column space-x-4">
+                                            <div class="flex space-x-4">
                                                 <a :href="'/dashboard/product/' + product.id + '/edit'" class="hover:text-indigo-500 text-black">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />

@@ -504,7 +504,7 @@ export default {
         return {
             fields: {
                 name: this.product.name,
-                isConfigurableProduct: !!this.product.configurable,
+                isConfigurableProduct: this.product.configurable,
                 hasPriceIncrease: false,
                 isEnabled: this.product.status,
                 isVisible: this.product.visibility,
