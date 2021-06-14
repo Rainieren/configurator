@@ -41,8 +41,25 @@
 
                         </div>
                         <div class="px-10 pb-10">
-                            <p class="text-lg font-bold mb-2">{{ product.name }}</p>
-                            <p>{{ product.description }}</p>
+                            <div class="flex">
+                                <div class="w-1/2">
+                                    <p class="text-lg font-bold mb-2">{{ product.name }}</p>
+                                </div>
+                                <div class="w-1/2 flex justify-end">
+                                    <p class="text-lg font-bold mb-2">{{ parseFloat(product.price) | currency('€ ') }}</p>
+                                </div>
+                            </div>
+
+                            <p class="my-3">{{ product.description }}</p>
+                            <div class="" v-if="product.height || product.length || product.width || product.weight">
+                                <p class="font-medium">Product specificaties:</p>
+                                <div class="my-2">
+                                    <p class="text-gray-500 text-sm" v-if="product.height">Height: {{ product.height }}</p>
+                                    <p class="text-gray-500 text-sm" v-if="product.length">Length: {{ product.length }}</p>
+                                    <p class="text-gray-500 text-sm" v-if="product.length">Width: {{ product.width }}</p>
+                                    <p class="text-gray-500 text-sm" v-if="product.length">Weight: {{ product.weight }}</p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -61,5 +78,12 @@ export default {
             showModal: false,
         };
     },
+    created() {
+        window.addEventListener('keydown', (e) => {
+           if(e.key === 'Escape') {
+               this.showModal = false;
+           }
+        });
+    }
 }
 </script>

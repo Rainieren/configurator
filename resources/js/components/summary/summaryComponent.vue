@@ -1,10 +1,15 @@
 <template>
-    <div class="w-full bg-gray-100 xl:w-4/12 h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between">
+    <div class="w-full bg-gray-100 xl:w-4/12  h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between transition-all">
         <div class="h-auto">
             <div class="border-b border-gray-300 flex justify-center items-center relative h-96" v-if="active">
-                <img :src="active.visualisation" v-if="active" class="h-96 w-auto absolute animate__animated animate__fadeIn" alt="">
+                <transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="out-in">
+                    <img :src="active.visualisation" v-if="active" class="h-96 w-auto absolute" alt="">
+                </transition>
 
-                <img v-if="option[0].options[0].visualisation" :src="option[0].options[0].visualisation" class="h-96 w-auto absolute animate__animated animate__fadeIn" v-for="(option, index) in options" alt="">
+                <transition-group appear enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="out-in" class="block w-100 h-100">
+
+                    <img v-if="option[0].options[0].visualisation" :src="option[0].options[0].visualisation" :key="option[0].options[0].id" class="h-96 w-auto absolute" v-for="(option, index) in options" alt="">
+                </transition-group>
 
 
 <!--                <div class="" v-for="(option, index) in options">-->
@@ -18,7 +23,55 @@
 <!--                    </div>-->
 <!--                </div>-->
             </div>
-            <div class="p-8 md:p-16">
+            <transition enter-active-class="animate__animated animate__fadeInUp animate__faster" leave-active-class="animate__animated animate__fadeOutUp animate__faster">
+                <div class="p-8 md:p-16" v-if="finished">
+                    <button @click="finished = false">Klik me</button>
+                    <p class="text-2xl">Uw configuratie</p>
+                    <div class="border-b border-gray-300 py-8 grid grid-cols-12 gap-6">
+
+                        <div class="col-span-5">
+                            <div class="bg-white h-32 w-100 shadow-sm flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="col-span-7">
+                            <div class="flex">
+                                <div class="w-1/2">
+                                    <p class="font-bold">{{ active.name }}</p>
+                                </div>
+                                <div class="w-1/2 flex flex-column items-end justify-end">
+                                    <p class="font-bold">{{ active.price | currency('€ ') }}</p>
+                                </div>
+                            </div>
+                            <div class="" v-for="(option, index) in options" v-if="option[0].options.length">
+                                <ul>
+                                    <li class="text-gray-700 flex" v-for="option in option[0].options">
+                                        <div class="w-1/2">
+                                            {{ option.name }}
+                                        </div>
+                                        <div class="w-1/2 flex flex-column items-end justify-end">
+                                            {{ option.price | currency('€ ') }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex">
+                                <div class="w-1/2">
+                                    <p class="text-lg font-bold">Totaal:</p>
+                                </div>
+                                <div class="w-1/2 flex flex-column items-end justify-end">
+                                    <p class="text-lg font-bold">{{ calculateSum | currency('€ ') }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </transition>
+            <div class="p-8 md:p-16" v-if="!finished">
                 <div class="border-b border-gray-300 py-6 flex" v-if="active">
                     <div class="w-1/2 ">
 <!--                        <div class="bg-white border rounded-sm border-black w-auto text-center flex align-center justify-center shadow-sm px-1 mr-2">-->
@@ -32,50 +85,26 @@
                     </div>
                 </div>
 
-                <div class="border-b border-gray-300 py-6 flex h-75" v-for="(option, index) in options" v-if="option[0].options.length">
+                <transition-group enter-active-class="animate__animated animate__bounceInRight animate__faster" leave-active-class="animate__animated animate__bounceOutRight animate__faster">
+                    <div class="border-b border-gray-300 py-6 flex h-75" v-for="(option, index) in options" v-if="option[0].options.length" :key="option[0].step.id">
 
-                    <div class="w-100 animate__animated animate__bounceInRight animate__faster">
-                        <p class="font-bold text-lg">
-                            {{option[0].step.name}}
-                        </p>
-                        <ul>
-                            <li class="text-gray-700 flex" v-for="option in option[0].options">
-                                <div class="w-1/2">
-                                    {{ option.name }}
-                                </div>
-                                <div class="w-1/2 flex flex-column items-end justify-end">
-                                    {{ option.price | currency('€ ') }}
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="w-100">
+                            <p class="font-bold text-lg">
+                                {{option[0].step.name}}
+                            </p>
+                            <ul>
+                                <li class="text-gray-700 flex" v-for="option in option[0].options">
+                                    <div class="w-1/2">
+                                        {{ option.name }}
+                                    </div>
+                                    <div class="w-1/2 flex flex-column items-end justify-end">
+                                        {{ option.price | currency('€ ') }}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-
-<!--               TODO::  Dit laten zien als de configuratie is afgerond en de stappen zijn ingeklapt-->
-<!--                <div class="border-b border-gray-300 py-8 grid grid-cols-12 gap-6">-->
-<!--                    <div class="col-span-5">-->
-<!--                        <div class="bg-white h-32 w-100 shadow-sm flex items-center justify-center">-->
-<!--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />-->
-<!--                            </svg>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-span-5">-->
-<!--                        <p class="font-medium">Product naam</p>-->
-<!--                        <p class="text-gray-500">Lorem ipsum dolar amet </p>-->
-<!--                        <p class="text-gray-500">Kleur: Geel</p>-->
-<!--                        <p class="text-gray-500">Kleur: Geel</p>-->
-<!--                        <p class="text-gray-500">Kleur: Geel</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-span-2 flex justify-between items-end flex-col">-->
-<!--                        <p class="font-bold">€ 500,-</p>-->
-<!--                        <a href="" class="text-gray-500 font-base">-->
-<!--                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />-->
-<!--                            </svg>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
+                </transition-group>
 
                 <div class="border-b border-gray-300 py-6 flex">
                     <div class="w-3/4">
@@ -139,10 +168,11 @@ export default {
     data() {
         return {
             sum: 0,
+
         };
     },
     mixins: [Vue2Filters.mixin],
-    props: ['active', 'options'],
+    props: ['active', 'options', 'finished'],
     methods: {
         calculateOptionsSum: function(list) {
             let total = 0;

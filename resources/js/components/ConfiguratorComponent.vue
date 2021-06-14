@@ -42,7 +42,8 @@
                     <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                    <button v-for="product in configurableProducts" v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
+                    <div class="relative" v-for="product in configurableProducts">
+                    <button v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column h-100" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -83,15 +84,13 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="p-3 text-left">
-                            <div class="" v-if="product.height || product.length || product.width || product.weight">
-                                <p class="text-gray-500 text-sm" v-if="product.height">Height: {{ product.height }}</p>
-                                <p class="text-gray-500 text-sm" v-if="product.length">Length: {{ product.length }}</p>
-                                <p class="text-gray-500 text-sm" v-if="product.length">Width: {{ product.width }}</p>
-                                <p class="text-gray-500 text-sm" v-if="product.length">Weight: {{ product.weight }}</p>
-                            </div>
-                        </div>
                     </button>
+                    <button @click="openProductModal(product)" class="text-black rounded-lg absolute bottom-5 right-5 animate__animated animate__fadeInUp animate__faster">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                    </div>
                 </div>
 
 
@@ -175,13 +174,17 @@
                         </div>
                     </draggable>
                 </div>
-                <button @click="ProcessConfiguration(), openModal()" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Configuratie afronden</button>
+                <button @click="ProcessConfiguration" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Configuratie afronden</button>
             </div>
-            <Summary :active="activeProduct" :options="chosenOptions"></Summary>
+            <Summary :active="activeProduct" :options="chosenOptions" :finished="finished"></Summary>
         </div>
         <ConfigurationModal ref="configurationModal" :active="activeProduct" :options="chosenOptions" :code="summary_code"></ConfigurationModal>
         <product-modal ref="productModal"></product-modal>
 
+        <form action="/dashboard/summary/generate" method="POST" class="w-full my-2" id="generatePDF">
+            <input type="hidden" :value="JSON.stringify(activeProduct)" name="activeProduct">
+            <input type="hidden" :value="JSON.stringify(chosenOptions)" name="chosenOptions[]">
+        </form>
     </div>
 </template>
 
@@ -206,6 +209,8 @@
                 configuratorChosen: false,
                 configurators: [],
                 configurator: '',
+                finished: false,
+
             };
         },
         components: {
@@ -351,7 +356,7 @@
                 }, this);
             },
             ProcessConfiguration: function() {
-                this.configurationFinished = true
+                document.getElementById("generatePDF").submit();
             },
             lowestPriceInConfigurator: function(id) {
                 let array = [];
@@ -361,7 +366,6 @@
                         if(item.configurable) {
                             prices.push(parseFloat(item.price))
                         }
-
                     })
                     array.push({configurator: i, prices: [prices]})
                 });
@@ -373,15 +377,3 @@
         }
     }
 </script>
-
-<style>
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-    }
-    .cardhover:hover {
-        border-color: var(--borderHoverColor) !important;
-    }
-</style>

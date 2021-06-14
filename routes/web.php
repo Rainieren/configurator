@@ -25,6 +25,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/manufacturers', [App\Http\Controllers\ManufacturerController::class, 'index'])->name('manufacturers');
     Route::get('/steps', [App\Http\Controllers\StepController::class, 'index'])->name('steps');
     Route::get('/configurators', [App\Http\Controllers\ConfiguratorController::class, 'index'])->name('configurators');
+    Route::get('/summary/generate', [App\Http\Controllers\SummaryController::class, 'generatePDF'])->name('generate');
 
 
 

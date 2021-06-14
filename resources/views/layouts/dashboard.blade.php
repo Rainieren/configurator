@@ -86,7 +86,7 @@
         </div>
         <div class="ml-20 hidden md:block md:w-64 bg-white h-screen fixed justify-between flex flex-col shadow-md transition-all">
             <div class="h-auto w-full p-8 rounded flex items-center mb-3 border-b-2 border-gray-100">
-                <a href="{{ redirect()->back() }}" class="flex items-center hover:text-indigo-500 hover:no-underline">
+                <a href="{{ url()->previous() }}" class="flex items-center hover:text-indigo-500 hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg> Ga terug
@@ -94,27 +94,27 @@
             </div>
             <ul class="space-y-2 mb-auto  h-auto p-4">
                 <li>
-                    <a href="{{ route('home') }}" class="p-2.5 px-4 flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('home') ? 'bg-indigo-600 text-white' : '' }}">
+                    <a href="{{ route('home') }}" class="p-2.5 px-4 flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('home') ? 'bg-indigo-600 text-white' : '' }}">
                         Dashboard
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('configurators') }}" class="p-2.5 px-4 flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('configurators') ? 'bg-indigo-600' : '' }}">
+                    <a href="{{ route('configurators') }}" class="p-2.5 px-4 flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('configurators') ? 'bg-indigo-600 text-white' : '' }}">
                         Configurators
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('products') }}" class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('products') ? 'bg-indigo-600 text-white' : '' }}">
+                    <a href="{{ route('products') }}" class="p-2.5 px-4  flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('products') ? 'bg-indigo-600 text-white' : '' }}">
                         Products
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('steps') }}" class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('steps') ? 'bg-indigo-600 text-white' : '' }}">
+                    <a href="{{ route('steps') }}" class="p-2.5 px-4  flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('steps') ? 'bg-indigo-600 text-white' : '' }}">
                         Steps
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('manufacturers') }}"  class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('manufacturers') ? 'bg-indigo-600' : '' }}">
+                    <a href="{{ route('manufacturers') }}"  class="p-2.5 px-4  flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('manufacturers') ? 'bg-indigo-600' : '' }}">
                         Manufacturers
                     </a>
                 </li>
@@ -124,12 +124,12 @@
                 </li>
 
                 <li>
-                    <a href="" class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('settings') ? 'bg-indigo-600 text-white hover:text-gray-800' : '' }}">
+                    <a href="" class="hidden p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('settings') ? 'bg-indigo-600 text-white hover:text-gray-800' : '' }}">
                         Settings
                     </a>
                 </li>
                 <li>
-                    <a href="" class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('privacy') ? 'bg-indigo-600 text-white hover:text-gray-800' : '' }}">
+                    <a href="" class="hidden p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('privacy') ? 'bg-indigo-600 text-white hover:text-gray-800' : '' }}">
                         Privacy
                     </a>
                 </li>

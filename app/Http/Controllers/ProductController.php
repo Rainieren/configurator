@@ -182,7 +182,7 @@ class ProductController extends Controller
 
     public function getAllProductsWithNoConfigurator()
     {
-        return response()->json(Product::where(['configurable' => 1, 'step_id' => null, 'visibility' => 1])->get());
+        return response()->json(Product::where(['configurator_id' => null, 'visibility' => 1])->get());
     }
 
 

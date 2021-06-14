@@ -46,7 +46,7 @@
                                 <p class="my-2">Sorry, Er zijn momenteel geen producten met de gekozen interactie type beschikbaar om toe te voegen. Maak nieuwe producten aan of pas bestaande producten aan.</p>
                             </div>
                             <div class="mt-2" v-if="!loading && products.length">
-                                <div class="flex flex-col my-4 h-75 overflow-y-scroll">
+                                <div class="flex flex-col my-4 h-75 ">
                                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                         <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
                                             <div class="shadow-sm overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -55,6 +55,9 @@
                                                         <tr>
                                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                                 Select
+                                                            </th>
+                                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                Thumbnail
                                                             </th>
                                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                                 Name
@@ -73,13 +76,16 @@
                                                                 <input type="checkbox" :id="product.id" :key="product.id" @change="addToArray(product, index)" :value="product.id">
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
+                                                                <img :src="product.thumbnail" class="h-12 w-12 rounded bg-cover" alt="">
+                                                            </td>
+                                                            <td class="px-6 py-4 whitespace-nowrap">
                                                                 {{ product.name }}
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
                                                                 {{ product.price | currency('€ ') }}
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                                Card
+                                                                {{ checkInteractionType() }}
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -132,6 +138,15 @@ export default {
         },
         emptyArrayAndCloseModal: function() {
             this.showModal = false;
+        },
+        checkInteractionType: function() {
+            if(this.interactionType === 1) {
+                return "Card"
+            } else if (this.interactionType === 2) {
+                return "Radio"
+            } else {
+                return "Input"
+            }
         }
     }
 }

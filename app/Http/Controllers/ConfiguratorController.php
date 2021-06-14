@@ -56,6 +56,10 @@ class ConfiguratorController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
+        foreach(json_decode($request->selectedConfigurableProducts[0]) as $product) {
+            Product::where('id', $product)->update(['configurator_id' => $configurator->id]);
+        }
+
         return redirect('/dashboard/configurators');
     }
 
@@ -111,7 +115,9 @@ class ConfiguratorController extends Controller
      */
     public function destroy($id)
     {
+
         Configurator::destroy($id);
+        Product::where('configurator_id', $id)->update(['configurator_id' => null]);
 
         return redirect('/dashboard/configurators')->with('flash', "Succesvol verwijderd");
     }

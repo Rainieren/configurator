@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Download;
 use App\Models\Product;
 use App\Models\Summary;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -98,7 +100,21 @@ class SummaryController extends Controller
         //
     }
 
-    public function getAllSummaries() {
+    public function getAllSummaries()
+    {
         return response()->json(Summary::with('products')->get());
+    }
+
+    public function generatePDF(Request $request)
+    {
+        dd($request);
+        $pdf = PDF::loadView('pdfs.summary');
+
+//        $download = Summary::create([
+//            'user_id' => Auth::user()->id,
+//            'filename' => 'summary.pdf'
+//        ]);
+
+        return $pdf->download('summary.pdf');
     }
 }
