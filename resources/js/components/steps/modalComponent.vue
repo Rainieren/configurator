@@ -32,20 +32,24 @@
                 <div class="bg-white px-4 pt-4 pb-4 sm:p-6 sm:pb-4">
                     <div class="">
                         <div class="">
-                            <p class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                Producten toevoegen
-                            </p>
-                            <div class="flex justify-center flex-column items-center my-5" v-if="loading">
-                                <svg class="animate-spin mr-3 h-8 w-8 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <p class="font-medium my-3">Producten ophalen</p>
-                            </div>
-                            <div v-if="!products.length">
-                                <p class="my-2">Sorry, Er zijn momenteel geen producten met de gekozen interactie type beschikbaar om toe te voegen. Maak nieuwe producten aan of pas bestaande producten aan.</p>
+
+                            <div v-if="!products.length" class="f">
+                                <div class="w-100 text-center flex items-center justify-center flex-column p-5">
+                                    <p class="font-medium text-lg">Sorry, At this moment there are no product available with the chosen interaction type. Create a new product with the right interaction type or change a existing one</p>
+                                    <img :src="'/images/undraw_empty_xct9.svg'" class="w-1/3 my-24" alt="">
+                                </div>
                             </div>
                             <div class="mt-2" v-if="!loading && products.length">
+                                <p class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Producten toevoegen
+                                </p>
+                                <div class="flex justify-center flex-column items-center my-5" v-if="loading">
+                                    <svg class="animate-spin mr-3 h-8 w-8 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <p class="font-medium my-3">Producten ophalen</p>
+                                </div>
                                 <div class="flex flex-col my-4 h-75 ">
                                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                         <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">

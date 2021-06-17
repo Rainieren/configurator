@@ -89,7 +89,7 @@
                 <a href="{{ url()->previous() }}" class="flex items-center hover:text-indigo-500 hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-                    </svg> Ga terug
+                    </svg> Go back
                 </a>
             </div>
             <ul class="space-y-2 mb-auto  h-auto p-4">
@@ -114,13 +114,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('manufacturers') }}"  class="p-2.5 px-4  flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('manufacturers') ? 'bg-indigo-600' : '' }}">
+                    <a href="{{ route('manufacturers') }}"  class="p-2.5 px-4  flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('manufacturers') ? 'bg-indigo-600 text-white' : '' }}">
                         Manufacturers
                     </a>
                 </li>
 
                 <li>
-                    <p class="text-xs p-2 text-gray-800  font-semibold uppercase tracking-widest">Overig</p>
+                    <p class="text-xs p-2 text-gray-800  font-semibold uppercase tracking-widest">Other</p>
                 </li>
 
                 <li>

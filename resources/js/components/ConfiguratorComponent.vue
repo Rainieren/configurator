@@ -2,19 +2,24 @@
     <div class="container-fluid px-0">
         <transition name="fade">
             <div class="bg-white fixed w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
-                <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">Wat wil je configureren?</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <div v-for="(configurator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configurator.theme_color)">
-                        <div v-on:click="getConfigurableProducts(configurator.id)">
-                            <div class="p-3">
-                                <p class="font-medium text-xl text-center">{{ configurator.name }}</p>
-                                <div class=" w-64 flex items-center justify-center h-32 my-8">
-                                    <img :src="configurator.thumbnail" v-if="configurator.thumbnail" alt="">
+                <div class="text-center" v-if="configurators.length != 0">
+                    <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">What do you like to configure?</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                        <div v-for="(configurator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configurator.theme_color)">
+                            <div v-on:click="getConfigurableProducts(configurator.id)">
+                                <div class="p-3">
+                                    <p class="font-medium text-xl text-center">{{ configurator.name }}</p>
+                                    <div class=" flex items-center justify-center w-full my-8">
+                                        <img :src="configurator.thumbnail" v-if="configurator.thumbnail" class="h-full w-64" alt="">
+                                    </div>
+                                    <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
                                 </div>
-                                <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="" v-else>
+                    <p class="font-medium text-3xl">There are no configurators. Ask the administrator to make one</p>
                 </div>
             </div>
         </transition>
@@ -25,7 +30,7 @@
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <p class=" text-xl">Producten ophalen, even geduld aub...</p>
+                <p class=" text-xl">Retreiving products, One moment please...</p>
             </div>
         </transition>
 
@@ -35,15 +40,15 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg>
-                    <p class="text-gray-800 font-medium text-lg  cursor-pointer hover:text-indigo-500" >Andere configurator kiezen</p>
+                    <p class="text-gray-800 font-medium text-lg  cursor-pointer hover:text-indigo-500" >Choose a different configurator</p>
                 </div>
 
                 <div class="relative flex justify-between items-center pb-4">
-                    <h1 class="text-3xl font-medium">{{ configurator.name }} configureren</h1>
+                    <h1 class="text-3xl font-medium">Configure {{ configurator.name }}</h1>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                     <div class="relative" v-for="product in configurableProducts">
-                    <button v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column h-100" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
+                    <button v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column h-100 w-100" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -62,7 +67,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                             </svg>
-                                            Op voorraad
+                                            In stock
                                         </span>
                                     </p>
                                     <p v-if="product.stock === 0">
@@ -70,7 +75,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                             </svg>
-                                            Niet op voorraad
+                                            Out of stock
                                         </span>
                                     </p>
                                 </div>
@@ -114,7 +119,7 @@
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                                 <div v-for="(option, index) in step.options" v-bind:key="index" class="relative">
-                                    <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative flex flex-column animate__animated animate__fadeInUp animate__faster w-100" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option)), 'pointer-events-none opacity-50': option.stock === 0}">
+                                    <button v-on:click="addToChosenOptions(step, option)" class="bg-white border-2 rounded-xl transition border-gray-200 hover:border-indigo-500 relative flex flex-column animate__animated animate__fadeInUp animate__faster w-100 h-100" v-bind:key="option.id" :class="{'border-indigo-500': chosenOptions.some(chosenOption => chosenOption[0].options.includes(option)), 'pointer-events-none opacity-50': option.stock === 0}">
                                         <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="chosenOptions.some(chosenOption => chosenOption[0].options.includes(option))">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -134,7 +139,7 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                             </svg>
-                                                            Op voorraad
+                                                            In stock
                                                         </span>
                                                     </p>
                                                     <p v-if="option.stock === 0">
@@ -142,7 +147,7 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                                                             </svg>
-                                                            Niet op voorraad
+                                                            Out of stock
                                                         </span>
                                                     </p>
                                                 </div>
@@ -171,10 +176,11 @@
                                     </div>
                                 </button>
                             </div>
+
                         </div>
                     </draggable>
                 </div>
-                <button @click="ProcessConfiguration" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Configuratie afronden</button>
+                <button @click="ProcessConfiguration" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Finish configuration</button>
             </div>
             <Summary :active="activeProduct" :options="chosenOptions" :finished="finished"></Summary>
         </div>
@@ -182,6 +188,7 @@
         <product-modal ref="productModal"></product-modal>
 
         <form action="/dashboard/summary/generate" method="POST" class="w-full my-2" id="generatePDF">
+            <input type="hidden" name="_token" :value="csrf">
             <input type="hidden" :value="JSON.stringify(activeProduct)" name="activeProduct">
             <input type="hidden" :value="JSON.stringify(chosenOptions)" name="chosenOptions[]">
         </form>
@@ -210,7 +217,7 @@
                 configurators: [],
                 configurator: '',
                 finished: false,
-
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             };
         },
         components: {
@@ -258,43 +265,56 @@
                 return exists;
             },
             addToChosenOptions(step, option) {
+                // Option is in stock
                 if(option.stock === 1) {
-                    // Stap komt overeen met de stap die al in de array staat
+                    // Check if the step where the option belongs to, exists in the array of ChosenOptions
                     if(this.chosenOptions.some(options => options[0].step.name === step.name)) {
+                        // The step allows multiple select
                         if(step.allow_multiple) {
+                            // The option exists in the array of selected options
                             if(this.optionExistInArray(option.name)){
+                                // Loop through all the chosenOptions
                                 this.chosenOptions.forEach(function(value, i) {
-                                    // Check if it is the last one
-                                    if(value[0].options.length === 1) {
-                                        // Delete the array if its the last one
-                                        this.chosenOptions.splice(i, 1)
-                                    } else {
-                                        // Just delete the option
-                                        value[0].options.forEach(function(chOption, index) {
-                                            if(chOption.name === option.name) {
-                                                value[0].options.splice(index, 1);
-                                            }
-                                        });
+                                    // The step equals the step given
+                                    if(value[0].step.name === step.name) {
+                                        // the options array length is 1 (Meaning its the last one in the array)
+                                        if (value[0].options.length === 1) {
+                                            // Delete the whole array instead of only the option
+                                            this.chosenOptions.splice(i, 1)
+                                        } else {
+                                            // The array's length is NOT 1 and thus only the options needs to be deleted
+                                            value[0].options.forEach(function(chOption, index) {
+                                                // If the option equals the option given
+                                                if(chOption.name === option.name) {
+                                                    // Delete the option from the array
+                                                    value[0].options.splice(index, 1);
+                                                }
+                                            });
+                                        }
                                     }
                                 }, this);
                             } else {
+                                // If the option does not exists in the array
                                 this.chosenOptions.forEach(function(value, i) {
+                                    // If the step name equals the given name
                                     if(value[0].step.name === step.name) {
+                                        // Push the option to the right options array
                                         value[0].options.push(option)
                                     }
                                 },this);
                             }
                         } else {
-                            // Stap staat NIET meerdere producten toe
+                            // If the stap does NOT allow for multiple select
                             this.chosenOptions.forEach(function(value, i) {
-                                // Als de stap overeen komt met de stap die in de array staat
+                                // If the step equals the given step
                                 if(value[0].step.name === step.name) {
-                                    // Vervang de huidige optie met de nieuwe
+                                    // Replace the current option with the new option
                                     Vue.set(this.chosenOptions[i][0].options, 0, option)
                                 }
                             }, this);
                         }
                     } else {
+                        // If neither do exist at all in the array, Add the stap AND the option to the array
                         this.chosenOptions.push([{step: step, options: [option]}])
                     }
                 }
@@ -311,7 +331,7 @@
                     axios.get('/api/get/configurable_products/' + id)
                     .then(response => {
                         this.configurableProducts = response.data
-                        this.loading = false
+
                     }).catch(err => {
                         console.log(err)
                     }),
@@ -319,7 +339,7 @@
                         .then(response => {
                             this.configurator = response.data
                             this.configuratorChosen = true
-                            this.loading = false
+
                         }).catch(err => {
                         console.log(err)
                     })
@@ -329,6 +349,7 @@
                 axios.get('/api/get/all/configurators')
                     .then(response => {
                         this.configurators = response.data
+                        this.loading = false
                     }).catch(err => {
                     console.log(err)
                 });

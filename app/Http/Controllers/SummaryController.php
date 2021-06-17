@@ -107,9 +107,9 @@ class SummaryController extends Controller
 
     public function generatePDF(Request $request)
     {
-        dd($request);
-        $pdf = PDF::loadView('pdfs.summary');
-
+//        dd($request);
+        $pdf = PDF::loadView('pdfs.summary', ['active' => $request->activeProduct, 'options' => $request->chosenOptions]);
+//        $dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
 //        $download = Summary::create([
 //            'user_id' => Auth::user()->id,
 //            'filename' => 'summary.pdf'

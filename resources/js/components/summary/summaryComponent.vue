@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full bg-gray-100 xl:w-4/12  h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between transition-all">
+    <div class="w-full bg-gray-100 xl:w-4/12  h-screen block xl:fixed top-0 right-0 shadow-md z-10 flex flex-col justify-between transition-all overflow-y-scroll">
         <div class="h-auto">
             <div class="border-b border-gray-300 flex justify-center items-center relative h-96" v-if="active">
                 <transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="out-in">
                     <img :src="active.visualisation" v-if="active" class="h-96 w-auto absolute" alt="">
                 </transition>
 
-                <transition-group appear enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="out-in" class="block w-100 h-100">
+                <transition-group appear enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="out-in" class="block w-100 h-100 flex justify-center items-center relative">
 
                     <img v-if="option[0].options[0].visualisation" :src="option[0].options[0].visualisation" :key="option[0].options[0].id" class="h-96 w-auto absolute" v-for="(option, index) in options" alt="">
                 </transition-group>
@@ -135,11 +135,12 @@
 
             </div>
         </div>
-        <div class="border-t border-gray-300 px-16 md:px-8 py-8 space-y-2 h-auto ">
+        <div class="border-t border-gray-300 px-8 md:px-16 py-16 space-y-2 h-64 ">
             <p class="font-bold font-lg">Need help?</p>
             <p class="text-gray-500">Lorem ipsum dolar amet rados</p>
-            <div class="flex space-x-10">
-                <div class="flex items-center my-3">
+            <div class="md:flex md:space-x-10 block">
+
+                <div class="flex items-center my-3 w-100 md:w-1/2">
                     <div class="bg-white border border-gray-100 text-indigo-500 h-12 w-12 rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -147,7 +148,7 @@
                     </div>
                     <a href="" class="font-medium ml-3 hover:text-indigo-500 hover:no-underline">info@mcompany.nl</a>
                 </div>
-                <div class="flex items-center my-3">
+                <div class="flex items-center my-3  w-100 md:w-1/2">
                     <div class="bg-white border border-gray-100 text-indigo-500 h-12 w-12 rounded-full flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />

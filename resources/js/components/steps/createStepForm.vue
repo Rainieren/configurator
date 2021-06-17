@@ -79,27 +79,33 @@
                         <div class="w-8/12">
                             <fieldset>
                                 <div class="space-y-4">
-                                    <div class="flex" v-for="product in configurableProducts">
-                                        <div class="flex items-center justify-center">
-                                            <div class="flex items-center h-5">
-                                                <div class="flex justify-between items-center" @click="()=>{AddSelectedConfigurableProducts(product.id)}">
-                                                    <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': selectedConfigurableProducts.includes(product.id)}">
-                                                        <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': selectedConfigurableProducts.includes(product.id)}"></div>
+                                    <div class="" v-if="configurableProducts.length != 0">
+                                        <div class="flex" v-for="product in configurableProducts">
+                                            <div class="flex items-center justify-center">
+                                                <div class="flex items-center h-5">
+                                                    <div class="flex justify-between items-center" @click="()=>{AddSelectedConfigurableProducts(product.id)}">
+                                                        <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': selectedConfigurableProducts.includes(product.id)}">
+                                                            <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': selectedConfigurableProducts.includes(product.id)}"></div>
+                                                        </div>
                                                     </div>
+                                                    <input v-model="fields.is_optional" id="ddd" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                                 </div>
-                                                <input v-model="fields.is_optional" id="ddd" name="is_optional" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                                <input :id="product.id" :value="product.id" :name="product.id" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                             </div>
-                                            <input :id="product.id" :value="product.id" :name="product.id" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                        </div>
-                                        <div class="ml-3 flex w-100">
-                                            <div class="w-4/6">
-                                                <label :for="product.id" class="font-medium text-gray-700 m-0">{{ product.name }}</label>
-                                                <label :for="product.id" class="text-gray-500 block">{{ product.description | truncate(32) }}</label>
+                                            <div class="ml-3 flex w-100">
+                                                <div class="w-4/6">
+                                                    <label :for="product.id" class="font-medium text-gray-700 m-0">{{ product.name }}</label>
+                                                    <label :for="product.id" class="text-gray-500 block">{{ product.description | truncate(32) }}</label>
+                                                </div>
+                                               <div class="w-2/6 flex items-center justify-end">
+                                                   <label :for="product.id">{{ product.price | currency('€ ')}}</label>
+                                               </div>
                                             </div>
-                                           <div class="w-2/6 flex items-center justify-end">
-                                               <label :for="product.id">{{ product.price | currency('€ ')}}</label>
-                                           </div>
                                         </div>
+                                    </div>
+                                    <div class="flex justify-center items-center flex-column text-center" v-else>
+                                        <p class="font-medium">There are no product yet. To assign this step to a product please create a product first. Or create a step without a parent product</p>
+                                        <a href="/dashboard/product/create" class="text-indigo-500">Create a product</a>
                                     </div>
                                 </div>
                             </fieldset>

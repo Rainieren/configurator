@@ -83,6 +83,7 @@ export default {
                 name: this.configurator.name,
                 themeColor: this.configurator.theme_color,
                 defaultColor: '#6366F1',
+                selectedConfigurableProducts: [],
             },
             submitted: false,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

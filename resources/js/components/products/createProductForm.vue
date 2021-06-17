@@ -17,8 +17,8 @@
                                     </svg>
                                 </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.name.required">Naam is verplicht!</p>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.name.maxLength">Naam mag niet meer dan 128 Karakters bevatten!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.name.required">Name is required!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.name.maxLength">Name cannot have more than 128 Characters!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -105,7 +105,7 @@
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.configurator_id.required">Configurator is verplicht!</p>
+                                <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.configurator_id.required">Configurator is required!</p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.price.required">Prijs is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.price.required">Price is required!</p>
 
                             <div class="" v-if="!fields.isConfigurableProduct">
                                 <fieldset>
@@ -160,10 +160,10 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.priceIncrease.required">Percentage is verplicht!</p>
+                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.priceIncrease.required">Percentage is required!</p>
                                     </div>
                                     <div class="my-3">
-                                        <label for="percentage" class="font-medium text-gray-700">Moet gebaseerd zijn op de som van de volgende stappen</label>
+                                        <label for="percentage" class="font-medium text-gray-700">The percentage needs to be based on the sum of the following steps:</label>
                                         <fieldset class="my-3">
                                             <div class="space-y-4">
                                                 <div class="flex">
@@ -172,7 +172,7 @@
                                                     </div>
                                                     <div class="ml-3 flex w-100">
                                                         <div class="w-4/6">
-                                                            <label class="font-medium text-gray-700 m-0">Hoofdproduct</label>
+                                                            <label class="font-medium text-gray-700 m-0">Parent product</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,21 +201,20 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model.trim="$v.fields.sku.$model" type="text" id="sku" name="sku" v-on:keypress="isLetterOrDash($event)" maxlength="191"  :class="{ 'border-red-500' : submitted && !$v.fields.sku.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <input v-model.trim="$v.fields.sku.$model" type="text" id="sku" name="sku" maxlength="191"  :class="{ 'border-red-500' : submitted && !$v.fields.sku.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.sku.required">
                                     <svg v-if="submitted && !$v.fields.sku.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.sku.required">SKU is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.sku.required">SKU is required!</p>
                         </div>
                     </div>
                     <hr class="my-4">
                     <div class="flex space-x-5">
                         <div class="w-4/12">
                             <p class="text-gray-800 font-medium text-lg">Stock</p>
-                            <p class="text-gray-500">How much do you have in stock?</p>
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
@@ -229,7 +228,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.stock.required">Voorraad is verplicht!</p>
+                            <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.stock.required">Stock is required!</p>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -300,7 +299,7 @@
                     <div class="flex space-x-5">
                         <div class="w-4/12">
                             <p class="text-gray-800 font-medium text-lg">Product attributes</p>
-                            <p class="text-gray-500">These values are configured in centimeters. To change to another unit of measurement. Go to settings</p>
+                            <p class="text-gray-500">These values are configured in settings. To change to another unit of measurement. Go to settings</p>
                         </div>
                         <div class="w-8/12">
                             <div class="mb-3 w-2/4">
@@ -342,15 +341,15 @@
                             <div class="flex">
                                 <div class="w-full flex-column">
                                     <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" v-on:change="alert('test')" :class="{'border-red-600': submitted && !$v.fields.newFrom.required || !$v.fields.newFrom.minValue}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
-                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.required">Nieuw vanaf is verplicht!</p>
-                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.minValue">Nieuw vanaf mag niet lager zijn dan vandaag!</p>
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.required">New from is required!</p>
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.minValue">New from cannot be greater than today!</p>
                                 </div>
                                 <div class="mx-3 flex items-center justify-center">
                                     <p class="text-gray-900 font-medium">To</p>
                                 </div>
                                 <div class="w-full flex-column">
                                     <input v-model.trim="$v.fields.newTo.$model" type="date" name="new_to" id="new_to"  :class="{'border-red-600': submitted && !$v.fields.newTo.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
-                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newTo.required">Nieuw tot is verplicht!</p>
+                                    <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newTo.required">New to is required!</p>
                                 </div>
                             </div>
                         </div>
@@ -364,7 +363,7 @@
                         <div class="w-8/12">
                             <div class="relative">
                                 <select v-model.trim="$v.fields.manufacturer.$model" :class="{'border-red-600': submitted && !$v.fields.manufacturer.required}" type="text" name="manufacturer" id="manufacturer" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" :disabled="!fields.hasManufacturer">
-                                    <option selected value="">Selecteer een fabrikant</option>
+                                    <option selected value="">Select a manufacturer</option>
                                     <option :value="manufacturer.id" v-for="manufacturer in manufacturers">{{  manufacturer.name }}</option>
                                 </select>
 
@@ -373,7 +372,7 @@
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.manufacturer.required">Fabrikant is verplicht!</p>
+                                <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.manufacturer.required">Manufacturer is required!</p>
                             </div>
                             <fieldset>
                                 <div class="mt-3 space-y-2">
@@ -445,7 +444,7 @@
                                                 <p class="text-gray-400 text-sm font-medium m-0">The user can select what they want using rounded buttons</p>
                                             </div>
                                         </div>
-                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.interactionType.required">Interactie type is verplicht!</p>
+                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.interactionType.required">Interaction type is required!</p>
                                     </div>
                                 </fieldset>
                             </div>
@@ -598,20 +597,11 @@
                 event = (event) ? event : window.event;
                 var charCode = (event.which) ? event.which : event.keyCode;
                 if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
-                    event.preventDefault();;
-                } else {
-                    return true;
-                }
-            },
-            isLetterOrDash: function(event) {
-                event = (event) ? event : window.event;
-                var charCode = (event.which) ? event.which : event.keyCode;
-                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 45 && charCode !== 95) {
                     event.preventDefault();
                 } else {
                     return true;
                 }
-            },
+            }
         },
         validations: {
             fields: {

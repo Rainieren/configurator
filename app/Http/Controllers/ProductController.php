@@ -40,7 +40,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
         if($request->thumbnail_upload) {
             $imageName = time() . '.' . $request->thumbnail_upload->extension();
             $request->thumbnail_upload->storeAs('public/images', $imageName);
@@ -78,6 +77,7 @@ class ProductController extends Controller
         ]);
 
         return redirect('/dashboard/product/' . $product->id)->with('flash', 'Successful aangemaakt!');
+        return response()->json();
     }
 
     /**

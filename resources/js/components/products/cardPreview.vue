@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="bg-white shadow-sm min-h-32 w-50 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200 relative" :class="{'pointer-events-none opacity-50': data.stock === 0 || data.stock === '0'}">
+    <button type="button" class="bg-white shadow-sm min-h-32 w-50 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200 relative my-5" :class="{'pointer-events-none opacity-50': data.stock === 0 || data.stock === '0'}">
         <div class="p-3 border-b border-gray-300">
             <div class="flex">
                 <div class="w-2/3 text-left overflow-hidden break-word">
@@ -14,7 +14,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
-                            Op voorraad
+                            In stock
                         </span>
                     </p>
                     <p v-if="data.stock === '0' || data.stock === 0">
@@ -22,15 +22,18 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                             </svg>
-                            Niet op voorraad
+                            Out of stock
                         </span>
                     </p>
                 </div>
             </div>
         </div>
         <div class="p-3 flex justify-center items-center h-64">
-            <img :src="data.thumbnail" v-if="checkIfIsFile(data.thumbnail) === false" class="object-contain object-center h-full w-full rounded-xl"/>
-            <img :src="data.thumbnailPreview" v-if="data.thumbnailPreview" class="object-contain object-center h-full w-full rounded-xl"/>
+
+                <img :src="data.thumbnail" v-if="checkIfIsFile(data.thumbnail) === false" class="object-contain object-center h-full w-full rounded-xl"/>
+            <transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="out-in">
+                <img :src="data.thumbnailPreview" v-if="data.thumbnailPreview" class="object-contain object-center h-full w-full rounded-xl"/>
+            </transition>
         </div>
         <div class="p-3 text-left">
             <p class="text-gray-500 text-sm" v-if="data.weight">Weight: {{ data.weight }}</p>

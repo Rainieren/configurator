@@ -9,7 +9,7 @@
                     </div>
                     <div class="w-8/12">
                         <div class="col-span-6 relative">
-                            <input v-model.trim="$v.fields.name.$model" :class='{ "border-2 border-red-500" : submitted && !$v.fields.name.required}'  name="name" id="name" type="text" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
+                            <input v-model.trim="$v.fields.name.$model" :class='{ "border-2 border-red-500" : submitted && !$v.fields.name.required}' placeholder="Sony, Volvo, Logitech etc." name="name" id="name" type="text" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
 
                             <div class="absolute inset-y-7 top-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
                                 <svg v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">

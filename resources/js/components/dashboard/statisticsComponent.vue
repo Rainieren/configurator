@@ -2,9 +2,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 my-4">
         <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
-                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Totaal geconfigureerde producten</p>
+                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Amount of configured products</p>
                 <div class="flex">
-                    <p class="text-gray-900 text-3xl font-bold">
+                    <p class="text-gray-900 text-3xl font-bold my-5">
                         {{ summaries.length }}
                     </p>
                 </div>
@@ -12,19 +12,21 @@
         </div>
         <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
-                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Gemiddelde prijs</p>
+                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Average price</p>
                 <div class="flex">
-                    <p class="text-gray-900 text-3xl font-bold">
-                        {{ parseFloat(averagePrice) | currency('€ ') }}
+                    <p class="text-gray-900 text-3xl font-bold my-5">
+                        —
                     </p>
                 </div>
             </div>
         </div>
         <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
-                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Populairst product</p>
+                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Most populair product</p>
                 <div class="flex">
-                    <p class="text-gray-900 text-3xl font-bold">T-Shirt</p>
+                    <p class="text-gray-900 text-3xl font-bold my-5">
+                        —
+                    </p>
                 </div>
             </div>
         </div>
