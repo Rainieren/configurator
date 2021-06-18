@@ -51,6 +51,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/store', [App\Http\Controllers\ManufacturerController::class, 'store'])->name('storeManufacturer');
         Route::get('/{id}', [App\Http\Controllers\ManufacturerController::class, 'show'])->name('manufacturer');
         Route::get('/{id}/edit', [App\Http\Controllers\ManufacturerController::class, 'edit'])->name('editManufacturer');
+        Route::patch('{id}/update', [App\Http\Controllers\ManufacturerController::class, 'update'])->name('updateManufacturer');
         Route::delete('/{id}/delete', [App\Http\Controllers\ManufacturerController::class, 'destroy'])->name('deleteManufacturer');
     });
 

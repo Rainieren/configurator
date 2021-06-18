@@ -10,7 +10,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model.trim="$v.fields.name.$model" :class="{'border-red-600': submitted && !$v.fields.name.required || !$v.fields.name.maxLength }" name="name"  class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" id="name" type="text" autofocus>
+                                <input v-model.trim="$v.fields.name.$model" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.name.required || !$v.fields.name.maxLength }" name="name"  class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" id="name" type="text" autofocus>
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
                                     <svg v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -80,7 +80,7 @@
                             <p class="text-gray-800 font-medium text-lg">Configurable product</p>
                         </div>
                         <div class="w-8/12">
-                            <fieldset>
+                            <fieldset class="mb-5">
                                 <div class="flex items-center">
                                     <div class="flex items-center h-5">
                                         <div class="flex justify-between items-center" @click="[fields.isConfigurableProduct = !fields.isConfigurableProduct], isConfigurableProductFunc()">
@@ -95,9 +95,9 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <div v-if="fields.isConfigurableProduct" class="my-3">
+                            <div v-if="fields.isConfigurableProduct" class="mt-10">
                                 <label for="height" class="font-medium text-gray-700">Configurator</label>
-                                <select v-model.trim="$v.fields.configurator_id.$model" :class="{'border-red-600': submitted && !$v.fields.configurator_id.required}" type="text" name="configurator" id="configurator" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <select v-model.trim="$v.fields.configurator_id.$model" :class="{'border-red-500 animate__animated animate__shakeX': submitted && !$v.fields.configurator_id.required}" type="text" name="configurator" id="configurator" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option :value="configurator.id" selected v-for="configurator in configurators">{{ configurator.name }}</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.stock.required">
@@ -121,7 +121,7 @@
                                     €
                                   </span>
                                 </div>
-                                <input :maxlength="8" v-model.trim="$v.fields.price.$model" v-mask="mask" :class="{ 'border-red-500' : submitted && !$v.fields.price.required}" type="text" name="price" id="price" class="appearance-none block border border-gray-200 pl-8 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="0.00" :disabled="fields.hasPriceIncrease">
+                                <input :maxlength="8" v-model.trim="$v.fields.price.$model" v-mask="mask" :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.price.required}" type="text" name="price" id="price" class="appearance-none block border border-gray-200 pl-8 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="0.00" :disabled="fields.hasPriceIncrease">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.price.required">
                                     <svg v-if="submitted && !$v.fields.price.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -153,7 +153,7 @@
                                     <div class="my-3">
                                         <label for="percentage" class="font-medium text-gray-700">Percentage</label>
                                         <div class="relative">
-                                            <input v-mask="'###'" v-model.trim="$v.fields.priceIncrease.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.fields.priceIncrease.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                            <input v-mask="'###'" v-model.trim="$v.fields.priceIncrease.$model" :maxlength="6" :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && $v.fields.priceIncrease.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.priceIncrease.required">
                                                 <svg v-if="submitted && !$v.fields.priceIncrease.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -201,7 +201,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model.trim="$v.fields.sku.$model" type="text" id="sku" name="sku" maxlength="191"  :class="{ 'border-red-500' : submitted && !$v.fields.sku.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <input v-model.trim="$v.fields.sku.$model" type="text" id="sku" name="sku" maxlength="191"  :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.sku.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.sku.required">
                                     <svg v-if="submitted && !$v.fields.sku.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -218,7 +218,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <select v-model.trim="$v.fields.stock.$model" :class="{'border-red-600': submitted && !$v.fields.stock.required}" type="text" name="stock" id="stock" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <select v-model.trim="$v.fields.stock.$model" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.stock.required}" type="text" name="stock" id="stock" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option value="1" selected>In stock</option>
                                     <option selected value="0">Out of stock</option>
                                 </select>
@@ -340,7 +340,7 @@
                         <div class="w-8/12">
                             <div class="flex">
                                 <div class="w-full flex-column">
-                                    <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" v-on:change="alert('test')" :class="{'border-red-600': submitted && !$v.fields.newFrom.required || !$v.fields.newFrom.minValue}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                    <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" v-on:change="alert('test')" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.newFrom.required || !$v.fields.newFrom.minValue}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                     <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.required">New from is required!</p>
                                     <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.minValue">New from cannot be greater than today!</p>
                                 </div>
@@ -348,7 +348,7 @@
                                     <p class="text-gray-900 font-medium">To</p>
                                 </div>
                                 <div class="w-full flex-column">
-                                    <input v-model.trim="$v.fields.newTo.$model" type="date" name="new_to" id="new_to"  :class="{'border-red-600': submitted && !$v.fields.newTo.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                    <input v-model.trim="$v.fields.newTo.$model" type="date" name="new_to" id="new_to"  :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.newTo.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                     <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newTo.required">New to is required!</p>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <select v-model.trim="$v.fields.manufacturer.$model" :class="{'border-red-600': submitted && !$v.fields.manufacturer.required}" type="text" name="manufacturer" id="manufacturer" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" :disabled="!fields.hasManufacturer">
+                                <select v-model.trim="$v.fields.manufacturer.$model" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.manufacturer.required}" type="text" name="manufacturer" id="manufacturer" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" :disabled="!fields.hasManufacturer">
                                     <option selected value="">Select a manufacturer</option>
                                     <option :value="manufacturer.id" v-for="manufacturer in manufacturers">{{  manufacturer.name }}</option>
                                 </select>

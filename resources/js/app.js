@@ -29,19 +29,30 @@ import Vue2Filters from 'vue2-filters'
 import Vuelidate from 'vuelidate';
 import Flash from './components/FlashComponent.vue';
 import Modal from './components/steps/modalComponent.vue';
+
 import Configurator from "./pages/Configurator.vue";
 import CreateConfiguratorForm from "./components/configurators/createConfiguratorForm.vue";
+import ChooseConfigurator from "./components/configurators/chooseConfiguratorComponent.vue";
+import ConfiguratorLoadingScreen from "./components/configurators/configuratorLoadingScreenComponent.vue";
 import EditConfiguratorForm from "./components/configurators/editConfiguratorForm.vue";
+import ConfigurationModal from "./components/configurators/configurationModal.vue";
+
 import CreateProductForm from "./components/products/createProductForm.vue";
 import ProductModal from "./components/products/productModal.vue";
 import EditProductForm from "./components/products/editProductForm.vue";
+import ConfigurableProduct from "./components/products/configurableProductsComponent.vue";
+
 import CreateStepForm from "./components/steps/createStepForm.vue";
 import EditStepForm from "./components/steps/editStepForm.vue";
+import StepList from "./components/steps/stepsComponent.vue"
+
 import Statistics from "./components/dashboard/statisticsComponent.vue";
 import Summary from "./components/summary/summaryComponent.vue";
-import ConfigurationModal from "./components/configurationModal.vue";
+
+
 import CreateManufacturerForm from "./components/manufacturers/createManufacturerForm.vue";
-import StepList from "./components/steps/stepsComponent.vue"
+import EditManufacturerForm from "./components/manufacturers/editManufacturerForm.vue";
+
 
 let Vue2FiltersConfig = {
     percent: {
@@ -70,6 +81,7 @@ Vue.component('product-edit-form', require('./components/products/editProductFor
 Vue.component('product-preview', require('./components/products/productPreview').default)
 Vue.component('card-preview', require('./components/products/cardPreview').default)
 Vue.component('radio-preview', require('./components/products/radioPreview.vue').default)
+Vue.component('configurable-product', require('./components/products/configurableProductsComponent.vue').default)
 
 // Steps
 Vue.component('step-create-form', require('./components/steps/createStepForm.vue').default);
@@ -78,9 +90,12 @@ Vue.component('step-list', require('./components/steps/stepsComponent.vue').defa
 
 
 Vue.component('manufacturer-create-form', require('./components/manufacturers/createManufacturerForm.vue').default)
+Vue.component('manufacturer-edit-form', require('./components/manufacturers/editManufacturerForm.vue').default)
 
 Vue.component('configurator-create-form', require('./components/configurators/createConfiguratorForm.vue').default)
 Vue.component('configurator-edit-form', require('./components/configurators/editConfiguratorForm.vue').default)
+Vue.component('choose-configurator', require('./components/configurators/chooseConfiguratorComponent.vue').default)
+Vue.component('configurator-loading-screen', require('./components/configurators/configuratorLoadingScreenComponent.vue').default)
 
 
 // Pages
@@ -101,7 +116,10 @@ const app = new Vue({
         Configurator,
         Summary,
         ConfigurationModal,
+        ChooseConfigurator,
+        ConfiguratorLoadingScreen,
         ProductModal,
+        ConfigurableProduct
     }
 });
 
@@ -116,6 +134,7 @@ const dashboard = new Vue({
         EditStepForm,
         Statistics,
         CreateManufacturerForm,
+        EditManufacturerForm,
         StepList,
         CreateConfiguratorForm,
         EditConfiguratorForm

@@ -127,9 +127,8 @@ class ConfiguratorController extends Controller
      */
     public function getAllConfiguratorsWithProducts()
     {
-
         return response()->json(Configurator::with('products')->whereHas('products', function ($query) {
-            $query->where('configurable', '=', 1);
+            $query->where('configurable', '=', 1)->where('status', '=', 1);
         })->get());
     }
 

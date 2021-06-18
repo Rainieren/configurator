@@ -36,7 +36,7 @@
                             <div v-if="!products.length" class="f">
                                 <div class="w-100 text-center flex items-center justify-center flex-column p-5">
                                     <p class="font-medium text-lg">Sorry, At this moment there are no product available with the chosen interaction type. Create a new product with the right interaction type or change a existing one</p>
-                                    <img :src="'/images/undraw_empty_xct9.svg'" class="w-1/3 my-24" alt="">
+                                    <img :src="'/images/empty_1.svg'" class="w-1/3 my-24" alt="">
                                 </div>
                             </div>
                             <div class="mt-2" v-if="!loading && products.length">

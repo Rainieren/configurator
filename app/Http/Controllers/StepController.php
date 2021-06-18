@@ -109,13 +109,13 @@ class StepController extends Controller
     public function update(Request $request, $id)
     {
 
-//        dd(Step::find($id)->products());
         $step = Step::find($id);
         $step->update([
             'name' => $request->data['fields']['name'],
             'interaction_type' => $request->data['fields']['interaction_type'],
             'is_optional' => $request->data['fields']['is_optional'],
             'allow_multiple' => $request->data['fields']['allow_multiple'],
+            'default_product' => $request->data['fields']['defaultProduct'],
             'updated_at' => Carbon::now()
         ]);
 

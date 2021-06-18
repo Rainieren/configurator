@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-if="fields.isConfigurableProduct" class="my-3">
+                                <div v-if="fields.isConfigurableProduct" class="mt-10">
                                     <label for="height" class="font-medium text-gray-700">Configurator</label>
                                     <select v-model.trim="$v.fields.configurator_id.$model" :class="{'border-red-600': submitted && !$v.fields.configurator_id.required}" type="text" name="configurator" id="configurator" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                         <option :value="configurator.id" v-for="configurator in configurators">{{ configurator.name }}</option>
@@ -415,7 +415,7 @@
                                         <div class="space-y-4">
 
                                             <div class="flex items-center">
-                                                <input v-model.trim="$v.fields.interactionType.$model" @click="fields.interactionInputType = ''" id="configuration_card" name="interaction_type" value="1" type="radio" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" class="mr-3 form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border border-gray-300">
+                                                <input v-model.trim="$v.fields.interactionType.$model" @click="fields.interactionInputType = ''" :checked="fields.interactionType === this.product.interaction_type_id" id="configuration_card" name="interaction_type" value="1" type="radio" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" class="mr-3 form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border border-gray-300">
                                                 <div class="flex flex-column">
                                                     <label for="push_everything" class="block text-sm font-medium text-gray-700 mb-0">
                                                         Card
@@ -524,7 +524,7 @@ export default {
                 newTo: this.product.new_to,
                 manufacturer: this.product.manufacturer_id,
                 hasManufacturer: !!this.product.manufacturer_id,
-                interactionType: this.product.interaction_type,
+                interactionType: this.product.interaction_type_id,
                 interactionInputType: '',
                 step: this.product.step_id,
                 configurator_id: this.product.configurator_id

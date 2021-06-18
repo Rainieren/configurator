@@ -37,7 +37,7 @@ class CreateProductsTable extends Migration
             $table->dateTime('new_from')->nullable();
             $table->dateTime('new_to')->nullable();
             $table->string('sku');
-            $table->integer('interaction_type')->nullable();
+            $table->integer('interaction_type_id')->nullable();
             $table->integer('step_id')->unsigned()->nullable();
             $table->boolean('configurable')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();

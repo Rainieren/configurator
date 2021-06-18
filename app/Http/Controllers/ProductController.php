@@ -68,7 +68,7 @@ class ProductController extends Controller
             'new_to' => $request->new_to,
             'sku' => $request->sku,
             'configurable' => filter_var($request->configurable_product, FILTER_VALIDATE_BOOLEAN),
-            'interaction_type' => $request->interaction_type,
+            'interaction_type_id' => $request->interaction_type,
             'user_id' => auth()->user()->id,
             'manufacturer_id' => $request->manufacturer,
             'configurator_id' => $request->configurator,
@@ -147,7 +147,7 @@ class ProductController extends Controller
             'new_to' => $request->new_to,
             'sku' => $request->sku,
             'configurable' => filter_var($request->configurable_product, FILTER_VALIDATE_BOOLEAN),
-            'interaction_type' => $request->interaction_type,
+            'interaction_type_id' => $request->interaction_type,
             'manufacturer_id' => $request->manufacturer,
             'configurator_id' => $request->configurator,
             'updated_at' => Carbon::now()
@@ -191,7 +191,7 @@ class ProductController extends Controller
     }
 
     public function getInteractionTypeProducts($interaction_type) {
-        return response()->json(Product::where('interaction_type', $interaction_type)->whereNull('step_id')->with('interactionType')->get());
+        return response()->json(Product::where('interaction_type_id', $interaction_type)->whereNull('step_id')->with('interaction_type')->get());
     }
 
     public function getParentProducts($id) {

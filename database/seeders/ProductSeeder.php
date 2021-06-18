@@ -39,39 +39,22 @@ class ProductSeeder extends Seeder
                 'description' => $faker->realText($maxNbChars = 200, $indexSize = 2),
                 // Fetch a random image
                 'thumbnail' => '/storage/images/placeholder.png',
-
                 'visualisation' => null,
-
                 'weight' => $faker->numberBetween($min = 0, $max = 100),
-
                 'height' => $faker->numberBetween($min = 0, $max = 100),
-
                 'length' => $faker->numberBetween($min = 0, $max = 100),
-
                 'width' => $faker->numberBetween($min = 0, $max = 100),
-
                 'url_key' => preg_replace('/\s+/', '_', strtolower($product_name)),
-
                 'new_from' => null,
-
                 'new_to' => null,
-
                 'user_id' => 1,
-
                 'sku' => $faker->randomNumber($nbDigits = NULL, $strict = false),
-
-                'step_id' => rand(1,5),
-
-                'configurable' => $index < 4,
-
-                'interaction_type' => rand(1,3),
-
+                'step_id' => $index > 4 ? rand(1,5) : NULL,
+                'configurable' => $index < 5,
+                'interaction_type_id' => 1,
                 'manufacturer_id' => $faker->numberBetween($min = 0, $max = 50),
-
                 'configurator_id' => rand(1,3),
-
                 'created_at' => Carbon::now(),
-
                 'updated_at' => Carbon::now(),
             ]);
         }

@@ -3,12 +3,12 @@
         <form action="" method="POST">
             <input type="hidden" name="_token" :value="csrf">
         </form>
-        <transition name="fade">
+        <transition enter-active-class="animate__animated animate__bounceIn" leave-active-class="animate__animated animate__bounceOut" mode="out-in">
             <div class="flex text-green-600 font-medium space-x-3 items-center" v-if="messageShow">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p>Succesvol opgeslagen!</p>
+                <p>Saved succesfully!</p>
             </div>
         </transition>
         <div class="" v-if="steps.length != 0">
@@ -16,10 +16,10 @@
                 <thead class="bg-white">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Verslepen
+                            Draggable
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Volgorde
+                            Order
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Name
@@ -52,7 +52,9 @@
                         </td>
                         <td class="px-6 py-3 whitespace-nowrap">{{ step.order }}</td>
                         <td class="px-6 py-3 whitespace-nowrap">{{ step.name }}</td>
-                        <td class="px-6 py-3 whitespace-nowrap">Card</td>
+                        <td class="px-6 py-3 whitespace-nowrap" v-if="step.interaction_type === 1">Card</td>
+                        <td class="px-6 py-3 whitespace-nowrap" v-if="step.interaction_type === 2">Input</td>
+                        <td class="px-6 py-3 whitespace-nowrap" v-if="step.interaction_type === 3">Radio</td>
                         <td class="px-6 py-3 whitespace-nowrap">
                             <div v-if="step.is_optional" class="">Yes</div>
                             <div v-else class="">No</div>
@@ -90,7 +92,7 @@
         <div v-else class="text-center">
             <div class="w-100 text-center flex items-center justify-center flex-column">
                 <p class="font-medium text-lg">You dont have any steps yet. Create a step using the button in the top right corner.</p>
-                <img :src="'/images/' + images[Math.floor(Math.random() * images.length)]" class="w-25 my-24" alt="">
+                <img :src="'/images/empty_1.svg'" class="w-25 my-24" alt="">
             </div>
         </div>
     </div>
@@ -124,7 +126,7 @@ export default {
                     this.messageShow = true;
                     setTimeout(() => {
                         this.messageShow = false;
-                    }, 2000);
+                    }, 3000);
                 }).catch(err => {
                 console.log("There has been an error getting all manufacturers")
             });

@@ -60,17 +60,24 @@
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Product
                                     </th>
+
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Description
+                                        In stock
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Stock
+                                        Type
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Visibility
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Price
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Created by
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Last updated
@@ -86,17 +93,32 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($products as $product)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
+                                            <td class="px-6 py-3 whitespace-nowrap">
                                                 <img src="{{ $product->thumbnail }}" class="h-12 w-12 rounded bg-cover" alt="">
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap">
                                                 {{ $product->name }}
                                             </td>
+
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                                <div class="p m-0 text-gray-600">{{ substr($product->description, 0, 32) }}</div>
+                                                @if($product->stock == 1)
+                                                    <span class="text-green-500 font-medium font-sm flex">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        In stock
+                                                    </span>
+                                                @else
+                                                    <span class="text-red-500 font-medium font-sm flex">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        Out of stock
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                               {{ $product->stock }}
+                                                {{ $product->configurable ? "Configurable product" : "Option" }}
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
                                                 @if($product->status == 1)
@@ -106,11 +128,21 @@
                                                 @endif
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
+                                                @if($product->visibility == 1)
+                                                    <div class="bg-green-200 text-green-800 text-sm rounded-full font-medium text-center w-auto">Visible</div>
+                                                @else
+                                                    <div class="bg-red-200 text-red-800 text-sm rounded-full font-medium text-center">Invisible</div>
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-3 whitespace-nowrap text-sm">
                                                 @if($product->price)
                                                     € {{ $product->price }}
                                                 @else
                                                     + {{ $product->percentage_increase }} %
                                                 @endif
+                                            </td>
+                                            <td class="px-6 py-3 whitespace-nowrap text-sm">
+                                                {{ $product->user->name }}
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
                                                 {{ $product->updated_at->diffForHumans() }}

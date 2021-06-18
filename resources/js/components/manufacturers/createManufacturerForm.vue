@@ -1,7 +1,7 @@
 <template>
     <div class="px-20">
         <div class="w-6/12">
-            <form action="/dashboard/manufacturer/store" method="POST" class="w-full my-2" id="manufacturerCreateForm">
+            <form action="/dashboard/manufacturer/store" method="POST" class="w-full my-2" id="manufacturerCreateForm" enctype="multipart/form-data">
                 <input type="hidden" name="_token" :value="csrf">
                 <div class="flex space-x-5">
                     <div class="w-4/12">
@@ -105,7 +105,7 @@
                                 <div class="flex text-sm text-gray-600">
                                     <label for="logo-upload" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                         <span>Upload a file</span>
-                                        <input id="logo-upload" name="logo_upload" type="file" class="sr-only">
+                                        <input id="logo-upload" v-on:change="onLogoChanged" name="logo_upload" type="file" accept="image/*" class="sr-only">
                                     </label>
                                     <p class="pl-1">or drag and drop</p>
                                 </div>
@@ -122,7 +122,7 @@
                         <p class="text-gray-800 font-medium text-lg">Description</p>
                     </div>
                     <div class="w-8/12">
-                        <textarea id="description" name="description" rows="5" class="p-2 shadow-sm block w-full border border-gray-200 rounded-md" placeholder="Write something beautiful"></textarea>
+                        <textarea v-model="fields.description" id="description" name="description" rows="5" class="p-2 shadow-sm block w-full border border-gray-200 rounded-md" placeholder="Write something beautiful"></textarea>
                     </div>
                 </div>
 
@@ -152,6 +152,9 @@ export default {
                 country: '',
                 state: '',
                 postal_code: '',
+                description: '',
+                thumbnail: '',
+                thumbnailPreview: null,
             },
             countries: [],
             submitted: false,
@@ -169,6 +172,11 @@ export default {
                 }).catch(err => {
                 console.log("There has been an error getting all countries")
             });
+        },
+        onLogoChanged (event) {
+            const file = event.target.files[0];
+            this.fields.thumbnail = file;
+            this.fields.thumbnailPreview = URL.createObjectURL(file);
         },
         submitForm: function() {
             this.submitted = true

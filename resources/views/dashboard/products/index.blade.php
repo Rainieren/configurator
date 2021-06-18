@@ -37,7 +37,7 @@
                                 <li class="flex w-100 justify-between"><span>Length:</span> <span>{{ $product->length }}</span></li>
                                 <li class="flex w-100 justify-between"><span>Weight:</span> <span>{{ $product->weight }}</span></li>
                                 <li class="flex w-100 justify-between"><span>Created by:</span> <span>{{ $product->user->name }}</span></li>
-                                <li class="flex w-100 justify-between"><span>Interaction type:</span> <span>{{ $product->interaction_type }}</span></li>
+                                <li class="flex w-100 justify-between"><span>Interaction type:</span> <span>@if ($product->interaction_type) {{ $product->interaction_type->name }} @else {{ __('No interaction type') }} @endif</span></li>
                                 <li class="flex w-100 justify-between"><span>Manufacturer:</span> <span>@if ($product->manufacturer) {{ $product->manufacturer->name }} @else {{ __('No manufacturer') }} @endif</span></li>
                                 <li class="flex w-100 justify-between"><span>Step:</span> <span>@if ($product->step) {{ $product->step->name }} @else {{ __('No step') }} @endif</span></li>
                                 <li class="flex w-100 justify-between"><span>Configurable:</span> <span>{{ $product->configurable ? 'True' : 'False' }}</span></li>

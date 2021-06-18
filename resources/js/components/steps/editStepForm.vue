@@ -148,7 +148,7 @@
                                         <p class="font-medium text-gray-500">{{ parseFloat(product.price) | currency('€ ') }}</p>
                                     </div>
                                     <div class="col-span-4 flex items-center justify-center">
-                                        <input @click="fields.defaultProduct = product" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                        <input @click="fields.defaultProduct = product.id" :checked="product.id === fields.defaultProduct" id="default_product" name="default_product" :value="product.id" type="radio" class="form-radio focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                         <label for="default_product" class="ml-3 mb-0 block text-sm font-medium">
                                             Default
                                         </label>
@@ -220,7 +220,7 @@ export default {
                 is_optional: this.step.is_optional,
                 name: this.step.name,
                 options: this.step.options,
-                defaultProduct: this.step.defaultProduct,
+                defaultProduct: this.step.default_product,
             },
             ValName: this.step.name,
             interactionTypes: {},

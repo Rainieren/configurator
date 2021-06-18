@@ -1,38 +1,8 @@
 <template>
     <div class="container-fluid px-0">
-        <transition name="fade">
-            <div class="bg-white fixed w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
-                <div class="text-center" v-if="configurators.length != 0">
-                    <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">What do you like to configure?</h2>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <div v-for="(configurator, i) in configurators" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 cursor-pointer animate__animated animate__fadeInUp animate__delay-1s cardhover" :style="styleBorder(configurator.theme_color)">
-                            <div v-on:click="getConfigurableProducts(configurator.id)">
-                                <div class="p-3">
-                                    <p class="font-medium text-xl text-center">{{ configurator.name }}</p>
-                                    <div class=" flex items-center justify-center w-full my-8">
-                                        <img :src="configurator.thumbnail" v-if="configurator.thumbnail" class="h-full w-64" alt="">
-                                    </div>
-                                    <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="" v-else>
-                    <p class="font-medium text-3xl">There are no configurators. Ask the administrator to make one</p>
-                </div>
-            </div>
-        </transition>
+        <choose-configurator :configuratorChosen="configuratorChosen" :configurators="configurators" :getConfigurableProducts="getConfigurableProducts"></choose-configurator>
+        <configurator-loading-screen v-if="loading"></configurator-loading-screen>
 
-        <transition name="fade">
-            <div class="w-screen h-screen absolute top-0 right-0 flex items-center justify-center bg-white flex-column" v-if="loading">
-                <svg class="animate-spin h-12 w-12 my-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class=" text-xl">Retreiving products, One moment please...</p>
-            </div>
-        </transition>
 
         <div class="flex flex-col xl:flex-row" v-if="!loading">
             <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-10 pt-20 lg:p-20 space-y-15">
@@ -47,54 +17,55 @@
                     <h1 class="text-3xl font-medium">Configure {{ configurator.name }}</h1>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+<!--                    <configurable-product :active="activeProduct" :options="chosenOptions" :product="product" v-for="product in configurableProducts" :key="product.id" :getAllRelatedSteps="getAllRelatedSteps"></configurable-product>-->
                     <div class="relative" v-for="product in configurableProducts">
-                    <button v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column h-100 w-100" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
-                        <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                        </div>
-                        <div class="p-3 border-b border-gray-300 h-auto w-100">
-                            <div class="flex">
-                                <div class="w-2/3 text-left">
-                                    <p class="font-bold">{{ product.name }}</p>
-                                    <p v-if="product.description" class="text-gray-800">{{ product.description.substring(0,32) }}</p>
-                                </div>
-                                <div class="w-1/3 text-right">
-                                    <p class="text-md">{{ parseFloat(product.price) | currency('€ ')}}</p>
-                                    <p class="" v-if="product.stock === 1">
-                                        <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                            </svg>
-                                            In stock
-                                        </span>
-                                    </p>
-                                    <p v-if="product.stock === 0">
-                                        <span class="text-red-500 font-medium font-sm flex justify-end align-items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                            </svg>
-                                            Out of stock
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3 h-64 w-100 overflow-hidden">
-                            <img class="object-contain object-center h-full w-full rounded-xl" v-if="product.thumbnail" :src="product.thumbnail">
-                            <div class="w-100 h-100 flex items-center justify-center text-gray-200" v-if="!product.thumbnail">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <button v-bind:key="product.id" type="button" class="bg-white shadow-sm relative min-h-32 hover:shadow-xl hover:border-indigo-500 transition rounded-xl border-2 border-gray-200 flex flex-column h-100 w-100" v-on:click="[activeProduct = product, summary = parseFloat(activeProduct.price), chosenOptions = [], getAllRelatedSteps(product.id)]" :class="{'border-indigo-500': activeProduct === product, 'pointer-events-none opacity-50': product.stock === 0 || !product.status}">
+                            <div class="absolute bg-indigo-500 rounded-full -right-3 -top-3" v-if="activeProduct === product">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                        </div>
-                    </button>
-                    <button @click="openProductModal(product)" class="text-black rounded-lg absolute bottom-5 right-5 animate__animated animate__fadeInUp animate__faster">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </button>
+                            <div class="p-3 border-b border-gray-300 h-auto w-100">
+                                <div class="flex">
+                                    <div class="w-2/3 text-left">
+                                        <p class="font-bold">{{ product.name }}</p>
+                                        <p v-if="product.description" class="text-gray-800">{{ product.description.substring(0,32) }}</p>
+                                    </div>
+                                    <div class="w-1/3 text-right">
+                                        <p class="text-md">{{ parseFloat(product.price) | currency('€ ')}}</p>
+                                        <p class="" v-if="product.stock === 1">
+                                            <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                </svg>
+                                                In stock
+                                            </span>
+                                        </p>
+                                        <p v-if="product.stock === 0">
+                                            <span class="text-red-500 font-medium font-sm flex justify-end align-items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                </svg>
+                                                Out of stock
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 h-64 w-100 overflow-hidden">
+                                <img class="object-contain object-center h-full w-full rounded-xl" v-if="product.thumbnail" :src="product.thumbnail">
+                                <div class="w-100 h-100 flex items-center justify-center text-gray-200" v-if="!product.thumbnail">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </button>
+                        <button @click="openProductModal(product)" class="text-black rounded-lg absolute bottom-5 right-5 animate__animated animate__fadeInUp animate__faster">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
@@ -197,8 +168,10 @@
 
 <script>
     import Summary from "./summary/summaryComponent.vue";
-    import ConfigurationModal from "./configurationModal.vue"
+    import ConfigurationModal from "./configurators/configurationModal.vue"
     import ProductModal from "./products/productModal.vue"
+    import ChooseConfigurator from "./configurators/chooseConfiguratorComponent.vue"
+    import ConfiguratorLoadingScreen from "./configurators/configuratorLoadingScreenComponent.vue";
     import draggable from 'vuedraggable'
 
     export default {
@@ -223,6 +196,8 @@
         components: {
             Summary,
             ConfigurationModal,
+            ChooseConfigurator,
+            ConfiguratorLoadingScreen,
             ProductModal,
             draggable,
         },
@@ -236,7 +211,7 @@
                 return this.steps.filter(step => {
                     return step.includes(this.activeProduct.id)
                 });
-            }
+            },
         },
         methods: {
             openProductModal(product) {
@@ -331,7 +306,6 @@
                     axios.get('/api/get/configurable_products/' + id)
                     .then(response => {
                         this.configurableProducts = response.data
-
                     }).catch(err => {
                         console.log(err)
                     }),
@@ -379,22 +353,24 @@
             ProcessConfiguration: function() {
                 document.getElementById("generatePDF").submit();
             },
-            lowestPriceInConfigurator: function(id) {
-                let array = [];
-                this.configurators.forEach(function(value, i) {
-                    let prices =  []
-                    value.products.forEach(function(item, i) {
-                        if(item.configurable) {
-                            prices.push(parseFloat(item.price))
-                        }
+            getConfigurableProducts: function(id) {
+                axios.all([
+                    axios.get('/api/get/configurable_products/' + id)
+                        .then(response => {
+                            this.configurableProducts = response.data
+                        }).catch(err => {
+                        console.log(err)
+                    }),
+                    axios.get('/api/get/configuration/' + id)
+                        .then(response => {
+                            this.configurator = response.data
+                            this.configuratorChosen = true
+
+                        }).catch(err => {
+                        console.log(err)
                     })
-                    array.push({configurator: i, prices: [prices]})
-                });
-                return array;
+                ]);
             },
-            styleBorder: function(themeColor) {
-                return {'--borderHoverColor': themeColor};
-            }
         }
     }
 </script>

@@ -10,17 +10,19 @@ class interactionType extends Model
     use HasFactory;
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function steps() {
+    public function steps()
+    {
         return $this->belongsTo(Step::class);
     }
 
 
     /**
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function products() {
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
 }

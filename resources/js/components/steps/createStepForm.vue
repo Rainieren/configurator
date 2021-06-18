@@ -10,7 +10,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <input v-model.trim="$v.fields.name.$model" name="name" id="name" type="text" :class="{'border-red-600': submitted && !$v.fields.name.required || !$v.fields.name.maxLength}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
+                                <input v-model.trim="$v.fields.name.$model" name="name" id="name" type="text" :class="{'border-red-500 animate__animated animate__shakeX': submitted && !$v.fields.name.required || !$v.fields.name.maxLength}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
 <!--                                <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
 <!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />-->
 <!--                                </svg>-->
@@ -119,7 +119,7 @@
                         </div>
                         <div class="w-8/12">
                             <div class="relative">
-                                <select v-model.trim="$v.fields.interactionType.$model" @change="selectedProducts = []" type="text" :class="{'border-red-600': submitted && !$v.fields.interactionType.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <select v-model.trim="$v.fields.interactionType.$model" @change="selectedProducts = []" type="text" :class="{'border-red-500 animate__animated animate__shakeX': submitted && !$v.fields.interactionType.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option value="" selected>Kies een interactie type</option>
                                     <option v-for="type in interactionTypes" :value="type.id">{{ type.name }}</option>
                                 </select>
@@ -217,7 +217,8 @@
                 configurableProducts: {},
                 selectedConfigurableProducts: [],
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                submitted: false
+                submitted: false,
+                loading: false
             };
         },
         mounted: function() {

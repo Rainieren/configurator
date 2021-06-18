@@ -39,9 +39,14 @@ class ManufacturerController extends Controller
      */
     public function store(Request $request)
     {
-        Manufacturer::create([
+//        dd($request);
+        if($request->logo_upload) {
+            $imageName = time() . '.' . $request->logo_upload->extension();
+            $request->logo_upload->storeAs('public/images', $imageName);
+        }
+        $manufacturer = Manufacturer::create([
             'name' => $request->name,
-            'logo' => 'test',
+            'logo' => $request->logo_upload ? '/storage/images/' . $imageName : '/storage/images/placeholder.png',
             'address' => $request->street_address,
             'zip_code' => $request->postal_code,
             'state' => $request->state,
@@ -74,7 +79,10 @@ class ManufacturerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $manufacturer = Manufacturer::find($id);
+
+        return view('dashboard.manufacturers.edit', compact('manufacturer'));
+
     }
 
     /**
@@ -86,7 +94,26 @@ class ManufacturerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->logo_upload) {
+            $imageName = time() . '.' . $request->logo_upload->extension();
+            $request->logo_upload->storeAs('public/images', $imageName);
+        }
+
+        $manufacturer = Manufacturer::find($id);
+
+        $manufacturer->update([
+            'name' => $request->name,
+            'logo' => $request->logo_upload ? '/storage/images/' . $imageName : $manufacturer->logo,
+            'address' => $request->street_address,
+            'zip_code' => $request->postal_code,
+            'state' => $request->state,
+            'city' => $request->city,
+            'description' => $request->description,
+            'country_id' => $request->country,
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return redirect()->back();
     }
 
     /**

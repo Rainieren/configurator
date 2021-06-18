@@ -34,7 +34,7 @@ class Product extends Model
         'created_at',
         'updated_at',
         'user_id',
-        'interaction_type',
+        'interaction_type_id',
         'sub_product_id',
         'manufacturer_id',
         'step_id',
@@ -74,9 +74,9 @@ class Product extends Model
         return $this->belongsToMany(Step::class, 'product_step', 'product_id', 'step_id')->orderBy('order');
     }
 
-//    /**
-//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-//     */
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function step()
     {
         return $this->belongsTo(Step::class);
@@ -101,7 +101,7 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function interactionType()
+    public function interaction_type()
     {
         return $this->belongsTo(interactionType::class);
     }

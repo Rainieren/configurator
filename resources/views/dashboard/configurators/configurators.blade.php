@@ -43,9 +43,6 @@
                                         Theme color
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Language
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Last updated
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -68,9 +65,6 @@
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
                                             <div class="h-5 w-5 block rounded-md" style="background-color: {{ $configurator->theme_color }}"></div>
-                                        </td>
-                                        <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            {{ $configurator->language_id }}
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
                                             {{ $configurator->updated_at->diffForHumans() }}

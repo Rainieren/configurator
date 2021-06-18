@@ -34,6 +34,9 @@
                                 <thead class="bg-white">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Thumbnail
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Name
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -56,6 +59,9 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($manufacturers as $manufacturer)
                                     <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <img src="{{ $manufacturer->logo }}" class="h-12 w-12 rounded bg-cover" alt="">
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->address }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->city }}, {{ $manufacturer->state }}, {{ $manufacturer->country->name }}</td>
@@ -63,7 +69,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->created_at->diffForHumans() }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             <div class="flex space-x-4">
-                                                <a href="" class="">
+                                                <a href="{{ route('editManufacturer', ['id' => $manufacturer->id]) }}" class="">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                     </svg>
