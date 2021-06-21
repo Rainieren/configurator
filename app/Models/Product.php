@@ -111,7 +111,15 @@ class Product extends Model
      */
     public function summaries()
     {
-        return $this->belongsToMany(Product::class, 'product_summary', 'summary_id','product_id');
+        return $this->belongsToMany(Summary::class, 'product_summary', 'summary_id','product_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function opties()
+    {
+        return $this->belongsToMany(Summary::class, 'summary_option', 'option_id', 'summary_id');
     }
 
 }

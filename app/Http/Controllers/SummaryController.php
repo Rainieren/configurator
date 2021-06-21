@@ -18,7 +18,9 @@ class SummaryController extends Controller
      */
     public function index()
     {
-        //
+        $summaries = Summary::orderBy('created_at', 'desc')->paginate(20);
+
+        return view('dashboard.summaries.index', compact('summaries'));
     }
 
     /**
@@ -39,20 +41,31 @@ class SummaryController extends Controller
      */
     public function store(Request $request)
     {
-        $parentProduct = Product::find($request['activeProduct']['id']);
+
+        $parent = Product::find($request['parent']['id']);
+
+        $sum = $parent->price;
 
         $summary = Summary::create([
             'code' => strtoupper(bin2hex(openssl_random_pseudo_bytes(4))),
-            'total' => $parentProduct->price,
+            'total' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
+        $summary->products()->attach($parent->id);
 
+        foreach ($request['options'] as $option) {
+            foreach($option[0]['options'] as $product) {
+                $product = Product::find($product['id']);
+                $product->opties()->attach($summary->id);
+                $sum += $product['price'];
+            }
+        }
 
-        $summary->products()->attach($parentProduct->id);
+        Summary::where('id', $summary->id)->update(['total' => $sum]);
 
-        return response()->json($summary);
+        return response()->json();
     }
 
     /**
@@ -116,5 +129,9 @@ class SummaryController extends Controller
 //        ]);
 
         return $pdf->download('summary.pdf');
+    }
+
+    public function getMostPopulairProduct() {
+
     }
 }

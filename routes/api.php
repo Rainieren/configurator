@@ -43,6 +43,8 @@ Route::post('/store/configuration', [App\Http\Controllers\SummaryController::cla
 Route::put('/change/steps/order', [App\Http\Controllers\StepController::class, 'changeOrder'])->name('changeStepOrder');
 
 Route::get('/get/all/summaries', [App\Http\Controllers\SummaryController::class, 'getAllSummaries'])->name('getAllSummaries');
+Route::post('/store/summary', [App\Http\Controllers\SummaryController::class, 'store'])->name('storeSummary');
+Route::get('/get/popular_product', [App\Http\Controllers\SummaryController::class, 'getMostPopulairProduct']);
 
 Route::get('/get/all/countries', [App\Http\Controllers\CountryController::class, 'getAllCountries'])->name('getAllCountries');
 

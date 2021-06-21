@@ -19,5 +19,13 @@ class Summary extends Model
         return $this->belongsToMany(Product::class, 'product_summary', 'summary_id','product_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function options()
+    {
+        return $this->belongsToMany(Product::class,'summary_option', 'summary_id', 'option_id');
+    }
+
 
 }

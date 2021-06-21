@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductSummaryTable extends Migration
+class CreateSummaryOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateProductSummaryTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_summary', function (Blueprint $table) {
-            $table->integer('product_id')->unsigned();
+        Schema::create('summary_option', function (Blueprint $table) {
             $table->integer('summary_id')->unsigned();
+            $table->integer('option_id')->unsigned();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateProductSummaryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_summary');
+        Schema::dropIfExists('summary_option');
     }
 }

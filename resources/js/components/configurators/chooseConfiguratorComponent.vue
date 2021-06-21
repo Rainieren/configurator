@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="bg-white fixed w-screen h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
+        <div class="bg-white fixed w-full h-screen top-0 right-0 flex items-center justify-center flex-column z-30" v-if="!configuratorChosen">
             <div class="text-center" v-if="this.configurators.length != 0">
                 <h2 class="text-3xl font-medium my-5 animate__animated animate__fadeInUp">What do you like to configure?</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">

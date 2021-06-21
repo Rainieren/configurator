@@ -25,7 +25,9 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/manufacturers', [App\Http\Controllers\ManufacturerController::class, 'index'])->name('manufacturers');
     Route::get('/steps', [App\Http\Controllers\StepController::class, 'index'])->name('steps');
     Route::get('/configurators', [App\Http\Controllers\ConfiguratorController::class, 'index'])->name('configurators');
+    Route::get('/summaries', [App\Http\Controllers\SummaryController::class, 'index'])->name('summaries');
     Route::post('/summary/generate', [App\Http\Controllers\SummaryController::class, 'generatePDF'])->name('generate');
+
 
 
 
@@ -41,6 +43,8 @@ Route::prefix('dashboard')->group(function () {
 
         Route::get('/{id}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('editProduct');
         Route::patch('{id}/update', [App\Http\Controllers\ProductController::class, 'update'])->name('updateProduct');
+
+        Route::get('/{id}/duplicate', [App\Http\Controllers\ProductController::class, 'edit'])->name('duplicateProduct');
 
         Route::delete('/{id}/delete', [App\Http\Controllers\ProductController::class, 'destroy'])->name('deleteProduct');
     });

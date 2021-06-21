@@ -12,10 +12,10 @@
         </div>
         <div class="bg-gray-100 rounded-xl">
             <div class="p-5 space-y-1">
-                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Average price</p>
+                <p class="text-gray-500 text-sm uppercase tracking-widest font-semibold">Average configuration price</p>
                 <div class="flex">
                     <p class="text-gray-900 text-3xl font-bold my-5">
-                        —
+                        {{ averagePrice | currency('€ ')}}
                     </p>
                 </div>
             </div>
@@ -45,8 +45,7 @@ export default {
         this.getConfigurationsSum();
     },
     methods: {
-        getConfigurationsSum: function()
-        {
+        getConfigurationsSum: function() {
             axios.get('/api/get/all/summaries')
                 .then(response => {
                     this.summaries = response.data
@@ -55,8 +54,7 @@ export default {
                 console.log(err)
             });
         },
-        getConfigurationAverage: function()
-        {
+        getConfigurationAverage: function() {
             let sum = 0;
             this.summaries.forEach((value, index) => {
                 sum += parseFloat(value['total'])

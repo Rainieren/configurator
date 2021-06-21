@@ -120,6 +120,12 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('summaries') }}"  class="p-2.5 px-4  flex transition items-center hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium {{ Route::currentRouteNamed('summaries') ? 'bg-indigo-600 text-white' : '' }}">
+                        Summaries
+                    </a>
+                </li>
+
+                <li>
                     <p class="text-xs p-2 text-gray-800  font-semibold uppercase tracking-widest">Other</p>
                 </li>
 

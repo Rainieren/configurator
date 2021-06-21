@@ -153,12 +153,63 @@
                 </div>
                 <button @click="ProcessConfiguration" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Finish configuration</button>
             </div>
-            <Summary :active="activeProduct" :options="chosenOptions" :finished="finished"></Summary>
+            <Summary :active="activeProduct" :options="chosenOptions" :finished="finished" ref="summary"></Summary>
         </div>
         <ConfigurationModal ref="configurationModal" :active="activeProduct" :options="chosenOptions" :code="summary_code"></ConfigurationModal>
         <product-modal ref="productModal"></product-modal>
 
-        <form action="/dashboard/summary/generate" method="POST" class="w-full my-2" id="generatePDF">
+        <transition enter-active-class="animate__animated animate__slideInRight animate__faster" leave-active-class="animate__animated animate__slideOutRight animate__faster" mode="out-in">
+            <div class="bg-white fixed h-screen w-full top-0 right-0 z-30 overflow-none shadow-lg flex items-center" v-if="configurationFinished">
+                <div class="relative left-1/4 w-1/3">
+                    <h2 class="font-bold text-3xl">Your configuration(s)</h2>
+                    <div class="grid grid-cols-1 divide-y divide-gray-200 my-10">
+                        <div class="flex space-x-6 py-5">
+                            <div class="w-1/4">
+                                <img src="https://images.photowall.com/products/60869/azores-mountain-landscape-1.jpg" alt="" class="rounded-lg">
+                            </div>
+                            <div class="w-3/4">
+                                <p class="font-bold text-xl">{{ activeProduct.name }}</p>
+                                <ul class="my-3">
+                                    <div class="" v-for="(option, index) in chosenOptions" v-if="option[0].options.length" :key="option[0].step.id">
+                                        <li class="text-gray-700 flex" v-for="option in option[0].options">
+                                            <div class="w-1/2">
+                                                {{ option.name }}
+                                            </div>
+                                            <div class="w-1/2 flex justify-end">
+                                                {{ option.price | currency('€ ')}}
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-end flex-column items-end">
+                        <p class="text-md">Subtotal: {{ this.$refs.summary.calculateSum | currency('€ ') }}</p>
+                        <p class="text-md">VAT: {{ this.$refs.summary.calculateSum * 0.21 | currency('€ ') }}</p>
+                        <p class="font-bold text-xl">Total: {{ this.$refs.summary.calculateSum | currency('€ ') }}</p>
+                    </div>
+                    <div class="flex justify-between my-5">
+                        <button @click="configurationFinished = false" class="bg-indigo-500 py-2 px-4 text-white rounded-lg flex items-center transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                            </svg>
+                            Go back
+                        </button>
+                        <button @click="storeSummary" class="bg-white border border-gray-300 py-2 px-4 rounded-lg hover:shadow-lg flex items-center transition-all">
+                            Go to payment
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+        <form action="/dashboard/summary/generate" method="POST" class="w-full my-2 hidden" id="generatePDF">
             <input type="hidden" name="_token" :value="csrf">
             <input type="hidden" :value="JSON.stringify(activeProduct)" name="activeProduct">
             <input type="hidden" :value="JSON.stringify(chosenOptions)" name="chosenOptions[]">
@@ -351,7 +402,18 @@
                 }, this);
             },
             ProcessConfiguration: function() {
-                document.getElementById("generatePDF").submit();
+                // document.getElementById("generatePDF").submit();
+                this.configurationFinished = true;
+            },
+            storeSummary: function() {
+                axios.post('/api/store/summary', {
+                    parent: this.activeProduct,
+                    options: this.chosenOptions,
+                }).then(response => {
+
+                }).catch(err => {
+
+                });
             },
             getConfigurableProducts: function(id) {
                 axios.all([
