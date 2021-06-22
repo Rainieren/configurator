@@ -88,10 +88,10 @@
 
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            {{ $summary->created_at->diffForHumans() }}
+                                            {{ $summary->created_at->toFormattedDateString() }}
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            {{ $summary->updated_at->diffForHumans() }}
+                                            {{ $summary->updated_at->toFormattedDateString() }}
                                         </td>
                                     </tr>
                                 @endforeach

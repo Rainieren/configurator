@@ -9,7 +9,7 @@
 
 </head>
     <body class="antialiased bg-white">
-        <div class="w-20 bg-gray-100 h-screen fixed justify-between flex flex-col">
+        <div class="w-20 bg-gray-100 h-screen fixed justify-between flex flex-col hidden">
             <div class="w-full h-auto bg-indigo-500 flex items-center justify-center rounded mb-5 text-white word-break p-2">
                 Logo
             </div>
@@ -84,7 +84,7 @@
                 <img class="inline-block h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </div>
         </div>
-        <div class="ml-20 hidden md:block md:w-64 bg-white h-screen fixed justify-between flex flex-col shadow-md transition-all">
+        <div class=" hidden md:block md:w-80 bg-white h-screen fixed justify-between flex flex-col shadow-md transition-all">
             <div class="h-auto w-full p-8 rounded flex items-center mb-3 border-b-2 border-gray-100">
                 <a href="{{ url()->previous() }}" class="flex items-center hover:text-indigo-500 hover:no-underline">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

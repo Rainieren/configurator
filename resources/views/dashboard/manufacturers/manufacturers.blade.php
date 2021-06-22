@@ -65,8 +65,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->address }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->city }}, {{ $manufacturer->state }}, {{ $manufacturer->country->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->updated_at->diffForHumans() }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->created_at->diffForHumans() }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->updated_at->toFormattedDateString() }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $manufacturer->created_at->toFormattedDateString() }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             <div class="flex space-x-4">
                                                 <a href="{{ route('editManufacturer', ['id' => $manufacturer->id]) }}" class="">

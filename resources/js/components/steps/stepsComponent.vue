@@ -59,8 +59,8 @@
                             <div v-if="step.is_optional" class="">Yes</div>
                             <div v-else class="">No</div>
                         </td>
-                        <td class="px-6 py-3 whitespace-nowrap">{{ step.created_at }}</td>
-                        <td class="px-6 py-3 whitespace-nowrap">{{ step.updated_at }}</td>
+                        <td class="px-6 py-3 whitespace-nowrap">{{ getTimeForHumans(step.created_at) }}</td>
+                        <td class="px-6 py-3 whitespace-nowrap">{{ getTimeForHumans(step.updated_at) }}</td>
                         <td class="px-6 py-3 whitespace-nowrap text-sm">
                             <div class="flex space-x-4">
                                 <a :href="'/dashboard/step/' + step.id + '/edit'" class="">
@@ -101,6 +101,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+import moment from 'moment'
 
 export default {
     props: ['steps'],
@@ -115,6 +116,7 @@ export default {
     },
     components: {
         draggable,
+        moment
     },
     methods: {
         onChange() {
@@ -131,6 +133,9 @@ export default {
                 }).catch(err => {
                 console.log("There has been an error getting all manufacturers")
             });
+        },
+        getTimeForHumans(time) {
+            return moment(time).format('LL');
         }
     }
 }

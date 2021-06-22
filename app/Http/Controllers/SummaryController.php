@@ -8,6 +8,7 @@ use App\Models\Summary;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SummaryController extends Controller
 {
@@ -131,7 +132,17 @@ class SummaryController extends Controller
         return $pdf->download('summary.pdf');
     }
 
-    public function getMostPopulairProduct() {
+    public function getMostPopulairProduct()
+    {
+////        $summary = Summary::all();
+//        dd(Summary::groupBy(DB::raw('substr(created_at, 0, 9)'))
+//            ->selectRaw('*, sum(total) as sum')
+//            ->get());
+
+//        dd(Summary::groupBy('created_at')->sum('total'));
+
+        return response()->json(Product::withCount('summaries')->orderBy('summaries_count', 'desc')->first());
+
 
     }
 }

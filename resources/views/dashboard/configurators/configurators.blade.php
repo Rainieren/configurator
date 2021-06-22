@@ -67,10 +67,10 @@
                                             <div class="h-5 w-5 block rounded-md" style="background-color: {{ $configurator->theme_color }}"></div>
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            {{ $configurator->updated_at->diffForHumans() }}
+                                            {{ $configurator->updated_at->toFormattedDateString() }}
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            {{ $configurator->created_at->diffForHumans() }}
+                                            {{ $configurator->created_at->toFormattedDateString() }}
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
                                             <div class="flex space-x-4">

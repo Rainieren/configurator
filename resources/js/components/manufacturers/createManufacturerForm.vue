@@ -9,7 +9,7 @@
                     </div>
                     <div class="w-8/12">
                         <div class="col-span-6 relative">
-                            <input v-model.trim="$v.fields.name.$model" :class='{ "border-2 border-red-500" : submitted && !$v.fields.name.required}' placeholder="Sony, Volvo, Logitech etc." name="name" id="name" type="text" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
+                            <input v-model.trim="$v.fields.name.$model" :class='{ "border-2 border-red-500 animate__animated animate__shakeX" : submitted && !$v.fields.name.required}' placeholder="Sony, Volvo, Logitech etc." name="name" id="name" type="text" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
 
                             <div class="absolute inset-y-7 top-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
                                 <svg v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -30,7 +30,7 @@
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 relative">
                                 <label for="street_address" class="block text-sm font-medium text-gray-700">Street address</label>
-                                <input type="text" v-model.trim="$v.fields.street_address.$model" name="street_address" :class="{ 'border-red-500' : submitted && !$v.fields.street_address.required}" id="street_address" autocomplete="street-address" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <input type="text" v-model.trim="$v.fields.street_address.$model" name="street_address" :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.street_address.required}" id="street_address" autocomplete="street-address" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.street_address.required">
                                     <svg v-if="submitted && !$v.fields.street_address.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -42,7 +42,7 @@
 
                             <div class="col-span-6 sm:col-span-6 lg:col-span-2 relative">
                                 <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                                <input type="text" v-model.trim="$v.fields.city.$model" name="city" :class="{'border-red-500' : submitted && !$v.fields.city.required}" id="city" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <input type="text" v-model.trim="$v.fields.city.$model" name="city" :class="{'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.city.required}" id="city" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.city.required">
                                     <svg v-if="submitted && !$v.fields.city.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -54,7 +54,7 @@
 
                             <div class="col-span-6 sm:col-span-3 lg:col-span-2 relative">
                                 <label for="state" class="block text-sm font-medium text-gray-700">State / Province</label>
-                                <input type="text" v-model.trim="$v.fields.state.$model" name="state" :class="{ 'border-red-500' : submitted && !$v.fields.state.required}" id="state" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <input type="text" v-model.trim="$v.fields.state.$model" name="state" :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.state.required}" id="state" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.state.required">
                                     <svg v-if="submitted && !$v.fields.state.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -66,7 +66,7 @@
 
                             <div class="col-span-6 sm:col-span-3 lg:col-span-2 relative">
                                 <label for="postal_code" class="block text-sm font-medium text-gray-700">ZIP / Postal</label>
-                                <input type="text" v-model.trim="$v.fields.postal_code.$model" name="postal_code" :class="{ 'border-red-500' : submitted && !$v.fields.postal_code.required}" id="postal_code" autocomplete="postal-code" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <input type="text" v-model.trim="$v.fields.postal_code.$model" name="postal_code" :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.postal_code.required}" id="postal_code" autocomplete="postal-code" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
 
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.postal_code.required">
                                     <svg v-if="submitted && !$v.fields.postal_code.required" class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -78,7 +78,7 @@
 
                             <div class="col-span-6 relative">
                                 <label for="country" class="block text-sm font-medium text-gray-700">Country / Region</label>
-                                <select id="country" v-model.trim="$v.fields.country.$model" name="country" :class="{ 'border-red-500' : submitted && !$v.fields.country.required}" autocomplete="country" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
+                                <select id="country" v-model.trim="$v.fields.country.$model" name="country" :class="{ 'border-red-500 animate__animated animate__shakeX' : submitted && !$v.fields.country.required}" autocomplete="country" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option v-for="country in countries" :value="country.id">{{ country.name }}</option>
                                 </select>
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.country.required">

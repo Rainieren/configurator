@@ -10,7 +10,7 @@
 
                 <div class="ml-4">
                     <p class="font-bold">{{ message_body }}</p>
-                    <p class="text-gray-600">Het is succesvol opgeslagen</p>
+                    <p class="text-gray-600">Saved successfully!</p>
                 </div>
             </div>
         </div>

@@ -199,6 +199,10 @@
                             Go back
                         </button>
                         <button @click="storeSummary" class="bg-white border border-gray-300 py-2 px-4 rounded-lg hover:shadow-lg flex items-center transition-all">
+                            <svg class="animate-spin mr-2 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" v-if="summaryLoading">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
                             Go to payment
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -240,7 +244,8 @@
                 configuratorChosen: false,
                 configurators: [],
                 configurator: '',
-                finished: false,
+                summaryLoading: false,
+
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             };
         },
@@ -392,7 +397,6 @@
                 });
             },
             addDefaultProductsToArrayBeforehand() {
-                console.log("Default producten toevoegen aan array")
                 this.steps[0].steps.forEach(function(value, index) {
                     value.options.forEach(function(option, index) {
                         if(option.id === value.default_product) {
@@ -406,11 +410,13 @@
                 this.configurationFinished = true;
             },
             storeSummary: function() {
+                this.summaryLoading = true
                 axios.post('/api/store/summary', {
                     parent: this.activeProduct,
                     options: this.chosenOptions,
                 }).then(response => {
-
+                    setTimeout(() => this.summaryLoading = false, 3000);
+                    location.reload();
                 }).catch(err => {
 
                 });
