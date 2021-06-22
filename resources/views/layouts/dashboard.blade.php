@@ -140,11 +140,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/dashboard/settings" class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium">
-                        Settings
-                    </a>
-                </li>
-                <li>
                     <a href="/" class="p-2.5 px-4  flex transition items-center text-gray-800 hover:text-gray-50 hover:no-underline rounded-md hover:bg-indigo-500 hover:font-medium">
                         Configurator
                     </a>
