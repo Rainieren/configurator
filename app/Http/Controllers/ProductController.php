@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         $product = Product::create([
             'name' => $request->name,
-            'price' => $request->price ? str_replace(",", "", $request->price) : null,
+            'price' => $request->price ? str_replace(",", "", $request->price) : str_replace(",", "", $request->percentageParentProduct * ($request->percentage / 100)),
             'percentage_increase' => $request->percentage / 100,
             'stock' => filter_var($request->stock, FILTER_VALIDATE_BOOLEAN),
             'status' => filter_var($request->isEnabled , FILTER_VALIDATE_BOOLEAN),
@@ -130,7 +130,7 @@ class ProductController extends Controller
 
         $product->update([
             'name' => $request->name,
-            'price' => $request->price ? str_replace(",", "", $request->price) : null,
+            'price' => $request->price ? str_replace(",", "", $request->price) : str_replace(",", "", $request->percentageParentProduct * ($request->percentage / 100)),
             'percentage_increase' => $request->percentage / 100,
             'stock' => filter_var($request->stock, FILTER_VALIDATE_BOOLEAN),
             'status' => filter_var($request->isEnabled, FILTER_VALIDATE_BOOLEAN),

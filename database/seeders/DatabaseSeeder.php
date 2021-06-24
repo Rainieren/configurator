@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             InteractionTypeSeeder::class,
             StepSeeder::class,
             ProductStepSeeder::class,
-            ConfiguratorSeeder::class
+            ConfiguratorSeeder::class,
         ]);
     }
 }

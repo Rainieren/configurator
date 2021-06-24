@@ -4,10 +4,10 @@
     <div class="px-10 py-5 md:px-20 md:py-10 transition-all">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-3xl font-bold text-gray-900">Products</p>
+                <p class="text-base md:text-lg lg:text-2xl xl:text-3xl font-extrabold text-gray-900">Products</p>
             </div>
             <div class="w-1/2 text-right">
-                <a href="{{ route('createProduct') }}" type="button" class="appearance-none inline-flex justify-center rounded-md border border-indigo-300 shadow-sm p-2 lg:px-4 lg:py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                <a href="{{ route('createProduct') }}" type="button" class="appearance-none inline-flex justify-center rounded-md border border-indigo-300 shadow-sm p-1 lg:px-4 lg:py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     <span class="hidden lg:block">New product</span>
                     <span class="block lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -26,7 +26,7 @@
                 <img src="{{ asset('images/empty_1.svg') }}" class="w-25 my-24" alt="">
             </div>
         @else
-            <div class="flex space-x-4 align-items-center">
+            <div class="flex space-x-4 align-items-center hidden">
                 <input type="text" class="appearance-none block border border-gray-200 p-2 pr-6 rounded-md w-64 shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="Search..." autofocus>
                 <select id="country" name="country" autocomplete="country" class="appearance-none block border border-gray-200 p-2 pr-6 rounded-md w-64 shadow-sm focus:border-indigo-500 focus:outline-none">
                     <option>ID</option>
@@ -51,7 +51,7 @@
                     <div class="py-2 align-middle inline-block w-full sm:px-6 lg:px-8">
                         {{ $products->links() }}
                         <div class="border-b border-gray-200 sm:rounded-lg shadow-md rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200 ">
+                            <table class="divide-y divide-gray-200 w-100">
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -122,16 +122,16 @@
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
                                                 @if($product->status == 1)
-                                                    <div class="bg-green-200 text-green-800 text-sm rounded-full font-medium text-center w-auto">Active</div>
+                                                    <div class="bg-green-200 text-green-800 text-sm rounded-full font-medium text-center w-auto px-4">Active</div>
                                                 @else
-                                                    <div class="bg-red-200 text-red-800 text-sm rounded-full font-medium text-center">Inactive</div>
+                                                    <div class="bg-red-200 text-red-800 text-sm rounded-full font-medium text-center px-4">Inactive</div>
                                                 @endif
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">
                                                 @if($product->visibility == 1)
-                                                    <div class="bg-green-200 text-green-800 text-sm rounded-full font-medium text-center w-auto">Visible</div>
+                                                    <div class="bg-green-200 text-green-800 text-sm rounded-full font-medium text-center w-auto px-4">Visible</div>
                                                 @else
-                                                    <div class="bg-red-200 text-red-800 text-sm rounded-full font-medium text-center">Invisible</div>
+                                                    <div class="bg-red-200 text-red-800 text-sm rounded-full font-medium text-center px-4">Invisible</div>
                                                 @endif
                                             </td>
                                             <td class="px-6 py-3 whitespace-nowrap text-sm">

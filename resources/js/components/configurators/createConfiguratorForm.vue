@@ -76,7 +76,7 @@
                             <p class="text-gray-500">Upload a thumbnail of the configurator</p>
                         </div>
                         <div class="w-8/12">
-                            <div>
+                            <div class="space-y-2">
                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                     <div class="space-y-1 text-center">
                                         <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
@@ -94,6 +94,7 @@
                                         </p>
                                     </div>
                                 </div>
+                                <uploadedFiles v-if="this.fields.thumbnail" :file="this.fields.thumbnail"></uploadedFiles>
                             </div>
                         </div>
                     </div>
@@ -147,6 +148,7 @@
 
 <script>
 import {maxLength, minValue, required, requiredIf} from "vuelidate/lib/validators";
+import uploadedFiles from '../imageUpload/uploadedFileComponent'
 
 export default {
     data () {
@@ -164,6 +166,9 @@ export default {
             submitted: false,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         };
+    },
+    components: {
+        uploadedFiles
     },
     mounted: function() {
         this.getConfigurableProductsWithNoConfigurator();

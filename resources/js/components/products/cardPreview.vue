@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="bg-white shadow-sm min-h-32 w-50 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200 relative my-5" :class="{'pointer-events-none opacity-50': data.stock === 0 || data.stock === '0'}">
+    <button type="button" class="bg-white shadow-sm min-h-32 2xl:w-50 w-100 hover:shadow-xl hover:border-indigo-500 transition rounded-lg border-2 border-gray-200 relative my-5" :class="{'pointer-events-none opacity-50': data.stock === 0 || data.stock === '0'}">
         <div class="p-3 border-b border-gray-300">
             <div class="flex">
                 <div class="w-2/3 text-left overflow-hidden break-word">
@@ -8,7 +8,7 @@
                 </div>
                 <div class="w-1/3 text-right">
                     <p class="text-md" v-if="!data.hasPriceIncrease">€ {{ data.price }}</p>
-                    <p class="text-md" v-if="data.hasPriceIncrease">+ {{ data.priceIncrease }} %</p>
+                    <p class="text-md" v-if="data.hasPriceIncrease">{{ data.percentageParentProduct * (data.priceIncrease / 100).toFixed(2)  | currency('€ ') }}</p>
                     <p class="" v-if="data.stock === '1' || data.stock === 1">
                         <span class="text-green-500 font-medium font-sm flex justify-end align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">

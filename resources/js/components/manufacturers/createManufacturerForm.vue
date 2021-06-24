@@ -113,6 +113,7 @@
                                     PNG, JPG, GIF up to 10MB
                                 </p>
                             </div>
+                            <uploadedFiles v-if="this.fields.thumbnail" :file="this.fields.thumbnail"></uploadedFiles>
                         </div>
                     </div>
                 </div>

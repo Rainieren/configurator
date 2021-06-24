@@ -22,7 +22,7 @@ class ConfiguratorSeeder extends Seeder
             'name' => 'Auto',
             'theme_color' => $faker->hexColor,
             'language_id' => 1,
-            'thumbnail' => '/storage/images/placeholder.png',
+            'thumbnail' => '/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -31,7 +31,7 @@ class ConfiguratorSeeder extends Seeder
             'name' => 'Bus',
             'theme_color' => $faker->hexColor,
             'language_id' => 1,
-            'thumbnail' => '/storage/images/placeholder.png',
+            'thumbnail' => '/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -40,7 +40,7 @@ class ConfiguratorSeeder extends Seeder
             'name' => 'Vrachtwagen',
             'theme_color' => $faker->hexColor,
             'language_id' => 1,
-            'thumbnail' => '/storage/images/placeholder.png',
+            'thumbnail' => '/images/placeholder.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

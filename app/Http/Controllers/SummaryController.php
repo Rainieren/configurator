@@ -134,15 +134,14 @@ class SummaryController extends Controller
 
     public function getMostPopulairProduct()
     {
-////        $summary = Summary::all();
-//        dd(Summary::groupBy(DB::raw('substr(created_at, 0, 9)'))
-//            ->selectRaw('*, sum(total) as sum')
-//            ->get());
-
 //        dd(Summary::groupBy('created_at')->sum('total'));
 
         return response()->json(Product::withCount('summaries')->orderBy('summaries_count', 'desc')->first());
+    }
 
-
+    public function getSummaryStatistics() {
+        return response()->json(DB::table('summaries')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('sum(total) as sum'))
+            ->groupBy('date')->pluck('sum','date'));
     }
 }

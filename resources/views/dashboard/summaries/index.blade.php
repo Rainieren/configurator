@@ -4,7 +4,7 @@
     <div class="px-10 py-5 md:px-20 md:py-10 transition-all">
         <div class="flex">
             <div class="w-1/2 flex items-center">
-                <p class="text-3xl font-bold text-gray-900">Summaries</p>
+                <p class="text-3xl font-extrabold text-gray-900">Summaries</p>
             </div>
             <div class="w-1/2 text-right">
 
@@ -15,7 +15,7 @@
 
         @if(count($summaries) == 0)
             <div class="w-100 text-center flex items-center justify-center flex-column">
-                <p class="font-medium text-lg">{{ __('You dont have any products yet. Create a product using the button in the top right corner.') }}</p>
+                <p class="font-medium text-lg">{{ __('You dont have any summaries yet, it will take time') }}</p>
                 <img src="{{ asset('images/empty_1.svg') }}" class="w-25 my-24" alt="">
             </div>
         @else

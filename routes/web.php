@@ -27,6 +27,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/configurators', [App\Http\Controllers\ConfiguratorController::class, 'index'])->name('configurators');
     Route::get('/summaries', [App\Http\Controllers\SummaryController::class, 'index'])->name('summaries');
     Route::post('/summary/generate', [App\Http\Controllers\SummaryController::class, 'generatePDF'])->name('generate');
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
 
 
 

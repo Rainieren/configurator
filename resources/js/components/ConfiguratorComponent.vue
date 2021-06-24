@@ -10,11 +10,11 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg>
-                    <p class="text-gray-800 font-medium text-lg  cursor-pointer hover:text-indigo-500" >Choose a different configurator</p>
+                    <p class="text-gray-800 font-medium text-sm md:text-base md:text-lg  cursor-pointer hover:text-indigo-500" >Choose a different configurator</p>
                 </div>
 
                 <div class="relative flex justify-between items-center pb-4">
-                    <h1 class="text-3xl font-medium">Configure {{ configurator.name }}</h1>
+                    <h1 class="text-base md:text-lg lg:text-2xl xl:text-3xl font-medium text-gray-900">Configure {{ configurator.name }}</h1>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
 <!--                    <configurable-product :active="activeProduct" :options="chosenOptions" :product="product" v-for="product in configurableProducts" :key="product.id" :getAllRelatedSteps="getAllRelatedSteps"></configurable-product>-->
@@ -28,8 +28,8 @@
                             <div class="p-3 border-b border-gray-300 h-auto w-100">
                                 <div class="flex">
                                     <div class="w-2/3 text-left">
-                                        <p class="font-bold">{{ product.name }}</p>
-                                        <p v-if="product.description" class="text-gray-800">{{ product.description.substring(0,32) }}</p>
+                                        <p class="font-bold text-sm">{{ product.name }}</p>
+                                        <p v-if="product.description" class="text-gray-800 text-sm">{{ product.description.substring(0,32) }}</p>
                                     </div>
                                     <div class="w-1/3 text-right">
                                         <p class="text-md">{{ parseFloat(product.price) | currency('€ ')}}</p>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-3 h-64 w-100 overflow-hidden">
+                            <div class="p-3 h-32 xl:h-64 w-100 overflow-hidden">
                                 <img class="object-contain object-center h-full w-full rounded-xl" v-if="product.thumbnail" :src="product.thumbnail">
                                 <div class="w-100 h-100 flex items-center justify-center text-gray-200" v-if="!product.thumbnail">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,7 +86,7 @@
                     <draggable :options="{animation:200, handle: '.handle'}" :element="'div'" @change="onOrderChange()">
                         <div v-for="(step, i) in product.steps" class="my-5 relative">
                             <div class="relative flex justify-between items-center pb-4">
-                                <h1 class="text-3xl font-medium">{{ step.name }}</h1>
+                                <h1 class="text-base md:text-lg lg:text-2xl xl:text-3xl font-medium text-gray-900">{{ step.name }}</h1>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                                 <div v-for="(option, index) in step.options" v-bind:key="index" class="relative">
@@ -124,7 +124,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="p-3 h-64 w-100 overflow-hidden">
+                                        <div class="p-3 h-32 xl:h-64 w-100 w-100 overflow-hidden">
                                             <img class="object-contain object-center h-full w-full rounded-xl" v-if="option.thumbnail" :src="option.thumbnail">
                                             <div class="w-100 h-100 flex items-center justify-center text-gray-200" v-if="!option.thumbnail">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -160,14 +160,14 @@
 
         <transition enter-active-class="animate__animated animate__slideInRight animate__faster" leave-active-class="animate__animated animate__slideOutRight animate__faster" mode="out-in">
             <div class="bg-white fixed h-screen w-full top-0 right-0 z-30 overflow-none shadow-lg flex items-center" v-if="configurationFinished">
-                <div class="relative left-1/4 w-1/3">
+                <div class="relative p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3">
                     <h2 class="font-bold text-3xl">Your configuration(s)</h2>
                     <div class="grid grid-cols-1 divide-y divide-gray-200 my-10">
-                        <div class="flex space-x-6 py-5">
-                            <div class="w-1/4">
+                        <div class="flex flex-column xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6 py-5">
+                            <div class="w-100 xl:w-1/4">
                                 <img src="https://images.photowall.com/products/60869/azores-mountain-landscape-1.jpg" alt="" class="rounded-lg">
                             </div>
-                            <div class="w-3/4">
+                            <div class="w-100 xl:w-3/4">
                                 <p class="font-bold text-xl">{{ activeProduct.name }}</p>
                                 <ul class="my-3">
                                     <div class="" v-for="(option, index) in chosenOptions" v-if="option[0].options.length" :key="option[0].step.id">
@@ -191,8 +191,8 @@
                         <p class="text-md">VAT: {{ this.$refs.summary.calculateSum * 0.21 | currency('€ ') }}</p>
                         <p class="font-bold text-xl">Total: {{ this.$refs.summary.calculateSum | currency('€ ') }}</p>
                     </div>
-                    <div class="flex justify-between my-5">
-                        <button @click="configurationFinished = false" class="bg-indigo-500 py-2 px-4 text-white rounded-lg flex items-center transition-all">
+                    <div class="flex flex-column-reverse space-y-4 md:flex-row md:space-y-0 md:justify-between my-5">
+                        <button @click="configurationFinished = false" class="bg-indigo-500 py-2 px-4 mt-4 md:mt-0 text-white rounded-lg flex items-center transition-all">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                             </svg>

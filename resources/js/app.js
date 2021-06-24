@@ -48,7 +48,7 @@ import StepList from "./components/steps/stepsComponent.vue"
 
 import Statistics from "./components/dashboard/statisticsComponent.vue";
 import Summary from "./components/summary/summaryComponent.vue";
-
+import UploadedFiles from './components/imageUpload/uploadedFileComponent.vue'
 
 import CreateManufacturerForm from "./components/manufacturers/createManufacturerForm.vue";
 import EditManufacturerForm from "./components/manufacturers/editManufacturerForm.vue";
@@ -104,6 +104,8 @@ Vue.component('configurator-view', require('./pages/Configurator.vue').default);
 // Configurator
 Vue.component('configurator', require('./components/ConfiguratorComponent.vue').default)
 Vue.component('summary', require('./components/summary/summaryComponent.vue').default)
+
+Vue.component('uploaded-files', require('./components/imageUpload/uploadedFileComponent.vue').default)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -137,6 +139,7 @@ const dashboard = new Vue({
         EditManufacturerForm,
         StepList,
         CreateConfiguratorForm,
-        EditConfiguratorForm
+        EditConfiguratorForm,
+        UploadedFiles
     }
 });
