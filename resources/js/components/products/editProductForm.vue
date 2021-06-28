@@ -160,7 +160,7 @@
                                     </fieldset>
                                     <div v-if="fields.hasPriceIncrease">
                                         <div class="my-3">
-                                            <label for="percentage" class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Percentage</label>
+                                            <label for="percentage" class="text-gray-800 font-medium text-sm md:text-base">Percentage</label>
                                             <div class="relative flex mt-1 w-25">
                                                 <input v-mask="'###'" v-model.trim="$v.fields.priceIncrease.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.fields.priceIncrease.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-l-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                                 <span class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-200 bg-gray-50 text-gray-500 text-sm shadow-sm">
@@ -175,7 +175,7 @@
                                             <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.priceIncrease.required">Percentage is verplicht!</p>
                                         </div>
                                         <div class="my-3">
-                                            <label for="percentage" class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">The percentage needs to be based on the price of a parent product:</label>
+                                            <label for="percentage" class="text-gray-800 font-medium text-sm md:text-base">The percentage needs to be based on the price of a parent product:</label>
                                             <fieldset class="my-3">
                                                 <div class="space-y-4">
                                                     <div class="flex" v-for="product in configurableProducts">
@@ -271,7 +271,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <uploadedFiles v-if="this.fields.thumbnail" :file="this.fields.thumbnail"></uploadedFiles>
+                                    <uploadedFiles v-if="this.fields.thumbnail" :file.sync="fields.thumbnail" :preview.sync="fields.thumbnailPreview"></uploadedFiles>
                                 </div>
                             </div>
                         </div>
@@ -300,7 +300,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <uploadedFiles v-if="this.fields.visualisation" :file="this.fields.visualisation"></uploadedFiles>
+                                    <uploadedFiles v-if="this.fields.visualisation" :file.sync="fields.visualisation"></uploadedFiles>
                                 </div>
                             </div>
                         </div>
@@ -349,9 +349,8 @@
                             <div class="w-100 xl:w-8/12">
                                 <div class="flex flex-column xl:flex-row">
                                     <div class="w-full flex-column">
-                                        <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" v-on:change="alert('test')" :class="{'border-red-600': submitted && !$v.fields.newFrom.required || !$v.fields.newFrom.minValue}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                        <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" :class="{'border-red-600': submitted && !$v.fields.newFrom.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                         <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.required">Nieuw vanaf is verplicht!</p>
-                                        <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.minValue">Nieuw vanaf mag niet lager zijn dan vandaag!</p>
                                     </div>
                                     <div class="mx-3 my-3 xl:my-0 flex items-center justify-center">
                                         <p class="text-gray-900 font-medium">To</p>
@@ -461,9 +460,9 @@
                         </div>
                         <input type="hidden" :value="this.fields.par">
                         <div class="flex flex-column-reverse xl:flex-row space-y-5 xl:space-y-0 xl:float-right my-10 xl:space-x-5">
-                            <button type="button" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                            <a href="/dashboard/products" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                                 Cancel
-                            </button>
+                            </a>
                             <button @click.prevent="updateProduct()" type="submit" class="w-full xl:w-auto bg-indigo-500 rounded-md p-2 px-4 text-center text-white hover:no-underline hover:bg-indigo-700 transition">Edit product</button>
                         </div>
                     </form>
@@ -691,7 +690,6 @@ export default {
                 required: requiredIf(function() {
                     return this.fields.newTo
                 }),
-                minValue: minValue(new Date().toISOString().substr(0,10)),
             },
             newTo: {
                 required: requiredIf(function() {

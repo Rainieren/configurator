@@ -28,11 +28,10 @@
                 From: "opacity-100 translate-y-0 sm:scale-100"
                 To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             -->
-            <div class="w-50 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle">
+            <div class="w-100 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle">
                 <div class="bg-white px-4 pt-4 pb-4 sm:p-6 sm:pb-4">
                     <div class="">
                         <div class="">
-
                             <div v-if="!products.length" class="f">
                                 <div class="w-100 text-center flex items-center justify-center flex-column p-5">
                                     <p class="font-medium text-lg">Sorry, At this moment there are no product available with the chosen interaction type. Create a new product with the right interaction type or change a existing one</p>
@@ -40,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="mt-2" v-if="!loading && products.length">
-                                <p class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                <p class="text-base md:text-lg lg:text-2xl xl:text-3xl font-medium text-gray-900" id="modal-title">
                                     Producten toevoegen
                                 </p>
                                 <div class="flex justify-center flex-column items-center my-5" v-if="loading">

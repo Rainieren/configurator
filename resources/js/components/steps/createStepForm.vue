@@ -1,14 +1,14 @@
 <template>
-    <div class="px-20">
-        <div class="flex space-x-10">
-            <div class="w-6/12">
+    <div class="px-10 md:px-20">
+        <div class="flex flex-column xl:flex-row xl:space-x-10">
+            <div class="w-100 xl:w-8/12">
                 <form action="/dashboard/step/store" method="POST" class="w-full my-2" id="productCreateForm">
                     <input type="hidden" name="_token" :value="csrf">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Name</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Name</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12 ">
                             <div class="relative">
                                 <input v-model.trim="$v.fields.name.$model" name="name" id="name" type="text" :class="{'border-red-500 animate__animated animate__shakeX': submitted && !$v.fields.name.required || !$v.fields.name.maxLength}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
 <!--                                <svg xmlns="http://www.w3.org/2000/svg" v-if="submitted && !$v.fields.name.required" class="h-5 w-5 text-red-600 absolute top-2 right-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
@@ -25,11 +25,11 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Optional</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Optional</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="flex items-center">
                                     <div class="flex items-center h-5">
@@ -48,11 +48,11 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Allow multiple select</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Allow multiple select</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="flex items-center">
                                     <div class="flex items-center h-5">
@@ -71,12 +71,12 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Parent product</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Parent product</p>
                             <p class="text-gray-500">To which product would u like to add this step? To which products does this step apply?</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="space-y-4">
                                     <div class="" v-if="configurableProducts.length != 0">
@@ -112,12 +112,12 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Interaction type</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Interaction type</p>
                             <p class="text-gray-500">How do you want the useers to interact with this step. This will only allow products to be added with the selected interaction type</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="relative">
                                 <select v-model.trim="$v.fields.interactionType.$model" @change="selectedProducts = []" type="text" :class="{'border-red-500 animate__animated animate__shakeX': submitted && !$v.fields.interactionType.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option value="" selected>Kies een interactie type</option>
@@ -133,12 +133,12 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Add products</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Add products</p>
                             <p class="text-gray-500">Which products would you like to add to this step? These are the products that the user can add to the configuration</p>
                         </div>
-                        <div class="w-8/12 space-y-5">
+                        <div class="w-100 xl:w-8/12 space-y-5">
                             <div class="grid grid-cols-10 gap-5 space-x-5 shadow-sm p-3 border border-gray-200 rounded-md" v-for="product in selectedProducts">
                                 <div class="flex align-items-center">
                                     <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
@@ -184,11 +184,11 @@
                     <input type="hidden" :value="JSON.stringify(selectedConfigurableProducts)" name="addToConfigurableProducts[]">
 
 
-                    <div class="flex float-right my-5 space-x-5">
-                        <button @click="" type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <div class="flex flex-column-reverse xl:flex-row space-y-5 xl:space-y-0 xl:float-right my-10 xl:space-x-5">
+                        <a href="/dashboard/steps" type="button" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                             Cancel
-                        </button>
-                        <button @click.prevent="submitStepCreateForm" type="submit" class="bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition">Create step</button>
+                        </a>
+                        <button @click.prevent="submitStepCreateForm" type="submit" class="w-full xl:w-auto bg-indigo-500 rounded-md p-2 px-4 text-center text-white hover:no-underline hover:bg-indigo-700 transition">Create step</button>
                     </div>
                 </form>
             </div>

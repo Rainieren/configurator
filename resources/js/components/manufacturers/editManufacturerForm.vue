@@ -1,22 +1,22 @@
 <template>
     <div class="">
-        <div class="px-20 pt-10 pb-10">
+        <div class="px-10 pt-5 pb-5 md:px-20 md:pt-10 md:pb-10">
             <div class="flex">
-                <div class="w-1/2 flex items-center">
-                    <p class="text-3xl font-bold text-gray-900">Edit {{ fields.name }}</p>
+                <div class="w-100 lg:w-1/2 flex items-center">
+                    <p class="text-base md:text-lg lg:text-2xl xl:text-3xl font-extrabold text-gray-900">Edit {{ fields.name }}</p>
                 </div>
             </div>
         </div>
-        <div class="px-20">
-            <div class="w-6/12">
+        <div class="px-10 md:px-20">
+            <div class="w-100 xl:w-8/12">
                 <form :action="'/dashboard/manufacturer/' + manufacturer.id + '/update'" method="POST" class="w-full my-2" id="manufacturerEditForm"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" :value="csrf">
                     <input type="hidden" name="_method" value="PATCH">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Name</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Name</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="col-span-6 relative">
                                 <input v-model.trim="$v.fields.name.$model" :class='{ "border-2 border-red-500" : submitted && !$v.fields.name.required}' placeholder="Sony, Volvo, Logitech etc." name="name" id="name" type="text" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
 
@@ -31,11 +31,11 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
                             <p class="text-gray-800 font-medium text-lg">Address</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 relative">
                                     <label for="street_address" class="block text-sm font-medium text-gray-700">Street address</label>
@@ -101,46 +101,49 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
                             <p class="text-gray-800 font-medium text-lg">Logo</p>
                         </div>
-                        <div class="w-8/12">
-                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                <div class="space-y-1 text-center">
-                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                    <div class="flex text-sm text-gray-600">
-                                        <label for="logo-upload" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                            <span>Upload a file</span>
-                                            <input id="logo-upload" name="logo_upload" type="file" class="sr-only">
-                                        </label>
-                                        <p class="pl-1">or drag and drop</p>
+                        <div class="w-100 xl:w-8/12">
+                            <div class="space-y-2">
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                    <div class="space-y-1 text-center">
+                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        <div class="flex text-sm text-gray-600">
+                                            <label for="logo-upload" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                                <span>Upload a file</span>
+                                                <input id="logo-upload" name="logo_upload" type="file" class="sr-only">
+                                            </label>
+                                            <p class="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500">
+                                            PNG, JPG, GIF up to 10MB
+                                        </p>
                                     </div>
-                                    <p class="text-xs text-gray-500">
-                                        PNG, JPG, GIF up to 10MB
-                                    </p>
                                 </div>
+                                <uploadedFiles v-if="this.fields.thumbnail" :file.sync="fields.thumbnail"></uploadedFiles>
                             </div>
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
                             <p class="text-gray-800 font-medium text-lg">Description</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <textarea v-model="fields.description" id="description" name="description" rows="5" class="p-2 shadow-sm block w-full border border-gray-200 rounded-md" placeholder="Write something beautiful"></textarea>
                         </div>
                     </div>
 
 
-                    <div class="flex float-right my-5 space-x-5">
-                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <div class="flex flex-column-reverse xl:flex-row space-y-5 xl:space-y-0 xl:float-right my-10 xl:space-x-5">
+                        <a href="/dashboard/manufacturers" type="button" class="w-full inline-flex mt-2 xl:m-0 justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                             Cancel
-                        </button>
-                        <button @click.prevent="submitForm" type="submit" class="bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-700 transition shadow-sm">Create manufacturer</button>
+                        </a>
+                        <button @click.prevent="submitForm" type="submit" class="w-full bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-700 transition shadow-sm">Update manufacturer</button>
                     </div>
                 </form>
             </div>
@@ -150,7 +153,7 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-
+import uploadedFiles from '../imageUpload/uploadedFileComponent'
 
 export default {
     data () {
@@ -162,7 +165,8 @@ export default {
                 country: this.manufacturer.country_id,
                 state: this.manufacturer.state,
                 postal_code: this.manufacturer.zip_code,
-                description: this.manufacturer.description
+                description: this.manufacturer.description,
+                thumbnail: this.manufacturer.logo,
             },
             countries: [],
             submitted: false,
@@ -171,6 +175,9 @@ export default {
     },
     mounted() {
         this.getAllCountries()
+    },
+    components: {
+        uploadedFiles
     },
     props: ['manufacturer'],
     methods: {

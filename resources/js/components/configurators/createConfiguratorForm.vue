@@ -1,14 +1,14 @@
 <template>
-    <div class="px-20">
-        <div class="flex space-x-10">
-            <div class="w-6/12">
+    <div class="px-10 md:px-20">
+        <div class="flex flex-column xl:flex-row xl:space-x-10">
+            <div class="w-100 xl:w-8/12">
                 <form action="/dashboard/configurator/store" method="POST" class="w-full my-2" id="configuratorCreateForm" enctype="multipart/form-data">
                     <input type="hidden" name="_token" :value="csrf">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Name</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Name</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="relative">
                                 <input v-model.trim="$v.fields.name.$model" name="name" id="name" type="text" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.name.required || !$v.fields.name.maxLength}" placeholder="Chair, Bike, Car etc." class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
@@ -22,11 +22,11 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Theme color</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Theme color</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="flex space-x-5">
                                 <div class="block h-10 w-10 rounded-md" :style="{backgroundColor: this.fields.themeColor}"></div>
                                 <div class="relative w-100">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <hr class="my-4 hidden">
-                    <div class="flex space-x-5 hidden">
+                    <div class="flex flex-column xl:flex-row xl:space-x-5 hidden">
                         <div class="w-4/12">
                             <p class="text-gray-800 font-medium text-lg">Language</p>
                         </div>
@@ -70,12 +70,12 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Thumbnail</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Thumbnail</p>
                             <p class="text-gray-500">Upload a thumbnail of the configurator</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="space-y-2">
                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                     <div class="space-y-1 text-center">
@@ -94,20 +94,20 @@
                                         </p>
                                     </div>
                                 </div>
-                                <uploadedFiles v-if="this.fields.thumbnail" :file="this.fields.thumbnail"></uploadedFiles>
+                                <uploadedFiles v-if="this.fields.thumbnail" :file.sync="fields.thumbnail"></uploadedFiles>
                             </div>
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Parent products</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Parent products</p>
                             <p class="text-gray-500">Which products would you like to add to this configurator?</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="space-y-4">
-                                    <div class="flex" v-for="product in configurableProducts">
+                                    <div class="flex" v-if="configurableProducts.length" v-for="product in configurableProducts">
                                         <div class="flex items-center justify-center">
                                             <div class="flex items-center h-5">
                                                 <div class="flex justify-between items-center" @click="()=>{AddSelectedConfigurableProducts(product.id)}">
@@ -129,16 +129,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="" v-if="!configurableProducts.length">
+                                        <p class="font-medium">There are no products available at this moment.</p>
+                                    </div>
                                 </div>
                             </fieldset>
                         </div>
                     </div>
                     <input type="hidden" :value="JSON.stringify(selectedConfigurableProducts)" name="selectedConfigurableProducts[]">
-                    <div class="flex float-right my-5 space-x-5">
-                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <div class="flex flex-column-reverse xl:flex-row space-y-5 xl:space-y-0 xl:float-right my-10 xl:space-x-5">
+                        <a href="/dashboard/configurators" type="button" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                             Cancel
-                        </button>
-                        <button @click.prevent="submitConfiguratorForm" type="submit" class="bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition">Create configurator</button>
+                        </a>
+                        <button @click.prevent="submitConfiguratorForm" type="submit" class="w-full bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition">Create configurator</button>
                     </div>
                 </form>
             </div>

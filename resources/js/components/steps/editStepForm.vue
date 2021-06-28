@@ -1,20 +1,20 @@
 <template>
     <div>
-        <div class="px-20 pt-10 pb-10">
+        <div class="px-10 pt-5 pb-5 md:px-20 md:pt-10 md:pb-10">
             <div class="flex">
-                <div class="w-1/2 flex items-center">
-                    <p class="text-3xl font-bold text-gray-900">{{ fields.name }}</p>
+                <div class="w-100 lg:w-1/2 flex items-center">
+                    <p class="text-base md:text-lg lg:text-2xl xl:text-3xl font-extrabold text-gray-900">{{ fields.name }}</p>
                 </div>
             </div>
         </div>
-        <div class="px-20">
-            <div class="flex space-x-10">
-                <div class="w-6/12">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Name</p>
+        <div class="px-10 md:px-20">
+            <div class="flex flex-column xl:flex-row xl:space-x-10">
+                <div class="w-100 xl:w-8/12">
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Name</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="relative">
                                 <input name="name" id="name" v-model.trim="$v.fields.name.$model" type="text" :class="{ 'border-red-500' : submitted && !$v.fields.name.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" autofocus>
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none" v-if="!$v.fields.name.required">
@@ -27,11 +27,11 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Optional</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Optional</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="flex items-start">
                                     <div class="flex items-center h-5">
@@ -52,11 +52,11 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Allow multiple select</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Allow multiple select</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="flex items-start">
                                     <div class="flex items-center h-5">
@@ -75,12 +75,12 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Parent product</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Parent product</p>
                             <p class="text-gray-500">To which product would u like to add this step? To which products does this step apply?</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <fieldset>
                                 <div class="space-y-4">
                                     <div class="flex" v-for="product in configurableProducts">
@@ -110,12 +110,12 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Interaction type</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Interaction type</p>
                             <p class="text-gray-500">How do you want the useers to interact with this step. This will only allow products to be added with the selected interaction type</p>
                         </div>
-                        <div class="w-8/12">
+                        <div class="w-100 xl:w-8/12">
                             <div class="relative">
                                 <select v-model.trim="$v.fields.interaction_type.$model" type="text" :class="{ 'border-red-500' : submitted && !$v.fields.interaction_type.required}" name="interaction_type" id="interaction_type" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none">
                                     <option value="">Kies een type</option>
@@ -131,15 +131,15 @@
                         </div>
                     </div>
                     <hr class="my-4">
-                    <div class="flex space-x-5">
-                        <div class="w-4/12">
-                            <p class="text-gray-800 font-medium text-lg">Add products</p>
+                    <div class="flex flex-column xl:flex-row xl:space-x-5">
+                        <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
+                            <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Add products</p>
                             <p class="text-gray-500">Which products would you like to add to this step? These are the products that the user can add to the configuration</p>
                         </div>
-                        <div class="w-8/12 space-y-5">
-                            <transition-group appear enter-active-class="animate__animated animate__fadeIn" leave-
+                        <div class="w-100 xl:w-8/12 space-y-2">
+                            <transition-group class="space-y-2" appear enter-active-class="animate__animated animate__fadeIn" leave-
                                               active-class="animate__animated animate__fadeOut" mode="out-in">
-                                <div class="grid grid-cols-12 gap-5 space-x-5 shadow-sm p-3" v-for="product in fields.options" :key="product.id">
+                                <div class="grid grid-cols-12 gap-5 shadow-sm p-3 border border-gray-200 rounded-lg" v-for="product in fields.options" :key="product.id">
                                     <div class="col-span-2 flex align-items-center">
                                         <img :src="product.thumbnail" alt="" class="h-12 w-12 rounded bg-cover">
                                     </div>
@@ -190,15 +190,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex float-right my-5 space-x-5">
-                        <button type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <div class="flex flex-column-reverse xl:flex-row space-y-5 xl:space-y-0 xl:float-right my-10 xl:space-x-5">
+                        <a href="/dashboard/steps" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                             Cancel
-                        </button>
+                        </a>
                         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" v-if="loading">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <button type="submit" v-on:click="updateStep()" class="bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition">Update step</button>
+                        <button type="submit" v-on:click="updateStep()" class="w-full xl:w-auto bg-indigo-500 rounded-md p-2 px-4 text-center text-white hover:no-underline hover:bg-indigo-700 transition">Update step</button>
                     </div>
                 </div>
             </div>

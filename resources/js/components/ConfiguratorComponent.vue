@@ -6,7 +6,7 @@
 
         <div class="flex flex-col xl:flex-row" v-if="!loading">
             <div class="configurator bg-white relative xl:w-8/12 w-full min-h-screen p-10 pt-20 lg:p-20 space-y-15">
-                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500 bg-white rounded-md shadow-sm px-2 py-1.5 hover:shadow-md transition-all border border-gray-200" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = [], steps = []">
+                <div class="absolute top-5 left-5 flex justify-center items-center hover:text-indigo-500 bg-white rounded-md shadow-sm px-2 py-1.5 hover:shadow-md transition-all border border-gray-200" v-on:click="configuratorChosen = false, activeProduct = '', chosenOptions = [], steps = [], stepsLoading = true">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                     </svg>
@@ -68,20 +68,13 @@
                         </button>
                     </div>
                 </div>
-
-
-<!--                <article class="option my-3 transition-all" :class="accordionClass">-->
-<!--                    <div class="header border border-gray-500 p-2 cursor-pointer" @click="toggleAccordion">-->
-<!--                        even testen-->
-<!--                    </div>-->
-<!--                    <div class="message border-b border-r border-l border-gray-500 overflow-hidden p-0 transition-all h-40" :class="accordionContainer">-->
-<!--                        <div class="body p-4" :class="accordionBody">-->
-<!--                            Bericht-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </article>-->
-
-
+                <div class="flex justify-center items-center" v-if="activeProduct && stepsLoading">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <div class="font-medium my-10 text-sm xl:text-lg">Fetching steps</div>
+                </div>
                 <div class="space-y-5 " v-if="!stepsLoading" v-for="product in steps" >
                     <draggable :options="{animation:200, handle: '.handle'}" :element="'div'" @change="onOrderChange()">
                         <div v-for="(step, i) in product.steps" class="my-5 relative">
@@ -159,8 +152,8 @@
         <product-modal ref="productModal"></product-modal>
 
         <transition enter-active-class="animate__animated animate__slideInRight animate__faster" leave-active-class="animate__animated animate__slideOutRight animate__faster" mode="out-in">
-            <div class="bg-white fixed h-screen w-full top-0 right-0 z-30 overflow-none shadow-lg flex items-center" v-if="configurationFinished">
-                <div class="relative p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3">
+            <div class="bg-white fixed h-screen w-full top-0 right-0 z-30 overflow-none shadow-lg flex items-center overflow-y-scroll" v-if="configurationFinished">
+                <div class="relative h-100 p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3">
                     <h2 class="font-bold text-3xl">Your configuration(s)</h2>
                     <div class="grid grid-cols-1 divide-y divide-gray-200 my-10">
                         <div class="flex flex-column xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6 py-5">
@@ -212,12 +205,6 @@
                 </div>
             </div>
         </transition>
-
-        <form action="/dashboard/summary/generate" method="POST" class="w-full my-2 hidden" id="generatePDF">
-            <input type="hidden" name="_token" :value="csrf">
-            <input type="hidden" :value="JSON.stringify(activeProduct)" name="activeProduct">
-            <input type="hidden" :value="JSON.stringify(chosenOptions)" name="chosenOptions[]">
-        </form>
     </div>
 </template>
 
@@ -369,7 +356,6 @@
                         .then(response => {
                             this.configurator = response.data
                             this.configuratorChosen = true
-
                         }).catch(err => {
                         console.log(err)
                     })

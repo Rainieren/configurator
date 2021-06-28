@@ -261,7 +261,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <uploadedFiles v-if="this.fields.thumbnail" :file="this.fields.thumbnail" :preview="this.fields.thumbnailPreview" @update-images="updateFiles"></uploadedFiles>
+                                <uploadedFiles v-if="this.fields.thumbnail" :file.sync="fields.thumbnail" :preview.sync="fields.thumbnailPreview"></uploadedFiles>
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <uploadedFiles v-if="this.fields.visualisation" :file="this.fields.visualisation" @update-images="updateFiles"></uploadedFiles>
+                                <uploadedFiles v-if="this.fields.visualisation" :file.sync="fields.visualisation"></uploadedFiles>
                             </div>
                         </div>
                     </div>
@@ -339,7 +339,7 @@
                         <div class="w-100 xl:w-8/12">
                             <div class="flex flex-column xl:flex-row">
                                 <div class="w-full flex-column">
-                                    <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" v-on:change="alert('test')" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.newFrom.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                    <input v-model.trim="$v.fields.newFrom.$model" type="date" name="new_from" id="new_from" :class="{'border-red-600 animate__animated animate__shakeX': submitted && !$v.fields.newFrom.required}" class="appearance-none block border border-gray-200 p-2 rounded-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                     <p class="error text-red-600 my-3" v-if="submitted && !$v.fields.newFrom.required">New from is required!</p>
                                 </div>
                                 <div class="mx-3 my-3 xl:my-0 flex items-center justify-center">
@@ -449,9 +449,9 @@
                         </div>
                     </div>
                     <div class="flex flex-column-reverse xl:flex-row space-y-5 xl:space-y-0 xl:float-right my-10 xl:space-x-5">
-                        <button type="button" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                        <a href="/dashboard/products" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                             Cancel
-                        </button>
+                        </a>
                         <button @click.prevent="submitProductCreateForm" type="submit" class="w-full xl:w-auto bg-indigo-500 rounded-md p-2 px-4 text-center text-white hover:no-underline hover:bg-indigo-700 transition">Create product</button>
                     </div>
                 </form>
