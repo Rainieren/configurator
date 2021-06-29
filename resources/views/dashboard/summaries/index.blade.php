@@ -61,7 +61,7 @@
                                             {{ $summary->options->count() }}
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
-                                            {{ $summary->code }}
+                                            <a class="text-indigo-500" href="/view_summary/{{$summary->code}}">{{ $summary->code }}</a>
                                         </td>
                                         <td class="px-6 py-3 whitespace-nowrap text-sm">
                                             € {{ $summary->total }}

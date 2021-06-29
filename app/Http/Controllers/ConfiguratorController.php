@@ -96,22 +96,21 @@ class ConfiguratorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
         $configurator = Configurator::find($id);
 
-        if($request->data['fields']['thumbnail']) {
-            $imageName = time() . '.' . $request->data['fields']['thumbnail']->extension();
+        if($request->thumbnail_upload) {
+            $imageName = time() . '.' . $request->thumbnail_upload->extension();
             $request->thumbnail_upload->storeAs('public/images', $imageName);
         }
 
         $configurator->update([
-            'name' => $request->data['fields']['name'],
-            'theme_color' => $request->data['fields']['themeColor'],
-            'thumbnail' => $request->data['fields']['thumbnail'] ? '/storage/images/' . $imageName : '/storage/images/placeholder.png',
+            'name' => $request->name,
+            'theme_color' => $request->theme_color,
+            'thumbnail' => $request->thumbnail_upload ? '/storage/images/' . $imageName : '/storage/images/placeholder.png',
             'updated_at' => Carbon::now(),
         ]);
 
-        return response()->json();
+        return redirect('/dashboard/configurators');
     }
 
     /**

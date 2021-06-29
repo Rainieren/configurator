@@ -55,5 +55,5 @@ Route::get('/get/all/countries', [App\Http\Controllers\CountryController::class,
 Route::get('/get/all/configurators', [App\Http\Controllers\ConfiguratorController::class, 'getAllConfiguratorsWithProducts']);
 Route::get('/get/configurators', [App\Http\Controllers\ConfiguratorController::class, 'getAllConfigurators']);
 Route::get('/get/configuration/{id}', [App\Http\Controllers\ConfiguratorController::class, 'getConfigurator']);
-Route::patch('/configurator/{id}/update', [App\Http\Controllers\ConfiguratorController::class, 'update'])->name('updateConfigurator');
+
 

@@ -11,8 +11,9 @@
         <div class="px-10 md:px-20">
             <div class="flex flex-column xl:flex-row xl:space-x-10">
                 <div class="w-100 xl:w-8/12">
-                    <form class="w-full my-2" id="configuratorCreateForm" >
+                    <form :action="'/dashboard/configurator/' + this.configurator.id + '/update'" method="POST" class="w-full my-2" id="configuratorEditForm" enctype="multipart/form-data">
                         <input type="hidden" name="_token" :value="csrf">
+                        <input type="hidden" name="_method" value="PATCH">
                         <div class="flex flex-column xl:flex-row xl:space-x-5">
                             <div class="w-100 xl:w-4/12 mb-3 xl:m-0">
                                 <p class="text-gray-800 font-medium text-sm md:text-base xl:text-lg">Name</p>
@@ -50,10 +51,10 @@
                                                     <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.themeColor === fields.defaultColor}"></div>
                                                 </div>
                                             </div>
-                                            <input id="allow_multiple" name="allow_multiple" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                            <input id="default_color" name="default_color" type="hidden" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                                         </div>
                                         <div class="ml-3 text-sm">
-                                            <label for="allow_multiple" class="font-medium text-gray-700">Use default</label>
+                                            <label for="default_color" class="font-medium text-gray-700">Use default</label>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -92,7 +93,7 @@
                             <a href="/dashboard/configurators" type="button" class="w-full xl:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 mt-2 xl:mt-0 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                                 Cancel
                             </a>
-                            <button @click.prevent="updateConfigurator" type="submit" class="w-full bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition">Update configurator</button>
+                            <button @click.prevent="updateConfigurator" type="submit" class="w-full bg-indigo-500 rounded p-2 px-4 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition">Update configurator</button>
                         </div>
                     </form>
                 </div>
@@ -133,17 +134,20 @@ export default {
             if(this.$v.$error) {
                 return
             } else {
-                axios.patch('/api/configurator/' + this.configurator.id + '/update', {
-                    data: {
-                        fields: this.fields,
-                    },
-                    headers: { "X-Requested-With": "XMLHttpRequest","Content-Type": "multipart/form-data" } 
-                }).then(response => {
-                    this.loading = false
-                    // window.location = "/dashboard/configurators"
-                }).catch(err => {
-                    console.log(err)
-                });
+                document.getElementById("configuratorEditForm").submit();
+                // let form = new FormData();
+                // form.set('file', this.fields.thumbnail);
+                // axios.patch('/api/configurator/' + this.configurator.id + '/update', {
+                //     data: {
+                //         fields: this.fields,
+                //         file: this.fields.thumbnail
+                //     },
+                // }).then(response => {
+                //     this.loading = false
+                //     // window.location = "/dashboard/configurators"
+                // }).catch(err => {
+                //     console.log(err)
+                // });
             }
         },
         onThumbnailChanged (event) {

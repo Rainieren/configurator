@@ -9,7 +9,7 @@
                             <div class="p-3">
                                 <p class="font-medium text-base md:text-lg text-center">{{ configurator.name }}</p>
                                 <div class=" flex items-center justify-center w-full my-8">
-                                    <img :src="configurator.thumbnail" v-if="configurator.thumbnail" class="h-full w-32 xl:w-64" alt="">
+                                    <img :src="configurator.thumbnail" v-if="configurator.thumbnail" class="h-full w-32 xl:w-64 max-h-64 object-cover" alt="">
                                 </div>
                                 <p class="text-gray-500">V.a {{ Math.min.apply(Math, lowestPriceInConfigurator(configurator.id)[i]['prices'][0]) | currency('€ ')}}</p>
                             </div>
@@ -24,6 +24,7 @@
                 </div>
             </div>
         </div>
+
     </transition>
 </template>
 

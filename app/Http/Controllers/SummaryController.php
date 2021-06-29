@@ -77,7 +77,9 @@ class SummaryController extends Controller
      */
     public function show($id)
     {
-        //
+        $summary = Summary::where('code', '=', $id)->firstOrFail();
+
+        return view('dashboard.summaries.show', compact('summary'));
     }
 
     /**

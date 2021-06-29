@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
     return view('home');
 });
 
 Auth::routes();
+Route::get('view_summary/{code}', [App\Http\Controllers\SummaryController::class, 'show'])->name('showSummary');
+
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -28,6 +32,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/summaries', [App\Http\Controllers\SummaryController::class, 'index'])->name('summaries');
     Route::post('/summary/generate', [App\Http\Controllers\SummaryController::class, 'generatePDF'])->name('generate');
     Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
+
 
 
 
@@ -76,7 +81,7 @@ Route::prefix('dashboard')->group(function () {
 
         Route::get('/{id}', [App\Http\Controllers\ConfiguratorController::class, 'show'])->name('configurator');
         Route::get('/{id}/edit', [App\Http\Controllers\ConfiguratorController::class, 'edit'])->name('editConfigurator');
-
+        Route::patch('/{id}/update', [App\Http\Controllers\ConfiguratorController::class, 'update'])->name('updateConfigurator');
         Route::delete('/{id}/delete', [App\Http\Controllers\ConfiguratorController::class, 'destroy'])->name('deleteConfigurator');
     });
 });

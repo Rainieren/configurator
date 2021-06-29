@@ -1852,8 +1852,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _configurators_configuratorLoadingScreenComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./configurators/configuratorLoadingScreenComponent.vue */ "./resources/js/components/configurators/configuratorLoadingScreenComponent.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_5__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2086,6 +2110,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       configurators: [],
       configurator: '',
       summaryLoading: false,
+      adminPopUp: true,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     };
   },
@@ -2111,7 +2136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   },
-  methods: _defineProperty({
+  methods: {
     openProductModal: function openProductModal(product) {
       // console.log(this.$refs.productModal.showModal)
       this.$refs.productModal.product = product;
@@ -2254,8 +2279,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, this);
     },
     ProcessConfiguration: function ProcessConfiguration() {
-      // document.getElementById("generatePDF").submit();
-      this.configurationFinished = true;
+      this.configurationFinished = !this.configurationFinished;
+      document.body.classList.toggle('overflow-hidden');
     },
     storeSummary: function storeSummary() {
       var _this5 = this;
@@ -2271,20 +2296,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         location.reload();
       })["catch"](function (err) {});
     }
-  }, "getConfigurableProducts", function getConfigurableProducts(id) {
-    var _this6 = this;
-
-    axios.all([axios.get('/api/get/configurable_products/' + id).then(function (response) {
-      _this6.configurableProducts = response.data;
-    })["catch"](function (err) {
-      console.log(err);
-    }), axios.get('/api/get/configuration/' + id).then(function (response) {
-      _this6.configurator = response.data;
-      _this6.configuratorChosen = true;
-    })["catch"](function (err) {
-      console.log(err);
-    })]);
-  })
+  }
 });
 
 /***/ }),
@@ -2367,6 +2379,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -2974,6 +2987,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2997,27 +3011,25 @@ __webpack_require__.r(__webpack_exports__);
   props: ['configurator'],
   methods: {
     updateConfigurator: function updateConfigurator() {
-      var _this = this;
-
       this.submitted = true;
       this.$v.$touch();
 
       if (this.$v.$error) {
         return;
       } else {
-        axios.patch('/api/configurator/' + this.configurator.id + '/update', {
-          data: {
-            fields: this.fields
-          },
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            "Content-Type": "multipart/form-data"
-          }
-        }).then(function (response) {
-          _this.loading = false; // window.location = "/dashboard/configurators"
-        })["catch"](function (err) {
-          console.log(err);
-        });
+        document.getElementById("configuratorEditForm").submit(); // let form = new FormData();
+        // form.set('file', this.fields.thumbnail);
+        // axios.patch('/api/configurator/' + this.configurator.id + '/update', {
+        //     data: {
+        //         fields: this.fields,
+        //         file: this.fields.thumbnail
+        //     },
+        // }).then(response => {
+        //     this.loading = false
+        //     // window.location = "/dashboard/configurators"
+        // }).catch(err => {
+        //     console.log(err)
+        // });
       }
     },
     onThumbnailChanged: function onThumbnailChanged(event) {
@@ -5182,7 +5194,7 @@ var currencyMask = text_mask_addons_dist_createNumberMask__WEBPACK_IMPORTED_MODU
       fields: {
         name: this.product.name,
         isConfigurableProduct: this.product.configurable,
-        hasPriceIncrease: this.product.percentage_increase ? true : false,
+        hasPriceIncrease: !this.product.percentage_increase ? true : false,
         isEnabled: this.product.status,
         isVisible: this.product.visibility,
         price: this.product.price,
@@ -5231,12 +5243,13 @@ var currencyMask = text_mask_addons_dist_createNumberMask__WEBPACK_IMPORTED_MODU
   computed: {},
   methods: {
     isConfigurableProductFunc: function isConfigurableProductFunc() {
-      if (!this.fields.isConfigurableProduct) {
+      if (this.fields.isConfigurableProduct) {
         this.fields.priceIncrease = null;
         this.fields.hasPriceIncrease = false;
         this.fields.interactionType = null;
         this.fields.interactionInputType = '';
         this.fields.step = '';
+        this.fields.percentageParentProduct = '';
       }
     },
     priceIncreaseFunc: function priceIncreaseFunc() {
@@ -83401,8 +83414,144 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container-fluid px-0" },
+    { staticClass: "container-fluid px-0 relative" },
     [
+      _c(
+        "transition",
+        {
+          attrs: {
+            appear: "",
+            "enter-active-class": "animate__animated animate__slideInDown",
+            "leave-active-class": "animate__animated animate__slideOutUp",
+            mode: "out-in"
+          }
+        },
+        [
+          _vm.adminPopUp
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "space-x-10 right-0 m-5 p-2 bg-indigo-500 text-white rounded-lg fixed top-0 z-50 flex justify-between shadow-lg"
+                },
+                [
+                  _c("div", { staticClass: "flex space-x-6 items-center" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "bg-indigo-700 text-white p-2 rounded-lg"
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "h-6 w-6",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              fill: "none",
+                              viewBox: "0 0 24 24",
+                              stroke: "currentColor"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                                "stroke-width": "2",
+                                d:
+                                  "M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "font-medium flex" }, [
+                      _vm._v(
+                        "You are logged in as administrator.\n                        "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "font-medium underline hover:text-gray-100 flex space-x-4 ml-3",
+                          attrs: { href: "/dashboard" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Go to dasboard\n                            "
+                          ),
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "h-6 w-6",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                  "stroke-width": "2",
+                                  d: "M13 7l5 5m0 0l-5 5m5-5H6"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-white flex items-center" }, [
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.adminPopUp = false
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "h-6 w-6",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              fill: "none",
+                              viewBox: "0 0 24 24",
+                              stroke: "currentColor"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                                "stroke-width": "2",
+                                d: "M6 18L18 6M6 6l12 12"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            : _vm._e()
+        ]
+      ),
+      _vm._v(" "),
       _c("choose-configurator", {
         attrs: {
           configuratorChosen: _vm.configuratorChosen,
@@ -84383,11 +84532,7 @@ var render = function() {
               _vm._v(" "),
               _c("Summary", {
                 ref: "summary",
-                attrs: {
-                  active: _vm.activeProduct,
-                  options: _vm.chosenOptions,
-                  finished: _vm.finished
-                }
+                attrs: { active: _vm.activeProduct, options: _vm.chosenOptions }
               })
             ],
             1
@@ -84429,7 +84574,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "relative h-100 p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3"
+                        "relative h-100 flex flex-column justify-center p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3"
                     },
                     [
                       _c("h2", { staticClass: "font-bold text-3xl" }, [
@@ -84589,11 +84734,7 @@ var render = function() {
                             {
                               staticClass:
                                 "bg-indigo-500 py-2 px-4 mt-4 md:mt-0 text-white rounded-lg flex items-center transition-all",
-                              on: {
-                                click: function($event) {
-                                  _vm.configurationFinished = false
-                                }
-                              }
+                              on: { click: _vm.ProcessConfiguration }
                             },
                             [
                               _c(
@@ -84874,7 +85015,8 @@ var render = function() {
                                   [
                                     configurator.thumbnail
                                       ? _c("img", {
-                                          staticClass: "h-full w-32 xl:w-64",
+                                          staticClass:
+                                            "h-full w-32 xl:w-64 max-h-64 object-cover",
                                           attrs: {
                                             src: configurator.thumbnail,
                                             alt: ""
@@ -86054,7 +86196,7 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "w-full bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition",
+                      "w-full bg-indigo-500 rounded p-2 px-4 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition",
                     attrs: { type: "submit" },
                     on: {
                       click: function($event) {
@@ -86213,12 +86355,22 @@ var render = function() {
             "form",
             {
               staticClass: "w-full my-2",
-              attrs: { id: "configuratorCreateForm" }
+              attrs: {
+                action:
+                  "/dashboard/configurator/" + this.configurator.id + "/update",
+                method: "POST",
+                id: "configuratorEditForm",
+                enctype: "multipart/form-data"
+              }
             },
             [
               _c("input", {
                 attrs: { type: "hidden", name: "_token" },
                 domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_method", value: "PATCH" }
               }),
               _vm._v(" "),
               _c(
@@ -86427,8 +86579,8 @@ var render = function() {
                             staticClass:
                               "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded",
                             attrs: {
-                              id: "allow_multiple",
-                              name: "allow_multiple",
+                              id: "default_color",
+                              name: "default_color",
                               type: "hidden"
                             }
                           })
@@ -86586,7 +86738,7 @@ var render = function() {
                     "button",
                     {
                       staticClass:
-                        "w-full bg-indigo-500 rounded p-2 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition",
+                        "w-full bg-indigo-500 rounded p-2 px-4 w-48 text-center text-white hover:no-underline hover:bg-indigo-500 transition",
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
@@ -86646,7 +86798,7 @@ var staticRenderFns = [
         "label",
         {
           staticClass: "font-medium text-gray-700",
-          attrs: { for: "allow_multiple" }
+          attrs: { for: "default_color" }
         },
         [_vm._v("Use default")]
       )
@@ -92491,7 +92643,8 @@ var render = function() {
                                     (_vm.fields.isConfigurableProduct = !_vm
                                       .fields.isConfigurableProduct)
                                   ],
-                                    _vm.isConfigurableProductFunc()
+                                    _vm.isConfigurableProductFunc(),
+                                    (_vm.fields.hasPriceIncrease = false)
                                 }
                               }
                             },
@@ -92909,7 +93062,7 @@ var render = function() {
                                         class: {
                                           "border-red-500":
                                             _vm.submitted &&
-                                            _vm.$v.fields.priceIncrease.$error
+                                            _vm.$v.fields.priceIncrease.required
                                         },
                                         attrs: {
                                           maxlength: 6,
@@ -97582,7 +97735,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "w-100 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
+                      "w-50 inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
                   },
                   [
                     _c(

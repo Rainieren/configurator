@@ -1,5 +1,31 @@
 <template>
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0 relative">
+        <transition appear enter-active-class="animate__animated animate__slideInDown" leave-active-class="animate__animated animate__slideOutUp" mode="out-in">
+            <div class="space-x-10 right-0 m-5 p-2 bg-indigo-500 text-white rounded-lg fixed top-0 z-50 flex justify-between shadow-lg" v-if="adminPopUp">
+                <div class="flex space-x-6 items-center">
+                    <div class="bg-indigo-700 text-white p-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                        </svg>
+                    </div>
+                    <p class="font-medium flex">You are logged in as administrator.
+                        <a href="/dashboard" class="font-medium underline hover:text-gray-100 flex space-x-4 ml-3">
+                        Go to dasboard
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+                <div class="text-white flex items-center">
+                    <button @click="adminPopUp = false">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </transition>
         <choose-configurator :configuratorChosen="configuratorChosen" :configurators="configurators" :getConfigurableProducts="getConfigurableProducts"></choose-configurator>
         <configurator-loading-screen v-if="loading"></configurator-loading-screen>
 
@@ -146,14 +172,14 @@
                 </div>
                 <button @click="ProcessConfiguration" v-if="activeProduct" class="my-5 w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-500 transition font-medium">Finish configuration</button>
             </div>
-            <Summary :active="activeProduct" :options="chosenOptions" :finished="finished" ref="summary"></Summary>
+            <Summary :active="activeProduct" :options="chosenOptions" ref="summary"></Summary>
         </div>
         <ConfigurationModal ref="configurationModal" :active="activeProduct" :options="chosenOptions" :code="summary_code"></ConfigurationModal>
         <product-modal ref="productModal"></product-modal>
 
         <transition enter-active-class="animate__animated animate__slideInRight animate__faster" leave-active-class="animate__animated animate__slideOutRight animate__faster" mode="out-in">
             <div class="bg-white fixed h-screen w-full top-0 right-0 z-30 overflow-none shadow-lg flex items-center overflow-y-scroll" v-if="configurationFinished">
-                <div class="relative h-100 p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3">
+                <div class="relative h-100 flex flex-column justify-center p-10 xl:p-0 xl:left-1/4 w-full md:w-2/3 xl:w-1/3">
                     <h2 class="font-bold text-3xl">Your configuration(s)</h2>
                     <div class="grid grid-cols-1 divide-y divide-gray-200 my-10">
                         <div class="flex flex-column xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6 py-5">
@@ -185,7 +211,7 @@
                         <p class="font-bold text-xl">Total: {{ this.$refs.summary.calculateSum | currency('€ ') }}</p>
                     </div>
                     <div class="flex flex-column-reverse space-y-4 md:flex-row md:space-y-0 md:justify-between my-5">
-                        <button @click="configurationFinished = false" class="bg-indigo-500 py-2 px-4 mt-4 md:mt-0 text-white rounded-lg flex items-center transition-all">
+                        <button @click="ProcessConfiguration" class="bg-indigo-500 py-2 px-4 mt-4 md:mt-0 text-white rounded-lg flex items-center transition-all">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                             </svg>
@@ -232,7 +258,7 @@
                 configurators: [],
                 configurator: '',
                 summaryLoading: false,
-
+                adminPopUp: true,
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             };
         },
@@ -247,6 +273,7 @@
         mounted: function() {
             // this.getConfigurableProducts();
             this.getAllConfigurators();
+
         },
         computed: {
             // Only show the steps that a the selected product has
@@ -374,9 +401,7 @@
                 axios.get('/api/get/getRelatedSteps/' +  id)
                     .then(response => {
                         this.steps = response.data
-
                         this.addDefaultProductsToArrayBeforehand()
-
                         this.stepsLoading = false
                     }).catch(err => {
                     console.log(err)
@@ -392,8 +417,8 @@
                 }, this);
             },
             ProcessConfiguration: function() {
-                // document.getElementById("generatePDF").submit();
-                this.configurationFinished = true;
+                this.configurationFinished = !this.configurationFinished;
+                document.body.classList.toggle('overflow-hidden')
             },
             storeSummary: function() {
                 this.summaryLoading = true
@@ -406,24 +431,6 @@
                 }).catch(err => {
 
                 });
-            },
-            getConfigurableProducts: function(id) {
-                axios.all([
-                    axios.get('/api/get/configurable_products/' + id)
-                        .then(response => {
-                            this.configurableProducts = response.data
-                        }).catch(err => {
-                        console.log(err)
-                    }),
-                    axios.get('/api/get/configuration/' + id)
-                        .then(response => {
-                            this.configurator = response.data
-                            this.configuratorChosen = true
-
-                        }).catch(err => {
-                        console.log(err)
-                    })
-                ]);
             },
         }
     }

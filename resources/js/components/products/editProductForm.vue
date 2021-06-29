@@ -92,7 +92,7 @@
                                 <fieldset>
                                     <div class="flex items-center">
                                         <div class="flex items-center h-5">
-                                            <div class="flex justify-between items-center" @click="[fields.isConfigurableProduct = !fields.isConfigurableProduct], isConfigurableProductFunc()">
+                                            <div class="flex justify-between items-center" @click="[fields.isConfigurableProduct = !fields.isConfigurableProduct], isConfigurableProductFunc(), fields.hasPriceIncrease = false">
                                                 <div class="w-12 h-7 flex items-center bg-gray-200 rounded-full p-1 duration-300 ease-in-out" :class="{ 'bg-green-500': fields.isConfigurableProduct}">
                                                     <div class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300 ease-in-out" :class="{ 'translate-x-5': fields.isConfigurableProduct,}"></div>
                                                 </div>
@@ -162,7 +162,7 @@
                                         <div class="my-3">
                                             <label for="percentage" class="text-gray-800 font-medium text-sm md:text-base">Percentage</label>
                                             <div class="relative flex mt-1 w-25">
-                                                <input v-mask="'###'" v-model.trim="$v.fields.priceIncrease.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.fields.priceIncrease.$error}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-l-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
+                                                <input v-mask="'###'" v-model.trim="$v.fields.priceIncrease.$model" :maxlength="6" :class="{ 'border-red-500' : submitted && $v.fields.priceIncrease.required}" type="text" name="percentage" id="percentage" class="appearance-none block border border-gray-200 p-2 rounded-l-md w-full shadow-sm focus:border-indigo-500 focus:outline-none" placeholder="">
                                                 <span class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-200 bg-gray-50 text-gray-500 text-sm shadow-sm">
                                                     %
                                                 </span>
@@ -504,7 +504,7 @@ export default {
             fields: {
                 name: this.product.name,
                 isConfigurableProduct: this.product.configurable,
-                hasPriceIncrease: this.product.percentage_increase ? true : false,
+                hasPriceIncrease: !this.product.percentage_increase ? true : false,
                 isEnabled: this.product.status,
                 isVisible: this.product.visibility,
                 price: this.product.price,
@@ -555,12 +555,13 @@ export default {
     },
     methods: {
         isConfigurableProductFunc() {
-            if(!this.fields.isConfigurableProduct) {
+            if(this.fields.isConfigurableProduct) {
                 this.fields.priceIncrease = null
                 this.fields.hasPriceIncrease = false
                 this.fields.interactionType = null
                 this.fields.interactionInputType = ''
                 this.fields.step = ''
+                this.fields.percentageParentProduct = ''
             }
         },
         priceIncreaseFunc() {
